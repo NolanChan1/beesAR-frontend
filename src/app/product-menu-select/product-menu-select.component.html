@@ -1,0 +1,46 @@
+<div class="dropdown-container">
+  <button
+    class="dropdown-button"
+    aria-haspopup="listbox"
+    aria-labelledby="dropdown-label"
+    (click)="toggleDropdown()"
+  >
+    <ic-icon
+      icon="{{ currentValue.icon }}"
+      [inline]="true"
+      size="16"
+      color="#0353a4"
+    ></ic-icon>
+    <p class="dropdown-selected" id="dropdown-label">{{ currentValue.name }}</p>
+    <ic-icon
+      icon="chevron-up"
+      [inline]="true"
+      size="24"
+      [vFlip]="dropdownOpen ? false : true"
+      color="#023e7d"
+      class="dropdown-arrow"
+    ></ic-icon>
+  </button>
+  <ul
+    class="dropdown-list"
+    role="listbox"
+    aria-expanded="false"
+    [ngClass]="{ 'dropdown-open': dropdownOpen }"
+  >
+    <li
+      *ngFor="let o of options"
+      class="list-option-container"
+      [ngClass]="{ selected: currentValue === o }"
+      (click)="select(o)"
+      role="option"
+    >
+      <ic-icon
+        icon="{{ o.icon }}"
+        [inline]="true"
+        size="16"
+        [color]="currentValue === o ? '#e9ecef' : '#0353a4'"
+      ></ic-icon>
+      <p>{{ o.name }}</p>
+    </li>
+  </ul>
+</div>

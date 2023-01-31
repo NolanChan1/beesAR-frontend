@@ -1,0 +1,123 @@
+<div class="menu-container">
+  <h1 class="current-selection-header">Current Selection</h1>
+  <div class="current-selection-container">
+    <img
+      src="{{ currentSelection.picture }}"
+      alt="{{ currentSelection.name }}"
+      width="82"
+      height="82"
+      class="current-selection-image"
+    />
+    <div class="current-selection-text-container">
+      <h2 class="current-selection-name">{{ currentSelection.name }}</h2>
+      <div class="current-selection-attributes-container">
+        <p class="current-selection-attribute-text">
+          {{ currentSelection.price }}
+        </p>
+        <hr class="current-selection-divider" />
+        <p class="current-selection-attribute-title">Height</p>
+        <p class="current-selection-attribute-text">
+          {{ currentSelection.height }}
+        </p>
+        <hr class="current-selection-divider" />
+        <p class="current-selection-attribute-title">Colour</p>
+        <p class="current-selection-attribute-text">
+          {{ currentSelection.colourName }}
+        </p>
+      </div>
+      <p class="current-selection-description">
+        {{ currentSelection.description }}
+      </p>
+    </div>
+  </div>
+  <product-menu-select
+    [options]="dropdownOptions"
+    (currentValueChange)="dropdownValueChanged($event)"
+  ></product-menu-select>
+  <div class="default-menu-container">
+    <div class="default-menu-row-container">
+      <div class="default-menu-header-container">
+        <h2>Similar Products</h2>
+      </div>
+      <div class="product-row-container">
+        <div *ngFor="let s of similarProducts" class="product-container">
+          <img
+            src="{{ s.imageFP }}"
+            alt="{{ s.name }}"
+            width="84"
+            height="84"
+            class="product-image"
+          />
+          <h3>{{ s.name }}</h3>
+        </div>
+      </div>
+      <div class="product-row-end">
+        <div class="product-row-end-cap"></div>
+        <div class="product-row-end-middle"></div>
+        <div class="product-row-end-cap"></div>
+      </div>
+
+      <div class="default-menu-divider"></div>
+    </div>
+    <div class="default-menu-row-container">
+      <div class="default-menu-header-container">
+        <h2>Specialty Candles</h2>
+        <h3>View Category</h3>
+        <ic-icon
+          icon="right-arrow"
+          size="24"
+          color="#0353a4"
+          class="view-category-arrow"
+        ></ic-icon>
+      </div>
+      <div class="product-row-container">
+        <div *ngFor="let s of specialtyCandles" class="product-container">
+          <img
+            src="{{ s.imageFP }}"
+            alt="{{ s.name }}"
+            width="84"
+            height="84"
+            class="product-image"
+          />
+          <h3>{{ s.name }}</h3>
+        </div>
+      </div>
+      <div class="product-row-end">
+        <div class="product-row-end-cap"></div>
+        <div class="product-row-end-middle"></div>
+        <div class="product-row-end-cap"></div>
+      </div>
+    </div>
+    <div class="default-menu-divider"></div>
+    <div class="default-menu-row-container">
+      <div class="default-menu-header-container">
+        <h2>Pillar Candles</h2>
+        <h3>View Category</h3>
+        <ic-icon
+          icon="right-arrow"
+          [inline]="true"
+          size="24"
+          color="#0353a4"
+          class="view-category-arrow"
+        ></ic-icon>
+      </div>
+      <div class="product-row-container">
+        <div *ngFor="let s of specialtyCandles" class="product-container">
+          <img
+            src="{{ s.imageFP }}"
+            alt="{{ s.name }}"
+            width="84"
+            height="84"
+            class="product-image"
+          />
+          <h3>{{ s.name }}</h3>
+        </div>
+      </div>
+      <div class="product-row-end">
+        <div class="product-row-end-cap"></div>
+        <div class="product-row-end-middle"></div>
+        <div class="product-row-end-cap"></div>
+      </div>
+    </div>
+  </div>
+</div>

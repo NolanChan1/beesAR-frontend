@@ -4,15 +4,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { CurrentSelectionService } from './current-selection.service';
+import { ProductMenuComponent } from './product-menu/product-menu.component';
+import { ProductMenuSelectComponent } from './product-menu-select/product-menu-select.component';
+
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IconModule } from '@visurel/iconify-angular';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProductMenuComponent,
+    ProductMenuSelectComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    IconModule,
+    BrowserAnimationsModule,
+    MatBottomSheetModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CurrentSelectionService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
