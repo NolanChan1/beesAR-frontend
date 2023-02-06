@@ -34,7 +34,8 @@
     [options]="dropdownOptions"
     (currentValueChange)="dropdownValueChanged($event)"
   ></product-menu-select>
-  <div class="default-menu-container">
+
+  <div *ngIf="currentMenu.id === 1" class="default-menu-container">
     <div class="default-menu-row-container">
       <div class="default-menu-header-container">
         <h2>Similar Products</h2>
@@ -119,5 +120,42 @@
         <div class="product-row-end-cap"></div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="currentMenu.id === 2" class="search-menu-container">
+    <h1 class="search-menu-header-text">Product Categories</h1>
+    <h2 class="search-menu-subheader-text">Candles</h2>
+    <div class="search-menu-category-button-container">
+      <button
+        *ngFor="let c of productCategories"
+        class="search-menu-category-button"
+        [ngClass]="{ 'search-menu-category-button-selected': c.selected }"
+        [ngStyle]="{ width: c.buttonWidth }"
+        (click)="toggleProductCategory(c.id)"
+      >
+        {{ c.name }}
+      </button>
+    </div>
+    <div class="default-menu-divider"></div>
+    <h1 class="search-menu-header-text">Search Results</h1>
+    <div class="search-menu-results-container">
+      <div class="search-menu-noresults-container">
+        <ic-icon
+          icon="alert-empty"
+          [inline]="true"
+          size="96"
+          color="#6c757d"
+          class="center-align"
+        ></ic-icon>
+        <p>
+          Please select at least one category from above to search for products
+          by category
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentMenu.id === 3" class="search-menu-container">
+    <h1 class="search-menu-header-text">Product Search</h1>
   </div>
 </div>

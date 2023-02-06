@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {
+  MatBottomSheet,
+  MatBottomSheetConfig,
+} from '@angular/material/bottom-sheet';
 import { IconService } from '@visurel/iconify-angular';
 import { appIcons } from './icons';
 import { ProductMenuComponent } from './product-menu/product-menu.component';
@@ -21,6 +24,10 @@ export class AppComponent {
   }
 
   onTriggerProductMenu() {
-    this.matBottomSheet.open(ProductMenuComponent);
+    const options = new MatBottomSheetConfig();
+    options.panelClass = 'remove-default';
+    this.matBottomSheet.open(ProductMenuComponent, {
+      panelClass: 'remove-default',
+    });
   }
 }

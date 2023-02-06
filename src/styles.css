@@ -18,3 +18,9 @@ a {
   font-family: -apple-system, BlinkMacSystemFont, Inter, Open Sans, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+
+.remove-default .menu-container {
+  margin-left: -1rem;
+  margin-top: -0.5rem;
+  margin-bottom: -0.5rem;
+}

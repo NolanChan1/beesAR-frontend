@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentSelectionService } from '../current-selection.service';
 
+import { candleCategories } from './candle-categories';
+
 @Component({
   selector: 'product-menu',
   templateUrl: './product-menu.component.html',
@@ -8,9 +10,13 @@ import { CurrentSelectionService } from '../current-selection.service';
 })
 export class ProductMenuComponent implements OnInit {
   dropdownOptions = [
-    { name: 'Default product menu', icon: 'book-open' },
-    { name: 'Search for products by category', icon: 'category-outline' },
-    { name: 'Search for products by name', icon: 'search-outline' },
+    { id: 1, name: 'Default product menu', icon: 'book-open' },
+    {
+      id: 2,
+      name: 'Search for products by category',
+      icon: 'category-outline',
+    },
+    { id: 3, name: 'Search for products by name', icon: 'search-outline' },
   ];
   public currentMenu = this.dropdownOptions[0];
 
@@ -52,11 +58,35 @@ export class ProductMenuComponent implements OnInit {
     },
   ];
 
+  productCategories = candleCategories;
+
   constructor(public currentSelection: CurrentSelectionService) {}
 
   ngOnInit(): void {}
 
   public dropdownValueChanged(event: any) {
     this.currentMenu = event;
+  }
+
+  public toggleProductCategory(id: number) {
+    if (id == 0) {
+      if (!this.productCategories[0].selected) {
+        // Select "All" and unselect the other buttons
+        this.productCategories[0].selected = true;
+        for (let i = 1; i < this.productCategories.length; i++) {
+          this.productCategories[i].selected = false;
+        }
+      } else {
+        this.productCategories[0].selected = false;
+      }
+    } else {
+      // Unselect "All" if a different category is selected
+      if (this.productCategories[0].selected) {
+        this.productCategories[0].selected = false;
+      }
+
+      this.productCategories[id].selected =
+        !this.productCategories[id].selected;
+    }
   }
 }

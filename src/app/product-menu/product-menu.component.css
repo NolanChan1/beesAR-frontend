@@ -1,10 +1,9 @@
+.center-align {
+  align-self: center;
+}
+
 .menu-container {
   width: 100vw;
-
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-  margin-top: 12rem;
 
   background-color: #f9f8fa;
   box-shadow: 0 -4px 16px 4px rgba(0, 0, 0, 0.25);
@@ -57,6 +56,7 @@
   font-weight: 500;
   font-size: 0.75rem;
   color: #001233;
+  line-height: 0.9075rem;
 }
 
 .current-selection-attributes-container {
@@ -77,6 +77,7 @@
   font-weight: 500;
   font-size: 0.625rem;
   color: #023e7d;
+  line-height: 0.75625rem;
 }
 
 .current-selection-divider {
@@ -179,6 +180,7 @@
   font-weight: 600;
   font-size: 0.75rem;
   color: #0353a4;
+  line-height: 100%;
 }
 
 .view-category-arrow {
@@ -187,7 +189,7 @@
 
   position: absolute;
   right: 20px;
-  top: 4px;
+  top: 3px;
 }
 
 .product-row-container {
@@ -281,4 +283,107 @@
   height: 0.125rem;
 
   background-color: #dee2e6;
+}
+
+.search-menu-container {
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.search-menu-header-text {
+  margin: 0rem;
+  padding: 0rem;
+  margin-top: 1rem;
+  margin-left: 1.25rem;
+
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 100%;
+  color: #212529;
+}
+
+.search-menu-subheader-text {
+  margin: 0rem;
+  padding: 0rem;
+  margin-top: 0.5rem;
+  margin-left: 1.25rem;
+
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 100%;
+  color: #212529;
+}
+
+.search-menu-category-button-container {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  margin-bottom: 1.25rem;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.search-menu-category-button {
+  margin: 0rem;
+  padding: 0rem;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #0353a4;
+
+  border: none;
+  border-radius: 0.2875rem;
+  background-color: #dee2e6;
+}
+
+.search-menu-category-button-selected {
+  color: #f8f9fa;
+  background-color: #0353a4;
+}
+
+.search-menu-results-container {
+  margin-top: 0.5rem;
+
+  position: relative;
+  width: 100%;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  display: flex;
+  flex-direction: column;
+
+  max-height: 25vh;
+}
+
+.search-menu-results-container::-webkit-scrollbar {
+  display: none;
+}
+
+.search-menu-noresults-container {
+  margin-top: 0.5rem;
+
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-menu-noresults-container p {
+  width: 12rem;
+
+  text-align: center;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 100%;
+  color: #6c757d;
 }
