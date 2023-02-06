@@ -59,6 +59,8 @@ export class ProductMenuComponent implements OnInit {
   ];
 
   productCategories = candleCategories;
+  public currentSearchTerm: string = '';
+  public empty: boolean = true;
 
   constructor(public currentSelection: CurrentSelectionService) {}
 
@@ -88,5 +90,17 @@ export class ProductMenuComponent implements OnInit {
       this.productCategories[id].selected =
         !this.productCategories[id].selected;
     }
+  }
+
+  public setSearchTerm(newVal: string) {
+    this.currentSearchTerm = newVal;
+  }
+
+  public clearSearchTerm() {
+    this.currentSearchTerm = '';
+  }
+
+  public performSearch() {
+    this.empty = !this.empty;
   }
 }

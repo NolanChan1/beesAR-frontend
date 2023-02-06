@@ -157,5 +157,47 @@
 
   <div *ngIf="currentMenu.id === 3" class="search-menu-container">
     <h1 class="search-menu-header-text">Product Search</h1>
+    <div class="search-menu-row-container">
+      <input
+        type="text"
+        #searchInput
+        (keyup)="setSearchTerm(searchInput.value)"
+        (keyup.enter)="performSearch()"
+        id="search-term"
+        name="search-term"
+        placeholder="Enter product name here"
+        class="search-menu-search-input"
+      />
+      <ic-icon
+        *ngIf="currentSearchTerm.length != 0"
+        icon="x-outline"
+        [inline]="true"
+        size="20"
+        color="#0353a4"
+        class="search-menu-cancel-search-button"
+        (click)="searchInput.value = ''; clearSearchTerm()"
+      ></ic-icon>
+    </div>
+
+    <button class="search-menu-search-button" (click)="performSearch()">
+      Search
+    </button>
+    <div class="default-menu-divider"></div>
+    <h1 class="search-menu-header-text">Search Results</h1>
+    <div class="search-menu-results-container">
+      <div *ngIf="empty" class="search-menu-noresults-container">
+        <ic-icon
+          icon="alert-empty"
+          [inline]="true"
+          size="96"
+          color="#6c757d"
+          class="center-align"
+        ></ic-icon>
+        <p>
+          Please enter some text above and then press the “Search” button to
+          search for products by their name
+        </p>
+      </div>
+    </div>
   </div>
 </div>
