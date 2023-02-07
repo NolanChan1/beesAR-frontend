@@ -1,5 +1,18 @@
 <div class="menu-container">
-  <h1 class="current-selection-header">Current Selection</h1>
+  <div class="menu-header-container">
+    <h1 class="current-selection-header">Current Selection</h1>
+    <div class="close-menu-button-container" (click)="closeProductMenu()">
+      <h2>Close Menu</h2>
+      <ic-icon
+        icon="chevron-right"
+        [inline]="true"
+        size="20"
+        color="#023e7d"
+        class="close-menu-button-icon"
+      ></ic-icon>
+    </div>
+  </div>
+
   <div class="current-selection-container">
     <img
       src="{{ currentSelection.picture }}"

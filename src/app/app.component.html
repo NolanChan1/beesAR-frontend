@@ -1,5 +1,12 @@
 <div class="test-background">
-  <button (click)="onTriggerProductMenu()">TEST</button>
+  <button (click)="onTriggerProductMenu()" class="open-menu-button">
+    <ic-icon
+      icon="round-book-open"
+      [inline]="true"
+      size="20"
+      color="#0353a4"
+    ></ic-icon>
+  </button>
 </div>
 
 <router-outlet></router-outlet>

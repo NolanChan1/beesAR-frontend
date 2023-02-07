@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentSelectionService } from '../current-selection.service';
 
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+
+import { CurrentSelectionService } from '../current-selection.service';
 import { candleCategories } from './candle-categories';
 
 @Component({
@@ -62,7 +64,10 @@ export class ProductMenuComponent implements OnInit {
   public currentSearchTerm: string = '';
   public empty: boolean = true;
 
-  constructor(public currentSelection: CurrentSelectionService) {}
+  constructor(
+    private productMenuRef: MatBottomSheetRef<ProductMenuComponent>,
+    public currentSelection: CurrentSelectionService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -102,5 +107,9 @@ export class ProductMenuComponent implements OnInit {
 
   public performSearch() {
     this.empty = !this.empty;
+  }
+
+  public closeProductMenu() {
+    this.productMenuRef.dismiss();
   }
 }
