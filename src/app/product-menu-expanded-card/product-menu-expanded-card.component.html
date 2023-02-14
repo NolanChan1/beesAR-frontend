@@ -1,0 +1,151 @@
+<div class="expanded-card-container">
+  <div class="header-container">
+    <img
+      src="assets/images/similar-candle1.png"
+      alt="solid-beeswax-candle"
+      width="84"
+      height="84"
+      class="product-image"
+    />
+    <div class="header-text-container">
+      <h1>3" Solid Beeswax Pillar Candle</h1>
+      <p>
+        Made from 100% Alberta beeswax, our pillar candles are hand poured and
+        show off the beautiful natural colouring of the wax. Beeswax is great
+        for people who have sensitivities to scents or adverse reactions to
+        other types of waxes.
+      </p>
+    </div>
+  </div>
+  <div class="product-card-row-container">
+    <h1>Price</h1>
+    <p class="attribute-height">$20.00</p>
+    <button class="store-page-redirect-button attribute-height">
+      <ic-icon
+        icon="shop-fill"
+        [inline]="true"
+        size="15"
+        color="#0353a4"
+      ></ic-icon>
+      <p>Open Store Page</p>
+    </button>
+  </div>
+  <div class="product-card-row-container">
+    <h1>Height</h1>
+    <div class="dropdown-container">
+      <button
+        aria-haspopup="listbox"
+        aria-labelledby="dropdown-label"
+        (click)="toggleDropdown()"
+        class="dropdown-button attribute-height"
+        [ngClass]="{
+          'remove-bottom-radius': dropdownOpen,
+          'dropdown-shadow': dropdownOpen
+        }"
+      >
+        <p>{{ selectedHeightName }}</p>
+        <ic-icon
+          icon="chevron-up"
+          [inline]="true"
+          size="15"
+          [vFlip]="dropdownOpen ? false : true"
+          color="#001845"
+          class="dropdown-button-icon"
+        ></ic-icon>
+      </button>
+      <ul
+        class="dropdown-list"
+        role="listbox"
+        aria-expanded="false"
+        [ngClass]="{ 'dropdown-open': dropdownOpen }"
+      >
+        <li
+          *ngFor="let h of heightOptions"
+          class="list-option dropdown-shadow"
+          [ngClass]="{ 'selected-option': h.id === selectedHeightID }"
+          (click)="selectHeight(h.id)"
+          role="option"
+        >
+          {{ h.name }}
+        </li>
+      </ul>
+    </div>
+    <hr class="product-card-vertical-divider" />
+    <h1>Colour</h1>
+    <p class="attribute-height">{{ selectedColourName }}</p>
+  </div>
+  <div class="colour-row-container">
+    <div
+      *ngFor="let c of colourOptions"
+      (click)="selectColour(c.id)"
+      class="colour-option-container"
+    >
+      <div
+        class="colour-option-border"
+        [ngClass]="{
+          'colour-option-border-selected': c.id === selectedColourID
+        }"
+      >
+        <div
+          class="colour-option-colour"
+          [ngStyle]="{ 'background-color': c.value }"
+        ></div>
+      </div>
+      <h1
+        class="colour-option-text"
+        [ngClass]="{ 'colour-option-text-selected': c.id === selectedColourID }"
+      >
+        {{ c.name }}
+      </h1>
+    </div>
+  </div>
+  <div class="product-card-horizontal-divider"></div>
+  <div class="product-card-row-container">
+    <h1>Categories</h1>
+    <p class="attribute-height">Candles</p>
+    <p class="attribute-height">Pillars</p>
+    <p class="attribute-height">Products</p>
+  </div>
+  <div class="product-card-row-container no-b-margin">
+    <h1>Dimensions</h1>
+    <div class="product-card-attribute-container attribute-height">
+      <ic-icon
+        icon="column-height"
+        [inline]="true"
+        size="15"
+        color="#023e7d"
+      ></ic-icon>
+      <p>3"</p>
+    </div>
+    <div class="product-card-attribute-container attribute-height">
+      <ic-icon
+        icon="diameter-outline"
+        [inline]="true"
+        size="15"
+        color="#023e7d"
+      ></ic-icon>
+      <p>3"</p>
+    </div>
+  </div>
+  <div class="product-card-horizontal-divider"></div>
+  <div class="button-row-container">
+    <button (click)="closeCard()" class="product-card-button go-back-button">
+      <ic-icon
+        icon="arrow-left"
+        [inline]="true"
+        size="15"
+        color="#f8f9fa"
+      ></ic-icon>
+      <p>Go Back</p>
+    </button>
+    <button (click)="closeCard()" class="product-card-button">
+      <ic-icon
+        icon="swap-vertical"
+        [inline]="true"
+        size="15"
+        color="#f8f9fa"
+      ></ic-icon>
+      <p>Swap Products</p>
+    </button>
+  </div>
+</div>

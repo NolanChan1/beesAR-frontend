@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 
+import { ProductMenuExpandedCardComponent } from '../product-menu-expanded-card/product-menu-expanded-card.component';
 import { CurrentSelectionService } from '../current-selection.service';
 import { candleCategories } from './candle-categories';
 
@@ -65,11 +67,21 @@ export class ProductMenuComponent implements OnInit {
   public empty: boolean = true;
 
   constructor(
+    private expandedProductCard: MatDialog,
     private productMenuRef: MatBottomSheetRef<ProductMenuComponent>,
     public currentSelection: CurrentSelectionService
   ) {}
 
   ngOnInit(): void {}
+
+  public openExpandedProductCard(id: number) {
+    this.expandedProductCard.open(ProductMenuExpandedCardComponent, {
+      backdropClass: 'custom-dialog-backdrop',
+      panelClass: 'custom-dialog-container',
+      maxWidth: '92vw',
+      width: '92vw',
+    });
+  }
 
   public dropdownValueChanged(event: any) {
     this.currentMenu = event;

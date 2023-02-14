@@ -28,6 +28,7 @@ export class AppComponent {
     options.panelClass = 'remove-default';
     this.matBottomSheet.open(ProductMenuComponent, {
       panelClass: 'remove-default',
+      backdropClass: 'custom-menu-backdrop',
     });
   }
 }

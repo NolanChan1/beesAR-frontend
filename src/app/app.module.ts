@@ -9,14 +9,17 @@ import { ProductMenuComponent } from './product-menu/product-menu.component';
 import { ProductMenuSelectComponent } from './product-menu-select/product-menu-select.component';
 
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconModule } from '@visurel/iconify-angular';
+import { ProductMenuExpandedCardComponent } from './product-menu-expanded-card/product-menu-expanded-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductMenuComponent,
     ProductMenuSelectComponent,
+    ProductMenuExpandedCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +27,7 @@ import { IconModule } from '@visurel/iconify-angular';
     IconModule,
     BrowserAnimationsModule,
     MatBottomSheetModule,
+    MatDialogModule,
   ],
   providers: [CurrentSelectionService],
   bootstrap: [AppComponent],
