@@ -14,7 +14,7 @@
  */
 
 body {
-  font-family: monospace;
+  font-family: 'Inter';
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -26,6 +26,9 @@ body {
   justify-items: center; 
 }
 
+.hide {
+  display: none;
+}
 div.demo-card {
   width: 80vw;
   margin: 20px auto;
@@ -189,7 +192,7 @@ body.ar.stabilized #stabilization {
 }
 
 .product-name {
-
+  margin: 0.3rem;
 }
 
 .product-info {
@@ -204,9 +207,99 @@ body.ar.stabilized #stabilization {
   border-radius: 3.2px;
   color: #023E7D;
 }
+
+.value-p {
+  background: #E9ECEF;
+  border-radius: 3.2px;
+  color: #023E7D;
+  padding: 3px
+}
 .product-info > span {
   /* flex-basis: 17%; */
   flex: 1; 
   margin: 0 1%;
   text-align: center;
+}
+
+.custom-button {
+  border-radius: 6.6px;
+  width: 80%;
+  font-family: 'Inter';
+  font-size: 14px;
+  background-color: #0353A4;
+  color: white;
+  align-items: center;
+  padding: 2px;
+  margin-bottom: 0.2rem;
+}
+
+.product-info.full-view {
+  width: 100%;
+}
+
+/* .product-menu-button {
+  width: 80%;
+  border-radius: 6.6px;
+  font-family: 'Inter';
+  font-size: 14px;
+
+  align-items: center;
+} */
+
+.product-menu-button.btn-primary {
+  display: unset;
+  justify-self: center;
+}
+
+.product-menu-icon-container {
+  background-color: white;
+  position: fixed;
+  right: 3%;
+  bottom: 0px;
+  margin: 0.5rem 0rem;
+  color: #0353A4;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  border-radius: 5px;
+}
+
+.full-product-card {
+  display: grid;
+  background-color: white;
+  border-radius: 0.6rem;
+}
+
+.colour-template {
+  border-radius: 50%;
+  background-color: yellow;
+  height: 30px;
+  width: 30px;
+}
+
+.colours {
+  display: flex;
+  margin-left: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.colour-template.selected {
+  border: 2px solid #0353A4;
+}
+
+#product-menu-container {
+  display: none;
+  z-index: 999;
+  position: fixed;
+  bottom: 0px;
+  /* height: 250px; */
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+}
+
+.menu-option {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
 }
