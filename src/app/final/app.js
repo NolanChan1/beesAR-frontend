@@ -17,12 +17,19 @@
  * Query for WebXR support. If there's no support for the `immersive-ar` mode,
  * show an error.
  */
+
+let enteredAR = false;
+let objShow = false;
+let retShow = true;
+let placed = false;
+
 (async function() {
   const isArSessionSupported = navigator.xr && navigator.xr.isSessionSupported && await navigator.xr.isSessionSupported("immersive-ar");
-  if (isArSessionSupported) {
+  if (isArSessionSupported && !enteredAR) {
     document.getElementById("enter-ar").addEventListener("click", window.app.activateXR)
+    //enteredAR = true;
   } else {
-    onNoXRDevice();
+    //onNoXRDevice();
   }
 })();
 
@@ -34,6 +41,8 @@ class App {
   /**
    * Run when the Start AR button is pressed.
    */
+
+
   activateXR = async () => {
     try {
       // Initialize a WebXR session using "immersive-ar".
@@ -49,7 +58,7 @@ class App {
       await this.onSessionStarted();
     } catch(e) {
       console.log(e);
-      onNoXRDevice();
+      //onNoXRDevice();
     }
   }
 
@@ -74,6 +83,8 @@ class App {
   onSessionStarted = async () => {
     // Add the `ar` class to our body, which will hide our 2D components
     document.body.classList.add('ar');
+    const element = document.getElementById("enter-ar");
+    element.remove();
 
     // To help with working with 3D on the web, we'll use three.js.
     this.setupThreeJs();
@@ -89,19 +100,71 @@ class App {
     // Start a rendering loop using this.onXRFrame.
     this.xrSession.requestAnimationFrame(this.onXRFrame);
 
-    this.xrSession.addEventListener("select", this.onSelect);
+    document.getElementById("btn-place").addEventListener("click", (e) => {
+      this.arPlace();
+      console.log("button clicked");
+    });
+    document.getElementById("btn-left").addEventListener("click", (e) => {
+       this.rotateModel(-1);
+      });
+    document.getElementById("btn-right").addEventListener("click", (e) => {
+      this.rotateModel(1);
+    });
+
+    document.getElementById("obj-toggle").addEventListener("click", this.objToggle);
+    document.getElementById("ret-toggle").addEventListener("click", this.retToggle);
+    //this.xrSession.addEventListener("select", this.onSelect);
   }
 
   /** Place a sunflower when the screen is tapped. */
-  onSelect = () => {
-    if (window.sunflower) {
-      const clone = window.sunflower.clone();
-      clone.position.copy(this.reticle.position);
-      this.scene.add(clone)
+  // onSelect = () => {
+  //   if (window.sunflower) {
+  //     const clone = window.sunflower.clone();
+  //     clone.position.copy(this.reticle.position);
+  //     this.scene.add(clone)
 
-      const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-      shadowMesh.position.y = clone.position.y;
+  //     const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
+  //     shadowMesh.position.y = clone.position.y;
+  //   }
+  // }
+
+  arPlace = () => {
+    if (window.sunflower && this.reticle.visible) {
+      window.sunflower.position.setFromMatrixPosition(this.reticle.matrix);
+      window.sunflower.visible = true;
+      this.scene.add(window.sunflower);
+      objShow = true;
+      placed = true;
     }
+  }
+
+  rotateModel = (dir) => {
+    if(window.sunflower) {
+      window.sunflower.rotation.y += (dir * 0.7);
+      console.log("rotated");
+    }
+  }
+
+  objToggle = () => {   
+    if (placed) {
+      objShow = !objShow;
+      window.sunflower.visible = objShow;
+      if(objShow === true) {
+        document.getElementById("obj-toggle").innerText = 'Hide Model';
+      } else if (objShow === false) {
+        document.getElementById("obj-toggle").innerText = 'Show Model';
+      }
+    }   
+  }
+
+  retToggle = () => {   
+    retShow = !retShow;
+    this.reticle.visible = retShow;
+    if(retShow === true) {
+      document.getElementById("ret-toggle").innerText = 'Hide Marker';
+    } else if (retShow === false) {
+      document.getElementById("ret-toggle").innerText = 'Show Marker';
+    }      
   }
 
   /**
@@ -144,7 +207,10 @@ class App {
         const hitPose = hitTestResults[0].getPose(this.localReferenceSpace);
 
         // Update the reticle position
-        this.reticle.visible = true;
+        if(retShow) {
+          this.reticle.visible = true;
+        }
+        
         this.reticle.position.set(hitPose.transform.position.x, hitPose.transform.position.y, hitPose.transform.position.z)
         this.reticle.updateMatrixWorld(true);
       }

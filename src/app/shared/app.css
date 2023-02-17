@@ -127,6 +127,16 @@ body.ar.stabilized #stabilization {
   align-items: center;
 }
 
+.btn-left {
+  position: absolute;
+  bottom: 20px;
+  left: calc(75% - 25px);
+  width: 30px;
+  height: 45px;
+  text-align: center;
+  display: block;
+}
+
 .virtual-marker.btn-primary {
   display: unset;
   justify-self: center;
