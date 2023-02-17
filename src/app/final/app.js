@@ -26,6 +26,25 @@
   }
 })();
 
+const capture = async () => {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+  const video = document.createElement("video");
+
+  try {
+    const captureStream = await navigator.mediaDevices.getDisplayMedia();
+    video.srcObject = captureStream;
+    context.drawImage(video, 0, 0, window.width, window.height);
+    const frame = canvas.toDataURL("image/png");
+    captureStream.getTracks().forEach(track => track.stop());
+    window.location.href = frame;
+  } catch (err) {
+    console.error("Error: " + err);
+  }
+};
+
+// capture();
+
 /**
  * Container class to manage connecting to the WebXR Device API
  * and handle rendering on every frame.
@@ -183,5 +202,109 @@ class App {
     this.camera.matrixAutoUpdate = false;
   }
 };
+displayValues = Array(6);
+class ProductDetails {
+  constructor (n, d, p="-", h="-", c="-", imglink = "") {
+    this.title = n;
+    this.price = p;
+    this.height = h;
+    this.colour = c;
+    this.desc = d;
+    this.image = imglink;
+  }
+}
+
+function productViewManager (e) {
+  if(!isProductMenuOpen) {
+    document.getElementById('expand').innerText = "close_fullscreen";
+    showExpandedProduct();
+  }
+  else {
+    document.getElementById('expand').innerText = "expand_content";
+    hideExpandedProduct();
+  }
+  isProductMenuOpen = !isProductMenuOpen;
+  fixProductMenuIconHeight()
+}
+
+function manageProductMenu (e) {
+  if (isMenuOpen) {
+    document.getElementById("product-menu-container").style.display = "none";
+  } else {
+    document.getElementById('product-menu-container').style.display = "grid";
+    document.getElementById('close-menu').style.bottom = (document.getElementById('product-menu-container').offsetHeight -50) + "px";
+  }
+  isMenuOpen = !isMenuOpen;
+}
+
+function productSelected () {
+  selectedProduct = sunflowerProduct;
+  document.getElementById('product-name-info').innerText = selectedProduct.title;
+  document.getElementById('product-desc-info').innerText = selectedProduct.desc;
+  setupFunction()
+  manageProductMenu();
+}
 
 window.app = new App();
+selectedProduct = null; //assume string for demo
+defaultProduct = new ProductDetails("No product selected...", "Select a product by opening the product menu.");
+isProductMenuOpen = false; //this is actually expanded product, not product menu!
+isMenuOpen = false;
+sunflowerProduct = new ProductDetails("Sunflower", "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!", "$25.00",'8"',"Yellow","https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg")
+
+function fixProductMenuIconHeight() {
+  value = document.getElementById('selection-panel').offsetHeight;
+  document.getElementById('product-menu-icon-container').style.bottom = value + "px";
+}
+
+function setupFunction () {
+  defaultProduct = new ProductDetails("No product selected...", "Select a product by opening the product menu.");
+  hideExpandedProduct(); //regular start
+  if (selectedProduct == null) {
+    document.getElementById('product-name-info').innerHTML = defaultProduct.title;
+    document.getElementsByClassName('product-description')[0].innerHTML = defaultProduct.desc;
+    document.getElementsByClassName('product-info')[0].style.display = "None";
+    document.getElementById('image-selected').style.display = "none";
+    document.getElementsByClassName('no-image')[0].style.display = "";
+  } else {
+    document.getElementById('product-name-info').innerHTML = selectedProduct.title;
+    document.getElementsByClassName('product-description')[0].innerHTML = selectedProduct.desc.substr(0,85) + "...";
+    document.getElementById('open-product-menu').style.display = "None";
+    document.getElementById('image-selected').src = selectedProduct.image;
+    document.getElementById('image-selected').style.display = "";
+    document.getElementsByClassName('no-image')[0].style.display = "none";
+  }
+  fixProductMenuIconHeight();
+}
+
+function sunflowerClicked () {
+  document.getElementById('confirm-button').style.display = "";
+}
+
+function hideExpandedProduct () {
+  elements = document.getElementsByClassName('show-for-fpc')
+  if (selectedProduct != null) {
+    document.getElementsByClassName('product-description')[0].innerHTML = selectedProduct.desc.substr(0,85) + "..."
+  }
+  idx = 0;
+  for (el of elements) {
+    displayValues[idx] = el.style.display;
+    el.style.display = "None";
+    idx += 1;
+  }
+
+  if (selectedProduct != null) {
+    document.getElementsByClassName('product-info')[0].style.display = "flex"
+  }
+}
+
+function showExpandedProduct    () {
+  elements = document.getElementsByClassName('show-for-fpc')
+  document.getElementById('product-desc-info').innerText = selectedProduct.desc;
+  idx = 0;
+  for (el of elements) {
+  el.style.display = "";
+  idx += 1;
+  }
+  document.getElementsByClassName('product-info')[0].style.display = "None";
+}
