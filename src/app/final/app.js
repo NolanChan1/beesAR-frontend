@@ -230,6 +230,7 @@ function productViewManager (e) {
 function manageProductMenu (e) {
   if (isMenuOpen) {
     document.getElementById("product-menu-container").style.display = "none";
+    document.getElementById('confirm-button').style.display = "none";
   } else {
     document.getElementById('product-menu-container').style.display = "grid";
     document.getElementById('close-menu').style.bottom = (document.getElementById('product-menu-container').offsetHeight -50) + "px";
@@ -246,7 +247,9 @@ function productSelected () {
 }
 
 window.app = new App();
-selectedProduct = null; //assume string for demo
+selectedProduct = null; //assume product class
+productHidden = false;
+markerHidden = false;
 defaultProduct = new ProductDetails("No product selected...", "Select a product by opening the product menu.");
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
@@ -307,4 +310,19 @@ function showExpandedProduct    () {
   idx += 1;
   }
   document.getElementsByClassName('product-info')[0].style.display = "None";
+}
+
+function hideUnhideProduct () {
+  if (productHidden) {//unhide product:
+    //code to unhide
+    document.getElementById('hide-marker').innerText = "Hide Product"
+  } else {
+    //code to hide it
+    document.getElementById('hide-marker').innerText = "Unhide Product"
+  }
+  productHidden = !productHidden;
+}
+
+function hideUnhideMarker () {
+
 }
