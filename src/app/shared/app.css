@@ -135,6 +135,10 @@ body.ar.stabilized #stabilization {
   justify-self: center;
 }
 
+#btn-place {
+  display: none;
+}
+
 .support-icons-container {
   display: grid;
   position: fixed;

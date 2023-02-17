@@ -52,6 +52,10 @@
         <span class="material-symbols-outlined icon" style="vertical-align: middle;">motion_sensor_active</span>
         Place Virtual Marker
       </div>
+      <div id="btn-place" class="btn btn-primary virtual-marker">
+        <span class="material-symbols-outlined icon" style="vertical-align: middle;">motion_sensor_active</span>
+        Place Product
+      </div>
       <div class="selection-control-container" id="selection-panel">
         <div class="selection-control-icons-container" style="display: flex;">
           <!-- icons to close/expand -->
@@ -115,12 +119,12 @@
                 <h6>Transformations</h6>
               </div>
               <div class="row">
-                <div class="col-12"><span class="value-p"><span class="material-symbols-outlined" style="font-size: inherit;">rotate_left</span>Rotate Product</span></div>
+                <div class="col-12"><span class="value-p" id="btn-rotate"><span class="material-symbols-outlined" style="font-size: inherit;">rotate_left</span>Rotate Product</span></div>
               </div>
               <div class="row"><h6>AR Options</h6></div>
               <div class="flex-row" style="padding: 0px;">
-                <span class=" value-p" onclick="hideUnhideProduct()">Hide Product</span>
-                <span class=" value-p" onclick="hideUnhideMarker()">Hide Marker</span>
+                <span class=" value-p" id="obj-toggle">Hide Product</span>
+                <span class=" value-p" id="ret-toggle">Hide Marker</span>
               </div>
               <hr class="show-for-fpc" style="width: 91%; margin: 8px 0px; justify-self: left;">
               <div class="flex-row" style="margin-top: 1rem">
