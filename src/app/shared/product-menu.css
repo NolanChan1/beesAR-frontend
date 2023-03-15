@@ -1,0 +1,236 @@
+.background-blur {
+  display: none;
+  height: 100vh;
+  width: 100vh;
+
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+
+  background-color: #0d0f10;
+  opacity: 0;
+}
+
+.open-pm-button {
+  position: relative;
+  top: 1rem;
+  left: 1rem;
+
+  border: none;
+
+  padding: 0.5rem;
+  border-radius: 0.875rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(248, 249, 250, 0.9);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+.pm-container {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #f9f8fa;
+  box-shadow: 0 -4px 16px 4px rgba(0, 0, 0, 0.25);
+  border-top: 0.125rem solid #ced4da;
+
+  position: relative;
+  top: 100vh;
+}
+
+.pm-header-container {
+  margin-top: 1.125rem;
+  margin-left: 1.25rem;
+  margin-right: 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.pm-cs-header-text {
+  margin: 0rem;
+  margin-bottom: 0.75rem;
+
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #0466c8;
+}
+
+.close-pm-button-container {
+  position: relative;
+  bottom: 0rem;
+  right: 0rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.close-pm-button-container h2 {
+  margin: 0rem;
+  padding: 0rem;
+
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 100%;
+  color: #023e7d;
+}
+
+.close-pm-button-icon {
+  align-self: center;
+}
+
+/* START - Current selection styles */
+.pm-cs-container {
+  margin: 0rem 1.25rem 0rem 1.25rem;
+  height: 6.375rem;
+
+  background-color: #f8f9fa;
+  border: 0.0625rem solid #ced4da;
+  border-radius: 1.25rem;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.pm-cs-image {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+
+  border: 0.0625rem solid #adb5bd;
+  border-radius: 1.05rem;
+}
+
+.pm-cs-textinfo-container {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pm-cs-noselection h2 {
+  margin: 0rem;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #001233;
+  line-height: 0.9075rem;
+}
+
+.pm-cs-ns-badge-container {
+  width: max-content;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  padding-left: 0.25rem;
+
+  background-color: #dee2e6;
+  border-radius: 0.2875rem;
+
+  display: flex;
+  align-items: center;
+  flex-basis: content;
+}
+
+.pm-cs-ns-badge-container p {
+  margin: 0.25rem 0.5rem 0.25rem 0.25rem;
+
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #0353a4;
+}
+
+/* END - Current selection styles */
+
+/* START - Product menu dropdown styles */
+
+.pm-dropdown-container {
+  position: relative;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.pm-dropdown-button {
+  position: relative;
+  width: 100%;
+
+  background-color: #dee2e6;
+  border: none;
+  height: 2.375rem;
+  border-top: 0.125rem solid #ced4da;
+  border-bottom: 0.125rem solid #ced4da;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.pm-dropdown-button-text {
+  margin: 0rem;
+  margin-left: 0.5rem;
+
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #0353a4;
+}
+
+.pm-dropdown-button-arrow {
+  position: absolute;
+  right: 1.25rem;
+}
+
+.pm-dropdown-list {
+  list-style: none;
+  position: absolute;
+  top: 2.375rem;
+  left: 0rem;
+  padding: 0rem;
+  margin: 0rem;
+  z-index: 10;
+}
+
+.pm-dropdown-list:last-child {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.pm-dropdown-option-container {
+  padding: 0rem;
+  margin: 0rem;
+
+  width: 100vw;
+  background-color: #dee2e6;
+  border: none;
+  height: 2.375rem;
+  border-left: 0.125rem solid #ced4da;
+  border-right: 0.125rem solid #ced4da;
+  border-bottom: 0.125rem solid #ced4da;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.pm-dropdown-option-container p {
+  padding: 0rem;
+  margin: 0rem;
+  margin-left: 0.5rem;
+
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #0353a4;
+}
+
+/* END - Product menu dropdown styles */

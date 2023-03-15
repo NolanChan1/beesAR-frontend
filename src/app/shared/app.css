@@ -14,7 +14,7 @@
  */
 
 body {
-  font-family: 'Inter';
+  font-family: "Inter";
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -23,7 +23,7 @@ body {
   -webkit-user-select: none;
   user-select: none;
   background-color: rgb(69, 90, 100);
-  justify-items: center; 
+  justify-items: center;
 }
 
 .hide {
@@ -108,12 +108,14 @@ body.ar.stabilized #stabilization {
   display: none;
 }
 
-#wrong-hosting-root { display: none; }
+#wrong-hosting-root {
+  display: none;
+}
 
 .bottom-container {
-  position:fixed;
-  bottom:20px;
-  display:grid;
+  position: fixed;
+  bottom: 20px;
+  display: grid;
   width: 100%;
   align-items: center;
   align-self: center;
@@ -123,9 +125,9 @@ body.ar.stabilized #stabilization {
   /*position:fixed;
   bottom: 200px;*/
   border-radius: 6.6px;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 14px;
-  color: #0353A4;
+  color: #0353a4;
   background-color: white;
   align-items: center;
 }
@@ -150,7 +152,7 @@ body.ar.stabilized #stabilization {
   /*div for spans*/
   background-color: white;
   margin: 0.5rem 0rem;
-  color: #0353A4;
+  color: #0353a4;
   display: flex;
   align-items: center;
   justify-items: center;
@@ -164,7 +166,7 @@ body.ar.stabilized #stabilization {
 .selection-control-container {
   display: grid;
   border-radius: 6.6px;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 14px;
   align-items: center;
   margin: 5px;
@@ -172,7 +174,7 @@ body.ar.stabilized #stabilization {
 
 .selection-control-icons-container > span {
   background: rgba(13, 15, 16, 0.75);
-  color: #0353A4;
+  color: #0353a4;
   margin: 0.1em;
   border-radius: 0.2em;
 }
@@ -190,7 +192,7 @@ body.ar.stabilized #stabilization {
 }
 
 .selection-main-content {
-  display:flex;
+  display: flex;
   background-color: white;
   border-radius: 0.6rem;
 }
@@ -204,23 +206,22 @@ body.ar.stabilized #stabilization {
   padding: 0 1%;
   justify-content: center;
   width: 80%;
-
 }
 .product-info > .value {
-  background: #E9ECEF;
+  background: #e9ecef;
   border-radius: 3.2px;
-  color: #023E7D;
+  color: #023e7d;
 }
 
 .value-p {
-  background: #E9ECEF;
+  background: #e9ecef;
   border-radius: 3.2px;
-  color: #023E7D;
-  padding: 3px
+  color: #023e7d;
+  padding: 3px;
 }
 .product-info > span {
   /* flex-basis: 17%; */
-  flex: 1; 
+  flex: 1;
   margin: 0 1%;
   text-align: center;
 }
@@ -228,9 +229,9 @@ body.ar.stabilized #stabilization {
 .custom-button {
   border-radius: 6.6px;
   width: 80%;
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 14px;
-  background-color: #0353A4;
+  background-color: #0353a4;
   color: white;
   align-items: center;
   padding: 2px;
@@ -261,7 +262,7 @@ body.ar.stabilized #stabilization {
   right: 3%;
   bottom: 0px;
   margin: 0.5rem 0rem;
-  color: #0353A4;
+  color: #0353a4;
   display: flex;
   align-items: center;
   justify-items: center;
@@ -288,7 +289,7 @@ body.ar.stabilized #stabilization {
 }
 
 .colour-template.selected {
-  border: 2px solid #0353A4;
+  border: 2px solid #0353a4;
 }
 
 #product-menu-container {
