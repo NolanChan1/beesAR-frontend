@@ -351,17 +351,17 @@ function setupFunction () {
 
 function updateProductDetailsOnExpandedCard (idxChange = false) {
 
-  $('#pc-price').attr("text", selectedProduct.price[selectedProduct.index]);
-  $('#pc-height').attr("text", selectedProduct.height[selectedProduct.index]);
-  $('#pc-colour').attr("text", selectedProduct.colour[0]);
-  $('#fpc-price').attr("text", selectedProduct.price[selectedProduct.index]);
+  $('#pc-price').attr("html", selectedProduct.price[selectedProduct.index]);
+  document.getElementById('pc-height').innerHTML = selectedProduct.height[selectedProduct.index];
+  document.getElementById('pc-colour').innerHTML = selectedProduct.colour[0];
+  document.getElementById('fpc-price').innerHTML = selectedProduct.price[selectedProduct.index];
   $('#fpc-storelink').attr("href", selectedProduct.storelink)
   // colour??
   $('#footer-height').attr("text", selectedProduct.height[selectedProduct.index])
 }
 
 function changeIndex (value) { //tracks height and price 
-  selectedProduct.index = value;
+  selectedProduct.index = value.selectedIndex;
   // change price
   updateProductDetailsOnExpandedCard(true)
 }
