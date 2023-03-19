@@ -124,7 +124,9 @@ body.ar.stabilized #stabilization {
   width: 50%;
   /*position:fixed;
   bottom: 200px;*/
-  border-radius: 6.6px;
+  border:none;
+  border-radius: .4rem;
+  font-weight: 500;
   font-family: "Inter";
   font-size: 14px;
   color: #0353a4;
@@ -149,18 +151,24 @@ body.ar.stabilized #stabilization {
 }
 
 .support-icons-container > div {
+
+    margin: 0.3rem 0; 
   /*div for spans*/
-  background-color: white;
-  margin: 0.5rem 0rem;
-  color: #0353a4;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(248, 249, 250, 0.9);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    /* backdrop-filter: blur(2px); */
 }
 
 .support-icons.material-symbols-outlined {
-  font-size: 35px;
+  font-size: 20px;
+  color:#0353A4;
 }
 
 .selection-control-container {
@@ -172,33 +180,53 @@ body.ar.stabilized #stabilization {
   margin: 5px;
 }
 
+.selection-control-icons-container {
+  margin: 0.1rem 0.7rem;
+}
+
 .selection-control-icons-container > span {
   background: rgba(13, 15, 16, 0.75);
   color: #0353a4;
   margin: 0.1em;
+  max-height: 24px;
+  border-radius: 0.2em;
+  align-self: center;
+}
+
+.delete-icon {
+  background: rgba(13, 15, 16, 0.75);
+  color: #0353a4;
+  margin: 0.2em;
   border-radius: 0.2em;
 }
 
 .image-container {
-  background-color: beige;
+  background-color: #E9ECEF;
   margin: 0.6rem;
-  border-radius: 0.6rem;
+  border-radius: 1rem;
+  border: 1px solid #ADB5BD;
 }
 
 .no-image.material-symbols-outlined {
-  font-size: 90px;
-  color: gray;
-  border-radius: 0.6rem;
+  font-size: 95px;
+  color: #ADB5BD;
+  border-radius: 1rem;
+}
+
+#image-selected {
+  border-radius: 1rem;
+  border-color: 2px black solid;
 }
 
 .selection-main-content {
   display: flex;
   background-color: white;
-  border-radius: 0.6rem;
+  border-radius: 1rem;
+  margin: 0 .7rem;
 }
 
 .product-name {
-  margin: 0.3rem;
+  margin: 0.1rem 0;
 }
 
 .product-info {
@@ -218,6 +246,7 @@ body.ar.stabilized #stabilization {
   border-radius: 3.2px;
   color: #023e7d;
   padding: 3px;
+  font-weight: 500;
 }
 .product-info > span {
   /* flex-basis: 17%; */
@@ -226,16 +255,37 @@ body.ar.stabilized #stabilization {
   text-align: center;
 }
 
+.height-form {
+  width: fit-content;
+  margin: 0;
+  display: inline;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: #e9ecef;
+  border-radius: .21rem;
+  color: #023e7d;
+}
+
 .custom-button {
-  border-radius: 6.6px;
-  width: 80%;
+  border-radius: 0.2875rem;
+  border:none;
+  display:flex;
+  width: max-content;
   font-family: "Inter";
   font-size: 14px;
-  background-color: #0353a4;
-  color: white;
+  background-color: #dee2e6;
+  color: #0353A4;
   align-items: center;
-  padding: 2px;
+  padding: 0px;
   margin-bottom: 0.2rem;
+}
+
+.custom-button > p {
+  margin: 0.25rem 0.5rem 0.25rem 0.25rem;
+
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #0353a4;
 }
 
 .product-info.full-view {
@@ -251,33 +301,39 @@ body.ar.stabilized #stabilization {
   align-items: center;
 } */
 
-.product-menu-button.btn-primary {
+/* .product-menu-button.btn-primary {
   display: unset;
   justify-self: center;
-}
+} */
 
 .product-menu-icon-container {
-  background-color: white;
   position: fixed;
   right: 3%;
   bottom: 0px;
   margin: 0.5rem 0rem;
   color: #0353a4;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.875rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
-  border-radius: 5px;
+  justify-content: center;
+  background: rgba(248, 249, 250, 0.9);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
 }
 
 .full-product-card {
   display: grid;
   background-color: white;
-  border-radius: 0.6rem;
+  border-radius: 1rem;
+  margin: 0 .7rem;
 }
 
 .colour-template {
   border-radius: 50%;
-  background-color: yellow;
+  background-color: #B28839;
   height: 30px;
   width: 30px;
 }

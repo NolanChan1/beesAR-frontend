@@ -267,19 +267,21 @@ class App {
 };
 displayValues = Array(6);
 class ProductDetails {
-  constructor (n, d, p="-", h="-", c="-", imglink = "") {
+  constructor (n, d, p=["-"], h=["-"], c=["-"], imglink = "", storelink = "") {
     this.title = n;
     this.price = p;
     this.height = h;
     this.colour = c;
     this.desc = d;
     this.image = imglink;
+    this.index = 0;
+    this.storelink = storelink;
   }
 }
 
 function productViewManager (e) {
   if(!isProductMenuOpen) {
-    document.getElementById('expand').innerText = "close_fullscreen";
+    document.getElementById('expand').innerText = "zoom_in_map";
     showExpandedProduct();
   }
   else {
@@ -302,7 +304,8 @@ function manageProductMenu (e) {
 }
 
 function productSelected () {
-  selectedProduct = sunflowerProduct;
+  //selectedProduct = sunflowerProduct;
+  selectedProduct = candleProduct;
   document.getElementById('product-name-info').innerText = selectedProduct.title;
   document.getElementById('product-desc-info').innerText = selectedProduct.desc;
   setupFunction()
@@ -316,8 +319,10 @@ markerHidden = false;
 defaultProduct = new ProductDetails("No product selected...", "Select a product by opening the product menu.");
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
-sunflowerProduct = new ProductDetails("Sunflower", "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!", "$25.00",'8"',"Yellow","https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg")
-
+sunflowerProduct = new ProductDetails("Sunflower", "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!", ["$25.00"],['8"'],["Yellow"],"https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg")
+candleProduct = new ProductDetails("Solid Beeswax Pillar Candle", 
+"Made from 100% Alberta beeswax, our pillar candles are hand poured and show off the beautiful natural colouring of the wax. As they burn, the lovely, subtle scent of beeswax is released.",
+["$20.00", "$31.00", "$42.00", "$53.00"], ['3"', '5"', '7"', '9"'], ["Stuart"], "https://i.imgur.com/kPO7HXN.jpg")
 function fixProductMenuIconHeight() {
   value = document.getElementById('selection-panel').offsetHeight;
   document.getElementById('product-menu-icon-container').style.bottom = value + "px";
@@ -334,13 +339,31 @@ function setupFunction () {
     document.getElementsByClassName('no-image')[0].style.display = "";
   } else {
     document.getElementById('product-name-info').innerHTML = selectedProduct.title;
-    document.getElementsByClassName('product-description')[0].innerHTML = selectedProduct.desc.substr(0,85) + "...";
+    document.getElementsByClassName('product-description')[0].innerHTML = selectedProduct.desc.substr(0,80) + "...";
     document.getElementById('open-product-menu').style.display = "None";
     document.getElementById('image-selected').src = selectedProduct.image;
     document.getElementById('image-selected').style.display = "";
     document.getElementsByClassName('no-image')[0].style.display = "none";
+    updateProductDetailsOnExpandedCard();
   }
   fixProductMenuIconHeight();
+}
+
+function updateProductDetailsOnExpandedCard (idxChange = false) {
+
+  $('#pc-price').attr("text", selectedProduct.price[selectedProduct.index]);
+  $('#pc-height').attr("text", selectedProduct.height[selectedProduct.index]);
+  $('#pc-colour').attr("text", selectedProduct.colour[0]);
+  $('#fpc-price').attr("text", selectedProduct.price[selectedProduct.index]);
+  $('#fpc-storelink').attr("href", selectedProduct.storelink)
+  // colour??
+  $('#footer-height').attr("text", selectedProduct.height[selectedProduct.index])
+}
+
+function changeIndex (value) { //tracks height and price 
+  selectedProduct.index = value;
+  // change price
+  updateProductDetailsOnExpandedCard(true)
 }
 
 function sunflowerClicked () {
