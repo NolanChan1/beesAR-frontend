@@ -357,7 +357,7 @@ function updateProductDetailsOnExpandedCard (idxChange = false) {
   document.getElementById('fpc-price').innerHTML = selectedProduct.price[selectedProduct.index];
   $('#fpc-storelink').attr("href", selectedProduct.storelink)
   // colour??
-  document.getElementById('#footer-height').innerHTML = selectedProduct.height[selectedProduct.index]
+  document.getElementById('#footer-height').innerHTML = selectedProduct.height[selectedProduct.index];
 }
 
 function changeIndex (value) { //tracks height and price 
