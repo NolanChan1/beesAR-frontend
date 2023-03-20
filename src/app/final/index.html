@@ -66,59 +66,67 @@
       <div class="selection-control-container" id="selection-panel">
         <div class="selection-control-icons-container" style="display: flex;">
           <!-- icons to close/expand -->
-          <span class="material-symbols-outlined icon">delete</span>
+          <iconify-icon
+        icon="ic:baseline-delete"
+        width="24"
+        inline="true"
+        class="delete-icon"
+      ></iconify-icon>
           <span class="material-symbols-outlined icon" onclick="productViewManager(event)" id="expand">expand_content</span>
         </div>
         <div>
           <!-- Main content -->
           <div class="full-product-card   fpc1" remove show-for from this one>
             <div class="selection-main-content">
-            <div class="no-image-selection image-container">
+            <div class="no-image-selection image-container" style="max-height: 95px;">
               <span class="material-symbols-outlined no-image">question_mark</span>
               <img src="" id="image-selected" width="95px" height="95px">
             </div>
-            <div style="display:grid; width: 100%;">
-              <div class="product-name"><h3 id="product-name-info">Product Name</h3></div>
+            <div style="display:flex; flex-direction: column; width: 100%; margin: 0.4rem 0.2rem 0.4rem 0rem;">
+              <div class="product-name"><h3 id="product-name-info" style="margin-bottom: 0px;">Product Name</h3></div>
               <div class="product-info">
-                <span class="cost-value value" id="cost-value">$25.00</span>
+                <span class="cost-value value" id="pc-price">$20.00</span>
                 <span class="ht"><b>Height</b></span>
-                <span class="value ht-value">8"</span>
+                <span class="value ht-value" id="pc-height">3"</span>
                 <span class="colour"><b>Colour</b></span>
-                <span class="colour-value value">Yellow</span>
+                <span class="colour-value value" id="pc-colour">Stuart</span>
               </div>
               <div class="product-description" id="product-desc-info">Product description</div>
               <div class="btn btn-primary custom-button product-menu-button" id="open-product-menu" onclick="manageProductMenu()">
-                <span class="material-symbols-outlined" style="vertical-align: middle;">menu_book</span> Open Product Menu
+                <iconify-icon
+            icon="ic:round-menu-book"
+            width="15"
+            inline="true"
+            style="color: #0353a4; margin-left: .5rem;"
+          ></iconify-icon><p> Open Product Menu </p>
               </div>
             </div>
             </div>
             <div class="show-for-fpc" style="padding: 5px;margin-left: 1rem;">
               <span class="ht"><b>Price</b></span>
-              <span class="value-p ht-value-p">$25.00</span>
-              <span class="value-p" style="margin-left: 2rem;"><span class="material-symbols-outlined" style="vertical-align: middle;">ungroup</span>Open on Store Page</span>
+              <span class="value-p ht-value-p" id="fpc-price">$20.00</span updated>
+              <a style="text-decoration: none;" id="fpc-storelink" href=""><span class="value-p" style="margin-left: 2rem;"><span class="material-symbols-outlined" style="vertical-align: middle;">ungroup</span>Open on Store Page</span></a updated>
             </div>
             <div class="show-for-fpc" style="padding: 5px;margin-left: 1rem;">
               <span class="ht"><b>Height</b></span>
-              <button style="padding: 2px;" class="value btn btn-secondary dropdown-toggle value-p" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                8"
-              </button>
-              <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div> -->
+              <select class="form-select height-form" aria-label=".form-select" onchange="changeIndex(this)">
+                <option selected value="0">3"</option>
+                <option value="1">5"</option>
+                <option value="2">7"</option>
+                <option value="3">9"</option>
+              </select>
               <span class="colour" style="margin-left: 2rem;"><b>Colour</b></span>
-              <span class="colour-value value-p">Yellow</span>
+              <span class="colour-value value-p">Stuart</span>
             </div>
             <div class="show-for-fpc colours"> <!-- set up x overflow later   -->
               <div style="display:grid; justify-items: center; margin-right: 0.2rem;">
               <span class="colour-template selected"></span>
-              <span style="font-size: 12px">Yellow</span>
+              <span style="font-size: 12px">Stuart</span>
               </div>
-              <div style="display:grid; justify-items: center;">
-                <span class="colour-template" style="background-color: orange;"></span>
+              <!-- <div style="display:grid; justify-items: center;">
+                <span class="colour-template" style="background-color: #B28839;"></span>
                 <span style="font-size: 12px"><del>Orange</del></span>
-              </div>
+              </div> -->
             </div>
             <hr class="show-for-fpc" style="width: 91%; margin: 0px; justify-self: center;">
             <div class="show-for-fpc container" style="padding: 0px; margin: 1rem 1rem;">
@@ -126,22 +134,25 @@
                 <h6>Transformations</h6>
               </div>
               <div class="row">
-                <div class="col-12"><span class="value-p" id="btn-rotate"><span class="material-symbols-outlined" style="font-size: inherit;">rotate_left</span>Rotate Product</span></div>
+                <div class="col-5"><span class="value-p" id="btn-rotate"><span class="material-symbols-outlined" style="font-size: inherit;">rotate_left</span>Rotate Product</span></div>
+                <div class="col-7"><span class="value-p" id="btn-move">Move Product</span></div>
               </div>
-              <div class="row"><h6>AR Options</h6></div>
+              <div class="row" style="margin-top: 1rem;"><h6>AR Options</h6></div>
               <div class="flex-row" style="padding: 0px;">
                 <span class=" value-p" id="obj-toggle">Hide Product</span>
-                <span class=" value-p" id="ret-toggle">Hide Marker</span>
+                <span class=" value-p" style="margin-left: 4.6rem;" id="ret-toggle">Hide Marker</span>
               </div>
               <hr class="show-for-fpc" style="width: 91%; margin: 8px 0px; justify-self: left;">
               <div class="flex-row" style="margin-top: 1rem">
                   <span class="category"><b>Categories</b></span>
-                  <span class="value-p">Flowers (fake category)</span>
-              </div>
+                  <span class="value-p" style="margin-right: .5rem;">Candles</span>
+                  <span class="value-p" style="margin-right: .5rem;">Pillars</span>
+                  <span class="value-p">Products</span>
+                </div>
               <div class="flex-row" style="margin: 0.1rem 0; padding: 0.5rem 0px">
-                <span style=""><b>Sizing</b></span>
-                <span class="value-p" ><span class="material-symbols-outlined" style="vertical-align: middle;">height</span>8"</span>
-                <span class="value-p" ><span class="material-symbols-outlined" style="vertical-align: middle;">width</span>6"</span>
+                <span ><b>Sizing</b></span>
+                <span class="value-p" id="footer-height" style="margin-right: 0.5rem;"><span class="material-symbols-outlined" style="vertical-align: middle;">height</span>3"</span>
+                <span class="value-p" ><span class="material-symbols-outlined" style="vertical-align: middle;">width</span>3"</span>
               </div>
             </div>
 
@@ -150,11 +161,26 @@
       </div>
     </div>
     <div class="support-icons-container">
-      <div><span class="material-symbols-outlined support-icons">live_help</span></div>
-      <div><span class="material-symbols-outlined support-icons" onclick="capture()">screenshot</span></div>
+      <div><iconify-icon
+        icon="ic:live-help"
+        width="20"
+        inline="true"
+        style="color: #0353a4"
+      ></iconify-icon></div>
+      <div onclick="capture()"><iconify-icon
+        icon="ic:photo-camera"
+        width="20"
+        inline="true"
+        style="color: #0353a4"
+      ></iconify-icon></div>
     </div>
-    <div class="product-menu-icon-container" id="product-menu-icon-container">
-      <span class="material-symbols-outlined support-icons" onclick="manageProductMenu()">menu_book</span>
+    <div class="product-menu-icon-container" onclick="manageProductMenu()" id="product-menu-icon-container">
+      <iconify-icon
+      icon="ic:round-menu-book"
+      width="20"
+      inline="true"
+      style="color: #0353a4"
+    ></iconify-icon>
     </div>
     <div id="unsupported-info" class="mdc-card demo-card">
       <h2>Unsupported Browser</h2>
@@ -172,11 +198,11 @@
         <div style="display:grid; width: 100%;">
           <div class="product-name"><h3>Product Name</h3></div>
           <div class="product-info">
-            <span class="cost-value value" >$25.00</span>
+            <span class="cost-value value" >$23.00</span>
             <span class="ht"><b>Height</b></span>
-            <span class="value ht-value">8"</span>
+            <span class="value ht-value">3"</span>
             <span class="colour"><b>Colour</b></span>
-            <span class="colour-value value">Yellow</span>
+            <span class="colour-value value">Stuart</span>
           </div>
           <div class="product-description">Product description</div>
         </div>

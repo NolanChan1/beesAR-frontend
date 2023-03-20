@@ -283,19 +283,29 @@ class App {
 }
 displayValues = Array(6);
 class ProductDetails {
-  constructor(n, d, p = "-", h = "-", c = "-", imglink = "") {
+  constructor(
+    n,
+    d,
+    p = ["-"],
+    h = ["-"],
+    c = ["-"],
+    imglink = "",
+    storelink = ""
+  ) {
     this.title = n;
     this.price = p;
     this.height = h;
     this.colour = c;
     this.desc = d;
     this.image = imglink;
+    this.index = 0;
+    this.storelink = storelink;
   }
 }
 
 function productViewManager(e) {
   if (!isProductMenuOpen) {
-    document.getElementById("expand").innerText = "close_fullscreen";
+    document.getElementById("expand").innerText = "zoom_in_map";
     showExpandedProduct();
   } else {
     document.getElementById("expand").innerText = "expand_content";
@@ -320,7 +330,8 @@ function manageProductMenu(e) {
 }
 
 function productSelected() {
-  selectedProduct = sunflowerProduct;
+  //selectedProduct = sunflowerProduct;
+  selectedProduct = candleProduct;
   document.getElementById("product-name-info").innerText =
     selectedProduct.title;
   document.getElementById("product-desc-info").innerText = selectedProduct.desc;
@@ -341,12 +352,19 @@ isMenuOpen = false;
 sunflowerProduct = new ProductDetails(
   "Sunflower",
   "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!",
-  "$25.00",
-  '8"',
-  "Yellow",
+  ["$25.00"],
+  ['8"'],
+  ["Yellow"],
   "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg"
 );
-
+candleProduct = new ProductDetails(
+  "Solid Beeswax Pillar Candle",
+  "Made from 100% Alberta beeswax, our pillar candles are hand poured and show off the beautiful natural colouring of the wax. As they burn, the lovely, subtle scent of beeswax is released.",
+  ["$20.00", "$31.00", "$42.00", "$53.00"],
+  ['3"', '5"', '7"', '9"'],
+  ["Stuart"],
+  "https://i.imgur.com/kPO7HXN.jpg"
+);
 function fixProductMenuIconHeight() {
   value = document.getElementById("selection-panel").offsetHeight;
   document.getElementById("product-menu-icon-container").style.bottom =
@@ -371,13 +389,34 @@ function setupFunction() {
     document.getElementById("product-name-info").innerHTML =
       selectedProduct.title;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 85) + "...";
+      selectedProduct.desc.substr(0, 80) + "...";
     document.getElementById("open-product-menu").style.display = "None";
     document.getElementById("image-selected").src = selectedProduct.image;
     document.getElementById("image-selected").style.display = "";
     document.getElementsByClassName("no-image")[0].style.display = "none";
+    updateProductDetailsOnExpandedCard();
   }
   fixProductMenuIconHeight();
+}
+
+function updateProductDetailsOnExpandedCard(idxChange = false) {
+  $("#pc-price").attr("html", selectedProduct.price[selectedProduct.index]);
+  document.getElementById("pc-height").innerHTML =
+    selectedProduct.height[selectedProduct.index];
+  document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
+  document.getElementById("fpc-price").innerHTML =
+    selectedProduct.price[selectedProduct.index];
+  if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
+  // colour??
+  document.getElementById("#footer-height").innerHTML =
+    selectedProduct.height[selectedProduct.index];
+}
+
+function changeIndex(value) {
+  //tracks height and price
+  selectedProduct.index = value.selectedIndex;
+  // change price
+  updateProductDetailsOnExpandedCard(true);
 }
 
 function sunflowerClicked() {
