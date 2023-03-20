@@ -234,3 +234,156 @@
 }
 
 /* END - Product menu dropdown styles */
+
+/* START - Defulat product menu styles */
+
+.dpm-container {
+  position: relative;
+  width: 100%;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dpm-container::-webkit-scrollbar {
+  display: none;
+}
+
+.dpm-row-container {
+  position: relative;
+  margin-top: 1rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.dpm-header-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  z-index: 6;
+}
+
+.dpm-header-container h2 {
+  padding: 0rem;
+  margin: 0rem;
+  margin-left: 1.25rem;
+
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #212529;
+}
+
+.pm-view-category-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pm-view-category-button-container h3 {
+  padding: 0rem;
+  margin: 0rem;
+
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #0353a4;
+  line-height: 100%;
+}
+
+.pm-view-category-arrow {
+  padding: 0rem;
+  margin: 0rem;
+  margin-right: 1.25rem;
+}
+
+.dpm-product-row-container {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+
+  overflow-x: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.dpm-product-row-container::-webkit-scrollbar {
+  display: none;
+}
+
+.pm-product-container {
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
+  margin-right: 0.75rem;
+
+  width: 6.375rem;
+
+  background-color: #f8f9fa;
+  border: #ced4da solid 0.0625rem;
+  border-radius: 1.25rem;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pm-product-image {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
+  border-radius: 1.05rem;
+}
+
+.pm-product-container h3 {
+  padding: 0rem;
+  margin: 0rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  width: 84px;
+
+  font-weight: 500;
+  font-size: 0.625rem;
+  color: #001233;
+
+  text-align: center;
+
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 1.5rem;
+  line-height: 0.75rem;
+}
+
+.pm-product-row-end {
+  position: absolute;
+  right: 0rem;
+  top: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.pm-product-row-end-cap {
+  width: 1.25rem;
+  height: 0.75rem;
+  background-color: #f9f8fa;
+  z-index: 5;
+}
+
+.pm-product-row-end-middle {
+  width: 1.25rem;
+  height: 8.375rem;
+
+  background-color: #f9f8fa;
+  box-shadow: -2px 0px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* END - Defulat product menu styles */

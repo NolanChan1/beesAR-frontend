@@ -21,10 +21,15 @@ let enteredAR = false;
 let objShow = false;
 let retShow = true;
 let placed = false;
-(async function() {
-  const isArSessionSupported = navigator.xr && navigator.xr.isSessionSupported && await navigator.xr.isSessionSupported("immersive-ar");
+(async function () {
+  const isArSessionSupported =
+    navigator.xr &&
+    navigator.xr.isSessionSupported &&
+    (await navigator.xr.isSessionSupported("immersive-ar"));
   if (isArSessionSupported) {
-    document.getElementById("enter-ar").addEventListener("click", window.app.activateXR)
+    document
+      .getElementById("enter-ar")
+      .addEventListener("click", window.app.activateXR);
   } else {
     onNoXRDevice();
   }
@@ -40,7 +45,7 @@ const capture = async () => {
     video.srcObject = captureStream;
     context.drawImage(video, 0, 0, window.width, window.height);
     const frame = canvas.toDataURL("image/png");
-    captureStream.getTracks().forEach(track => track.stop());
+    captureStream.getTracks().forEach((track) => track.stop());
     window.location.href = frame;
   } catch (err) {
     console.error("Error: " + err);
@@ -61,8 +66,8 @@ class App {
     try {
       // Initialize a WebXR session using "immersive-ar".
       this.xrSession = await navigator.xr.requestSession("immersive-ar", {
-        requiredFeatures: ['hit-test', 'dom-overlay'],
-        domOverlay: { root: document.body }
+        requiredFeatures: ["hit-test", "dom-overlay"],
+        domOverlay: { root: document.body },
       });
 
       // Create the canvas that will contain our camera's background and our virtual scene.
@@ -70,11 +75,11 @@ class App {
 
       // With everything set up, start the app.
       await this.onSessionStarted();
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       onNoXRDevice();
     }
-  }
+  };
 
   /**
    * Add a canvas element and initialize a WebGL context that is compatible with WebXR.
@@ -82,10 +87,10 @@ class App {
   createXRCanvas() {
     this.canvas = document.createElement("canvas");
     document.body.appendChild(this.canvas);
-    this.gl = this.canvas.getContext("webgl", {xrCompatible: true});
+    this.gl = this.canvas.getContext("webgl", { xrCompatible: true });
 
     this.xrSession.updateRenderState({
-      baseLayer: new XRWebGLLayer(this.xrSession, this.gl)
+      baseLayer: new XRWebGLLayer(this.xrSession, this.gl),
     });
   }
 
@@ -96,22 +101,25 @@ class App {
    */
   onSessionStarted = async () => {
     // Add the `ar` class to our body, which will hide our 2D components
-    document.body.classList.add('ar');
+    document.body.classList.add("ar");
     const element = document.getElementById("enter-ar");
-    element.remove();    
+    element.remove();
     document.getElementById("btn-place").style.display = "unset";
-
 
     // To help with working with 3D on the web, we'll use three.js.
     this.setupThreeJs();
 
     // Setup an XRReferenceSpace using the "local" coordinate system.
-    this.localReferenceSpace = await this.xrSession.requestReferenceSpace('local');
+    this.localReferenceSpace = await this.xrSession.requestReferenceSpace(
+      "local"
+    );
 
     // Create another XRReferenceSpace that has the viewer as the origin.
-    this.viewerSpace = await this.xrSession.requestReferenceSpace('viewer');
+    this.viewerSpace = await this.xrSession.requestReferenceSpace("viewer");
     // Perform hit testing using the viewer as origin.
-    this.hitTestSource = await this.xrSession.requestHitTestSource({ space: this.viewerSpace });
+    this.hitTestSource = await this.xrSession.requestHitTestSource({
+      space: this.viewerSpace,
+    });
 
     // Start a rendering loop using this.onXRFrame.
     this.xrSession.requestAnimationFrame(this.onXRFrame);
@@ -121,16 +129,20 @@ class App {
     document.getElementById("btn-place").addEventListener("click", (e) => {
       this.arPlace();
       console.log("button clicked");
-    });  
-    
+    });
+
     document.getElementById("btn-rotate").addEventListener("click", (e) => {
       this.rotateModel();
-     });
+    });
 
-    document.getElementById("obj-toggle").addEventListener("click", this.objToggle);
-    document.getElementById("ret-toggle").addEventListener("click", this.retToggle);
-   // this.xrSession.addEventListener("select", this.onSelect);
-  }
+    document
+      .getElementById("obj-toggle")
+      .addEventListener("click", this.objToggle);
+    document
+      .getElementById("ret-toggle")
+      .addEventListener("click", this.retToggle);
+    // this.xrSession.addEventListener("select", this.onSelect);
+  };
 
   /** Place a sunflower when the screen is tapped. */
   // onSelect = () => {
@@ -152,36 +164,36 @@ class App {
       objShow = true;
       placed = true;
     }
-  }  
+  };
 
   rotateModel = () => {
-    if(window.sunflower) {
+    if (window.sunflower) {
       window.sunflower.rotation.y += 0.7;
       console.log("rotated");
     }
-  } 
+  };
 
-  objToggle = () => {   
+  objToggle = () => {
     if (placed) {
       objShow = !objShow;
       window.sunflower.visible = objShow;
-      if(objShow === true) {
-        document.getElementById("obj-toggle").innerText = 'Hide Product';
+      if (objShow === true) {
+        document.getElementById("obj-toggle").innerText = "Hide Product";
       } else if (objShow === false) {
-        document.getElementById("obj-toggle").innerText = 'Show Product';
+        document.getElementById("obj-toggle").innerText = "Show Product";
       }
-    }   
-  }
+    }
+  };
 
-  retToggle = () => {   
+  retToggle = () => {
     retShow = !retShow;
     this.reticle.visible = retShow;
-    if(retShow === true) {
-      document.getElementById("ret-toggle").innerText = 'Hide Marker';
+    if (retShow === true) {
+      document.getElementById("ret-toggle").innerText = "Hide Marker";
     } else if (retShow === false) {
-      document.getElementById("ret-toggle").innerText = 'Show Marker';
-    }      
-  }
+      document.getElementById("ret-toggle").innerText = "Show Marker";
+    }
+  };
 
   /**
    * Called on the XRSession's requestAnimationFrame.
@@ -192,8 +204,8 @@ class App {
     this.xrSession.requestAnimationFrame(this.onXRFrame);
 
     // Bind the graphics framebuffer to the baseLayer's framebuffer.
-    const framebuffer = this.xrSession.renderState.baseLayer.framebuffer
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, framebuffer)
+    const framebuffer = this.xrSession.renderState.baseLayer.framebuffer;
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, framebuffer);
     this.renderer.setFramebuffer(framebuffer);
 
     // Retrieve the pose of the device.
@@ -204,10 +216,10 @@ class App {
       const view = pose.views[0];
 
       const viewport = this.xrSession.renderState.baseLayer.getViewport(view);
-      this.renderer.setSize(viewport.width, viewport.height)
+      this.renderer.setSize(viewport.width, viewport.height);
 
       // Use the view's transform matrix and projection matrix to configure the THREE.camera.
-      this.camera.matrix.fromArray(view.transform.matrix)
+      this.camera.matrix.fromArray(view.transform.matrix);
       this.camera.projectionMatrix.fromArray(view.projectionMatrix);
       this.camera.updateMatrixWorld(true);
 
@@ -217,24 +229,28 @@ class App {
       // If we have results, consider the environment stabilized.
       if (!this.stabilized && hitTestResults.length > 0) {
         this.stabilized = true;
-        document.body.classList.add('stabilized');
+        document.body.classList.add("stabilized");
       }
       if (hitTestResults.length > 0) {
         const hitPose = hitTestResults[0].getPose(this.localReferenceSpace);
 
         // Update the reticle position
 
-        if(retShow) {
+        if (retShow) {
           this.reticle.visible = true;
         }
-        this.reticle.position.set(hitPose.transform.position.x, hitPose.transform.position.y, hitPose.transform.position.z)
+        this.reticle.position.set(
+          hitPose.transform.position.x,
+          hitPose.transform.position.y,
+          hitPose.transform.position.z
+        );
         this.reticle.updateMatrixWorld(true);
       }
 
       // Render the scene with THREE.WebGLRenderer.
-      this.renderer.render(this.scene, this.camera)
+      this.renderer.render(this.scene, this.camera);
     }
-  }
+  };
 
   /**
    * Initialize three.js specific rendering code, including a WebGLRenderer,
@@ -247,7 +263,7 @@ class App {
       alpha: true,
       preserveDrawingBuffer: true,
       canvas: this.canvas,
-      context: this.gl
+      context: this.gl,
     });
     this.renderer.autoClear = false;
     this.renderer.shadowMap.enabled = true;
@@ -264,10 +280,10 @@ class App {
     this.camera = new THREE.PerspectiveCamera();
     this.camera.matrixAutoUpdate = false;
   }
-};
+}
 displayValues = Array(6);
 class ProductDetails {
-  constructor (n, d, p="-", h="-", c="-", imglink = "") {
+  constructor(n, d, p = "-", h = "-", c = "-", imglink = "") {
     this.title = n;
     this.price = p;
     this.height = h;
@@ -277,35 +293,38 @@ class ProductDetails {
   }
 }
 
-function productViewManager (e) {
-  if(!isProductMenuOpen) {
-    document.getElementById('expand').innerText = "close_fullscreen";
+function productViewManager(e) {
+  if (!isProductMenuOpen) {
+    document.getElementById("expand").innerText = "close_fullscreen";
     showExpandedProduct();
-  }
-  else {
-    document.getElementById('expand').innerText = "expand_content";
+  } else {
+    document.getElementById("expand").innerText = "expand_content";
     hideExpandedProduct();
   }
   isProductMenuOpen = !isProductMenuOpen;
-  fixProductMenuIconHeight()
+  fixProductMenuIconHeight();
 }
 
-function manageProductMenu (e) {
+function manageProductMenu(e) {
   if (isMenuOpen) {
     document.getElementById("product-menu-container").style.display = "none";
-    document.getElementById('confirm-button').style.display = "none";
+    document.getElementById("confirm-button").style.display = "none";
   } else {
-    document.getElementById('product-menu-container').style.display = "grid";
-    document.getElementById('close-menu').style.bottom = (document.getElementById('product-menu-container').offsetHeight -50) + "px";
+    document.getElementById("product-menu-container").style.display = "grid";
+    document.getElementById("close-menu").style.bottom =
+      document.getElementById("product-menu-container").offsetHeight -
+      50 +
+      "px";
   }
   isMenuOpen = !isMenuOpen;
 }
 
-function productSelected () {
+function productSelected() {
   selectedProduct = sunflowerProduct;
-  document.getElementById('product-name-info').innerText = selectedProduct.title;
-  document.getElementById('product-desc-info').innerText = selectedProduct.desc;
-  setupFunction()
+  document.getElementById("product-name-info").innerText =
+    selectedProduct.title;
+  document.getElementById("product-desc-info").innerText = selectedProduct.desc;
+  setupFunction();
   manageProductMenu();
 }
 
@@ -313,44 +332,63 @@ window.app = new App();
 selectedProduct = null; //assume product class
 productHidden = false;
 markerHidden = false;
-defaultProduct = new ProductDetails("No product selected...", "Select a product by opening the product menu.");
+defaultProduct = new ProductDetails(
+  "No product selected...",
+  "Select a product by opening the product menu."
+);
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
-sunflowerProduct = new ProductDetails("Sunflower", "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!", "$25.00",'8"',"Yellow","https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg")
+sunflowerProduct = new ProductDetails(
+  "Sunflower",
+  "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!",
+  "$25.00",
+  '8"',
+  "Yellow",
+  "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg"
+);
 
 function fixProductMenuIconHeight() {
-  value = document.getElementById('selection-panel').offsetHeight;
-  document.getElementById('product-menu-icon-container').style.bottom = value + "px";
+  value = document.getElementById("selection-panel").offsetHeight;
+  document.getElementById("product-menu-icon-container").style.bottom =
+    value + "px";
 }
 
-function setupFunction () {
-  defaultProduct = new ProductDetails("No product selected...", "Select a product by opening the product menu.");
+function setupFunction() {
+  defaultProduct = new ProductDetails(
+    "No product selected...",
+    "Select a product by opening the product menu."
+  );
   hideExpandedProduct(); //regular start
   if (selectedProduct == null) {
-    document.getElementById('product-name-info').innerHTML = defaultProduct.title;
-    document.getElementsByClassName('product-description')[0].innerHTML = defaultProduct.desc;
-    document.getElementsByClassName('product-info')[0].style.display = "None";
-    document.getElementById('image-selected').style.display = "none";
-    document.getElementsByClassName('no-image')[0].style.display = "";
+    document.getElementById("product-name-info").innerHTML =
+      defaultProduct.title;
+    document.getElementsByClassName("product-description")[0].innerHTML =
+      defaultProduct.desc;
+    document.getElementsByClassName("product-info")[0].style.display = "None";
+    document.getElementById("image-selected").style.display = "none";
+    document.getElementsByClassName("no-image")[0].style.display = "";
   } else {
-    document.getElementById('product-name-info').innerHTML = selectedProduct.title;
-    document.getElementsByClassName('product-description')[0].innerHTML = selectedProduct.desc.substr(0,85) + "...";
-    document.getElementById('open-product-menu').style.display = "None";
-    document.getElementById('image-selected').src = selectedProduct.image;
-    document.getElementById('image-selected').style.display = "";
-    document.getElementsByClassName('no-image')[0].style.display = "none";
+    document.getElementById("product-name-info").innerHTML =
+      selectedProduct.title;
+    document.getElementsByClassName("product-description")[0].innerHTML =
+      selectedProduct.desc.substr(0, 85) + "...";
+    document.getElementById("open-product-menu").style.display = "None";
+    document.getElementById("image-selected").src = selectedProduct.image;
+    document.getElementById("image-selected").style.display = "";
+    document.getElementsByClassName("no-image")[0].style.display = "none";
   }
   fixProductMenuIconHeight();
 }
 
-function sunflowerClicked () {
-  document.getElementById('confirm-button').style.display = "";
+function sunflowerClicked() {
+  document.getElementById("confirm-button").style.display = "";
 }
 
-function hideExpandedProduct () {
-  elements = document.getElementsByClassName('show-for-fpc')
+function hideExpandedProduct() {
+  elements = document.getElementsByClassName("show-for-fpc");
   if (selectedProduct != null) {
-    document.getElementsByClassName('product-description')[0].innerHTML = selectedProduct.desc.substr(0,85) + "..."
+    document.getElementsByClassName("product-description")[0].innerHTML =
+      selectedProduct.desc.substr(0, 85) + "...";
   }
   idx = 0;
   for (el of elements) {
@@ -360,32 +398,31 @@ function hideExpandedProduct () {
   }
 
   if (selectedProduct != null) {
-    document.getElementsByClassName('product-info')[0].style.display = "flex"
+    document.getElementsByClassName("product-info")[0].style.display = "flex";
   }
 }
 
-function showExpandedProduct    () {
-  elements = document.getElementsByClassName('show-for-fpc')
-  document.getElementById('product-desc-info').innerText = selectedProduct.desc;
+function showExpandedProduct() {
+  elements = document.getElementsByClassName("show-for-fpc");
+  document.getElementById("product-desc-info").innerText = selectedProduct.desc;
   idx = 0;
   for (el of elements) {
-  el.style.display = "";
-  idx += 1;
+    el.style.display = "";
+    idx += 1;
   }
-  document.getElementsByClassName('product-info')[0].style.display = "None";
+  document.getElementsByClassName("product-info")[0].style.display = "None";
 }
 
-function hideUnhideProduct () {
-  if (productHidden) {//unhide product:
+function hideUnhideProduct() {
+  if (productHidden) {
+    //unhide product:
     //code to unhide
-    document.getElementById('hide-marker').innerText = "Hide Product"
+    document.getElementById("hide-marker").innerText = "Hide Product";
   } else {
     //code to hide it
-    document.getElementById('hide-marker').innerText = "Unhide Product"
+    document.getElementById("hide-marker").innerText = "Unhide Product";
   }
   productHidden = !productHidden;
 }
 
-function hideUnhideMarker () {
-
-}
+function hideUnhideMarker() {}
