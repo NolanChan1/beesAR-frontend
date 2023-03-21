@@ -386,11 +386,6 @@ function fixProductMenuIconHeight() {
     value + "px";
 }
 
-function setupFunction() {
-  defaultProduct = new ProductDetails(
-    "No product selected...",
-    "Select a product by opening the product menu."
-  );
 function setupFunction () {
   defaultProduct = new ProductDetails("Please select a product to project onto the placed marker", "");
   hideExpandedProduct(); //regular start
@@ -425,8 +420,6 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
     selectedProduct.price[selectedProduct.index];
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
   // colour??
-  document.getElementById("#footer-height").innerHTML =
-    selectedProduct.height[selectedProduct.index];
   document.getElementById('footer-height').innerText = selectedProduct.height[selectedProduct.index];
 }
 
