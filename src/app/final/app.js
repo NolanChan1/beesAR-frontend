@@ -412,7 +412,7 @@ function setupFunction () {
 }
 
 function updateProductDetailsOnExpandedCard(idxChange = false) {
-  $("#pc-price").attr("html", selectedProduct.price[selectedProduct.index]);
+  document.getElementById("pc-price").innerHTML = selectedProduct.price[selectedProduct.index];
   document.getElementById("pc-height").innerHTML =
     selectedProduct.height[selectedProduct.index];
   document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
