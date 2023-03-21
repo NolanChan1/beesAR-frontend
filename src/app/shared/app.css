@@ -134,6 +134,17 @@ body.ar.stabilized #stabilization {
   align-items: center;
 }
 
+.product-description {
+  margin-top:0.2rem;
+  font-size: 0.6875rem;
+  line-height: .75rem;
+}
+
+.h6-modified {
+  font-size: 0.876rem;
+  line-height: 1rem;
+}
+
 .virtual-marker.btn-primary {
   display: unset;
   justify-self: center;
@@ -204,25 +215,26 @@ body.ar.stabilized #stabilization {
   background-color: #E9ECEF;
   margin: 0.6rem;
   border-radius: 1rem;
-  border: 1px solid #ADB5BD;
+  /* border: 1px solid #ADB5BD; */
 }
 
 .no-image.material-symbols-outlined {
   font-size: 95px;
   color: #ADB5BD;
   border-radius: 1rem;
+  border: 1px solid #ADB5BD;
 }
 
 #image-selected {
   border-radius: 1rem;
-  border-color: 2px black solid;
+  border: 1px solid black;
 }
 
 .selection-main-content {
   display: flex;
   background-color: white;
-  border-radius: 1rem;
-  margin: 0 .7rem;
+  border-radius: 1.25rem;
+  margin: 0 0rem;
 }
 
 .product-name {
@@ -232,13 +244,17 @@ body.ar.stabilized #stabilization {
 .product-info {
   display: flex;
   padding: 0 1%;
-  justify-content: center;
-  width: 80%;
+  justify-content: space-around;
+  width: 100%;
 }
-.product-info > .value {
+.product-info .value {
   background: #e9ecef;
   border-radius: 3.2px;
   color: #023e7d;
+}
+.product-info > div {
+  font-size: 0.8rem;
+  line-height: 12px;
 }
 
 .value-p {
@@ -327,7 +343,7 @@ body.ar.stabilized #stabilization {
 .full-product-card {
   display: grid;
   background-color: white;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   margin: 0 .7rem;
 }
 
@@ -345,7 +361,8 @@ body.ar.stabilized #stabilization {
 }
 
 .colour-template.selected {
-  border: 2px solid #0353a4;
+  border: 1px solid white;
+  box-shadow: 0 0 0 1px #023e7d;
 }
 
 #product-menu-container {
