@@ -1,34 +1,70 @@
-async function fetchText() {
-  console.log("HUH");
-  let response = await fetch(
-    `http://54.190.18.140:8080/api/categories/pillars`,
-    {
-      method: "GET",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  let data = await response.text();
-  console.log("BUH");
-  console.log(data);
+async function fetchCategory(productCategory) {
+  let fetchedData;
+  await fetch(`http://54.190.18.140:8080/api/categories/${productCategory}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      fetchedData = data;
+    })
+    .catch((error) => {
+      console.error("PRODUCT CATEGORY FETCH ERROR: ", error);
+    });
+  return fetchedData;
+}
+
+async function fetchImage(productSKU) {
+  let imageLink;
+  await fetch(`http://54.190.18.140:8080/api/product_images/${productSKU}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      return response.text();
+    })
+    .then((data) => {
+      imageLink = data;
+    })
+    .catch((error) => {
+      console.error("IMAGE FETCH ERROR: ", error);
+    });
+  return imageLink;
+}
+
+function updatePMPCDDStyles(ddOpen) {
+  if (ddOpen) {
+    $(".pmpc-dropdown-button-icon").removeAttr("flip");
+    $(".pmpc-dropdown-list").css("display", "block");
+
+    $(".pmpc-dropdown-button").addClass("pmpc-remove-bottom-radius");
+    $(".pmpc-dropdown-button").addClass("pmpc-dropdown-shadow");
+  } else {
+    $(".pmpc-dropdown-button-icon").attr("flip", "vertical");
+    $(".pmpc-dropdown-list").css("display", "none");
+
+    $(".pmpc-dropdown-button").removeClass("pmpc-remove-bottom-radius");
+    $(".pmpc-dropdown-button").removeClass("pmpc-dropdown-shadow");
+  }
 }
 
 $(document).ready(function () {
-  fetchText();
   $(".open-pm-button").on("click", function () {
     $(".pm-container").animate({ top: 192 });
-    $(".background-blur").animate({ opacity: 0.5 });
-    $(".background-blur").css("display", "block");
+    $(".pm-background-dim").animate({ opacity: 0.5 });
+    $(".pm-background-dim").css("display", "block");
   });
 
   $(".close-pm-button-container").on("click", function () {
     $(".pm-container").animate({ top: "100vh" });
-    $(".background-blur").animate({ opacity: 0 });
-    $(".background-blur").css("display", "none");
+    $(".pm-background-dim").animate({ opacity: 0 });
+    $(".pm-background-dim").css("display", "none");
   });
 
   // Product menu dropdown
@@ -161,45 +197,221 @@ $(document).ready(function () {
   });
 
   let pmOption =
-    '<div class="pm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>{{ s.name }}</h3></div>';
-  let testData;
-  console.log("ASDF");
-  // Default product menu
-  /*
-  $.ajax({
-    url: `http://54.190.18.140:8080/api/categories/pillars`,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-    dataType: "jsonp",
-  }).done(function (data, textStatus, jqXHR) {
-    console.log("TYUI");
-    testData = data;
-  });
-  console.log("JKL:");
-  console.log(testData);
+    '<div class="pm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
-  $.getJSON(
-    "http://54.190.18.140:8080/api/categories/pillars?callback=?",
-    function (result) {
-      $.parseJSON(result);
-      console.log(JSON.parse(result));
-    }
-  );
-    */
-  /*
-  fetch(`http://54.190.18.140:8080/api/categories/pillars`, {
-    method: "GET",
-    mode: "no-cors",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => console.log(response))
-    .then((data) => console.log(data))
-    .catch((error) => console.log(error));
-    */
+  let pmpcProduct = {
+    productSKU: -1,
+    imageLink: "",
+    name: "",
+    description: "",
+    prices: [],
+    selectedPrice: -1,
+    storeLink: "",
+    heights: [],
+    selectedHeight: -1,
+    colours: [],
+    selectedColour: { name: "", hexcode: "" },
+    categories: [],
+    diameter: -1,
+  };
+
+  let pmpcDropdownOpen = false;
+  let heightIndex = 0;
+  let colourIndex = 0;
+
+  let pillarCandles = fetchCategory("pillars");
+  pillarCandles.then((fetchedData) => {
+    $.each(fetchedData, function (i, data) {
+      $(".pillar-candles").append(pmOption);
+
+      let imageLink = fetchImage(data.Product_SKU);
+      imageLink.then((link) => {
+        $(".pillar-candles div:nth-child(" + (i + 1) + ") img").attr(
+          "src",
+          link
+        );
+      });
+      $(".pillar-candles div:nth-child(" + (i + 1) + ") h3").html(data.Name);
+
+      // Handle on click event - Setup PMPC
+      $(".pillar-candles div:nth-child(" + (i + 1) + ")").on(
+        "click",
+        function () {
+          pmpcProduct.productSKU = data.Product_SKU;
+          pmpcProduct.imageLink = $(
+            ".pillar-candles div:nth-child(" + (i + 1) + ") img"
+          ).attr("src");
+          pmpcProduct.name = data.Name;
+          pmpcProduct.description = data.Description;
+          pmpcProduct.prices = data.Price;
+          pmpcProduct.selectedPrice = pmpcProduct.prices[heightIndex];
+          pmpcProduct.storeLink = data["Product Page Link"];
+          pmpcProduct.heights = data.Dimensions.Height;
+          pmpcProduct.selectedHeight = pmpcProduct.heights[heightIndex];
+          if ("Color Options" in data) {
+            pmpcProduct.colours = data["Color Options"];
+            pmpcProduct.selectedColour = pmpcProduct.colours[colourIndex];
+          } else {
+            pmpcProduct.colours = [];
+            pmpcProduct.selectedColour = { name: "", hexcode: "" };
+          }
+          pmpcProduct.categories = data.Category;
+          if ("Diameter" in data.Dimensions) {
+            pmpcProduct.diameter = data.Dimensions.Diameter;
+          } else {
+            pmpcProduct.diameter = -1;
+          }
+
+          $(".pmpc-background-dim").css("display", "block");
+          $(".pmpc-container").css("display", "block");
+
+          $(".pmpc-product-image").attr("src", pmpcProduct.imageLink);
+          $(".pmpc-header-text-container h1").html(pmpcProduct.name);
+          $(".pmpc-header-text-container p").html(pmpcProduct.description);
+          $(".pmpc-price").html("$" + pmpcProduct.selectedPrice + ".00");
+          $(".pmpc-store-redirect-button").attr("href", pmpcProduct.storeLink);
+
+          $(".pmpc-dropdown-list").empty();
+          $(".pmpc-height").html(pmpcProduct.selectedHeight + '"');
+          if (pmpcProduct.heights.length > 1) {
+            $(".pmpc-height").css("display", "none");
+            $(".pmpc-dropdown-container").css("display", "block");
+            updatePMPCDDStyles(pmpcDropdownOpen);
+
+            $(".pmpc-dropdown-button p").html(pmpcProduct.selectedHeight + '"');
+            $(".pmpc-dropdown-button").on("click", function () {
+              pmpcDropdownOpen = !pmpcDropdownOpen;
+              updatePMPCDDStyles(pmpcDropdownOpen);
+            });
+
+            let pmpcDropdownOption =
+              '<li class="pmpc-list-option pmpc-dropdown-shadow" role="option">0"</li>';
+            $.each(pmpcProduct.heights, function (j, pmpcOption) {
+              $(".pmpc-dropdown-list").append(pmpcDropdownOption);
+
+              $(".pmpc-dropdown-list li:nth-child(" + (j + 1) + ")").html(
+                pmpcOption + '"'
+              );
+              $(".pmpc-dropdown-list li:nth-child(" + (j + 1) + ")").on(
+                "click",
+                function () {
+                  heightIndex = j;
+
+                  pmpcProduct.selectedPrice = pmpcProduct.prices[heightIndex];
+                  pmpcProduct.selectedHeight = pmpcProduct.heights[heightIndex];
+                  $(".pmpc-price").html(
+                    "$" + pmpcProduct.selectedPrice + ".00"
+                  );
+                  $(".pmpc-dropdown-button p").html(
+                    pmpcProduct.selectedHeight + '"'
+                  );
+                  $(".pmpc-height").html(pmpcProduct.selectedHeight + '"');
+
+                  $(".pmpc-selected-option").removeClass(
+                    "pmpc-selected-option"
+                  );
+                  $(
+                    ".pmpc-dropdown-list li:nth-child(" + (j + 1) + ")"
+                  ).addClass("pmpc-selected-option");
+
+                  pmpcDropdownOpen = false;
+                  updatePMPCDDStyles(pmpcDropdownOpen);
+                }
+              );
+            });
+
+            $(
+              ".pmpc-dropdown-list li:nth-child(" + (heightIndex + 1) + ")"
+            ).addClass("pmpc-selected-option");
+          } else {
+            $(".pmpc-height").css("display", "block");
+            $(".pmpc-dropdown-container").css("display", "none");
+          }
+
+          $(".pmpc-colour-row-container").empty();
+          if (pmpcProduct.colours.length > 0) {
+            $(".pmpc-colour").html(pmpcProduct.selectedColour.name);
+
+            let pmpcColourOption =
+              '<div class="pmpc-colour-option-container"><div class="pmpc-colour-option-border"><div class="pmpc-colour-option-colour"></div></div><h1 class="pmpc-colour-option-text">default-colour</h1></div>';
+            $.each(pmpcProduct.colours, function (j, pmpcOption) {
+              $(".pmpc-colour-row-container").append(pmpcColourOption);
+
+              if (j === colourIndex) {
+                $(".pmpc-colour-row-container div:nth-child(" + (j + 1) + ")")
+                  .children(".pmpc-colour-option-border")
+                  .addClass("pmpc-colour-option-border-selected");
+                $(
+                  ".pmpc-colour-row-container div:nth-child(" + (j + 1) + ") h1"
+                ).addClass("pmpc-colour-option-text-selected");
+              }
+
+              $(".pmpc-colour-row-container div:nth-child(" + (j + 1) + ")")
+                .children(".pmpc-colour-option-border")
+                .children()
+                .css("background-color", pmpcOption.hexcode);
+              $(
+                ".pmpc-colour-row-container div:nth-child(" + (j + 1) + ") h1"
+              ).html(pmpcOption.name);
+
+              $(".pmpc-colour-row-container div:nth-child(" + (j + 1) + ")").on(
+                "click",
+                function () {
+                  colourIndex = j;
+                  pmpcProduct.selectedColour = pmpcProduct.colours[colourIndex];
+
+                  $(".pmpc-colour").html(pmpcProduct.selectedColour.name);
+                  $(".pmpc-colour-option-border-selected").removeClass(
+                    "pmpc-colour-option-border-selected"
+                  );
+                  $(".pmpc-colour-option-text-selected").removeClass(
+                    "pmpc-colour-option-text-selected"
+                  );
+                  $(
+                    ".pmpc-colour-row-container div:nth-child(" +
+                      (colourIndex + 1) +
+                      ")"
+                  )
+                    .children(".pmpc-colour-option-border")
+                    .addClass("pmpc-colour-option-border-selected");
+                  $(
+                    ".pmpc-colour-row-container div:nth-child(" +
+                      (colourIndex + 1) +
+                      ") h1"
+                  ).addClass("pmpc-colour-option-text-selected");
+                }
+              );
+            });
+          } else {
+            $(".pmpc-colour").html("No colour options");
+          }
+
+          $(".pmpc-categories").empty();
+          let pmpcCategoryOption = '<p class="pmpc-attribute-height">';
+          $.each(pmpcProduct.categories, function (j, pmpcOption) {
+            $(".pmpc-categories").append(
+              pmpcCategoryOption + pmpcOption + "</p>"
+            );
+          });
+
+          if (pmpcProduct.diameter === -1) {
+            $(".pmpc-diameter").css("display", "none");
+          } else {
+            $(".pmpc-diameter").css("display", "block");
+            $(".pmpc-diameter p").html(pmpcProduct.diameter + '"');
+          }
+
+          $(".pmpc-go-back-button").on("click", function () {
+            $(".pmpc-background-dim").css("display", "none");
+            $(".pmpc-container").css("display", "none");
+          });
+          $(".pmpc-swap-button").on("click", function () {
+            $(".pmpc-background-dim").css("display", "none");
+            $(".pmpc-container").css("display", "none");
+          });
+        }
+      );
+      console.log(data);
+    });
+  });
 });

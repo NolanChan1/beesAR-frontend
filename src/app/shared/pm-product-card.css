@@ -1,0 +1,393 @@
+.pmpc-background-dim {
+  display: none;
+  height: 100vh;
+  width: 100vh;
+
+  position: absolute;
+  top: 0rem;
+  left: 0rem;
+
+  background-color: #0d0f10;
+  opacity: 0.5;
+
+  z-index: 11;
+}
+
+.pmpc-container {
+  display: none;
+  z-index: 12;
+
+  width: 92vw;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 1.25rem;
+  border: 0.125rem solid #ced4da;
+  background-color: #f9f8fa;
+}
+
+.pmpc-header-container {
+  margin: 0.75rem;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.pmpc-product-image {
+  border-radius: 1.05rem;
+  border: 0.0625rem solid #33415c;
+}
+
+.pmpc-header-text-container {
+  margin-left: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.pmpc-header-text-container h1 {
+  margin: 0rem;
+  padding: 0rem;
+  margin-bottom: 0.25rem;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 100%;
+  color: #001233;
+}
+
+.pmpc-header-text-container p {
+  margin: 0rem;
+  padding: 0rem;
+
+  font-weight: 500;
+  font-size: 0.625rem;
+  line-height: 0.75rem;
+  color: #0d0f10;
+
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3.75rem;
+}
+
+.pmpc-row-container {
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pmpc-attribute-height {
+  height: 1.4375rem;
+}
+
+.pmpc-row-container h1 {
+  margin: 0rem;
+  padding: 0rem;
+
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 100%;
+  color: #212529;
+}
+
+.pmpc-row-container p {
+  margin: 0rem;
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+
+  border-radius: 0.2875rem;
+  background-color: #e9ecef;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #023e7d;
+}
+
+.pmpc-store-redirect-button {
+  margin: 0rem;
+  padding: 0.25rem 0.375rem 0.25rem 0.25rem;
+  margin-left: 1rem;
+
+  border: none;
+  border-radius: 0.2875rem;
+  background-color: #dee2e6;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pmpc-store-redirect-button p {
+  margin: 0rem;
+  padding: 0rem;
+  margin-left: 0.25rem;
+
+  background-color: #dee2e6;
+
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 100%;
+  color: #0353a4;
+}
+
+.pmpc-vertical-divider {
+  display: inline-block;
+  margin: 0rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  width: 0.0625rem;
+  height: 1.4375rem;
+
+  background-color: #ced4da;
+}
+
+/* START - Dropdown styling */
+
+.pmpc-dropdown-container {
+  margin-left: 0.5rem;
+
+  position: relative;
+}
+
+.pmpc-dropdown-button {
+  margin: 0rem;
+  padding: 0rem;
+  width: 3rem;
+  position: relative;
+
+  border: none;
+  border-radius: 0.2875rem;
+  background-color: #e9ecef;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pmpc-remove-bottom-radius {
+  border-radius: 0.2875rem 0.2875rem 0rem 0rem;
+}
+
+.pmpc-dropdown-button p {
+  margin: 0rem;
+  padding: 0rem;
+  margin-left: 0.5rem;
+
+  vertical-align: center;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #023e7d;
+}
+
+.pmpc-dropdown-button-icon {
+  margin-right: 0.25rem;
+}
+
+.pmpc-dropdown-list {
+  padding: 0rem;
+  margin: 0rem;
+
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 1.4375rem;
+  left: 0rem;
+
+  z-index: 13;
+}
+
+.pmpc-list-option {
+  padding: 0rem;
+  margin: 0rem;
+
+  width: 3rem;
+  background-color: #e9ecef;
+  border: none;
+  height: 1.4375rem;
+
+  vertical-align: middle;
+  text-align: center;
+  line-height: 1.4375rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #023e7d;
+}
+
+.pmpc-list-option:last-child {
+  border-radius: 0rem 0rem 0.2875rem 0.2875rem;
+}
+
+.pmpc-dropdown-shadow {
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.pmpc-selected-option {
+  background-color: #023e7d;
+  color: #e9ecef;
+}
+
+/* END - Dropdown styling */
+
+.pmpc-colour-row-container {
+  margin-top: 0.125rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.pmpc-colour-row-container::-webkit-scrollbar {
+  display: none;
+}
+
+.pmpc-colour-option-container {
+  margin-right: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pmpc-colour-option-border {
+  width: 2rem;
+  height: 2rem;
+
+  border-radius: 1rem;
+  border: 0.0625rem solid #ced4da;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pmpc-colour-option-border-selected {
+  border-color: #0466c8;
+}
+
+.pmpc-colour-option-colour {
+  width: 1.625rem;
+  height: 1.625rem;
+
+  border-radius: 0.8125rem;
+}
+
+.pmpc-colour-option-text {
+  margin: 0rem;
+  padding: 0rem;
+  margin-top: 0.25rem;
+  width: 2.5rem;
+
+  text-align: center;
+  font-weight: 400;
+  font-size: 0.625rem;
+  color: #212529;
+
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  line-height: 0.75rem;
+  max-height: 0.75rem;
+}
+
+.pmpc-colour-option-text-selected {
+  color: #0466c8;
+}
+
+.pmpc-horizontal-divider {
+  margin: 1rem;
+  height: 0.0625rem;
+
+  background-color: #ced4da;
+}
+
+.pmpc-categories {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pmpc-attribute-container {
+  margin-left: 0.5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.5rem;
+
+  border-radius: 0.2875rem;
+  background-color: #e9ecef;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pmpc-attribute-container p {
+  margin: 0rem;
+  padding: 0rem;
+  margin-left: 0.25rem;
+
+  border-radius: 0rem;
+  background-color: none;
+
+  vertical-align: center;
+}
+
+.pmpc-button-row-container {
+  margin: 0rem 1rem 1rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pmpc-button {
+  height: 2rem;
+  width: calc(92vw - 3rem);
+
+  border-radius: 0.3875rem;
+  border: none;
+  background-color: #0353a4;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.pmpc-button p {
+  margin: 0rem;
+  padding: 0rem;
+  margin-left: 0.25rem;
+
+  text-align: center;
+  vertical-align: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #f8f9fa;
+}
+
+.pmpc-go-back-button {
+  margin-right: 1rem;
+  background-color: #023e7d;
+}
+
+.no-b-margin {
+  margin-bottom: 0rem;
+}
