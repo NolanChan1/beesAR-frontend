@@ -416,8 +416,7 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-height").innerHTML =
     selectedProduct.height[selectedProduct.index];
   document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
-  document.getElementById("fpc-price").innerHTML =
-    selectedProduct.price[selectedProduct.index];
+  document.getElementById("fpc-price").innerHTML = selectedProduct.price[selectedProduct.index];
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
   // colour??
   document.getElementById('footer-height').innerText = selectedProduct.height[selectedProduct.index];
@@ -436,6 +435,7 @@ function sunflowerClicked() {
 
 function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
+  document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
     document.getElementsByClassName("product-description")[0].innerHTML =
       selectedProduct.desc.substr(0, 85) + "...";
@@ -454,6 +454,7 @@ function hideExpandedProduct() {
 
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
+  document.getElementById("expand").innerText = "zoom_in_map";
   document.getElementById("product-desc-info").innerText = selectedProduct.desc;
   idx = 0;
   for (el of elements) {
@@ -476,3 +477,21 @@ function hideUnhideProduct() {
 }
 
 function hideUnhideMarker() {}
+
+function rotateSelection () {
+  productViewManager();
+  $('#enter-ar').addClass("hide");
+  $('#rotation-slider-container').removeClass("hide");
+  return false;
+}
+
+function stopRotation () {
+  // Hide/show virtual marker needs to be decided based on whether marker is placed.
+  productViewManager();
+  finishRotation()
+}
+
+function finishRotation () {
+  $('#enter-ar').removeClass('hide');
+  $('#rotation-slider-container').addClass('hide');
+}
