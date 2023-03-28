@@ -346,11 +346,18 @@ function manageProductMenu(e) {
 function productSelected() {
   //selectedProduct = sunflowerProduct;
   selectedProduct = candleProduct;
+  selectedProduct.selectedIndex = 0; // for repeat selections
   document.getElementById("product-name-info").innerText =
     selectedProduct.title;
   document.getElementById("product-desc-info").innerText = selectedProduct.desc;
   setupFunction();
   manageProductMenu();
+}
+
+function undoSelectionOfProduct() {
+  selectedProduct = null;
+  setupFunction();
+  productViewManager();
 }
 
 window.app = new App();
@@ -394,6 +401,7 @@ function setupFunction () {
       defaultProduct.title;
     document.getElementsByClassName("product-description")[0].innerHTML =
       defaultProduct.desc;
+    document.getElementById('open-product-menu').style.display = "";
     document.getElementsByClassName("product-info")[0].style.display = "None";
     document.getElementById("image-selected").style.display = "none";
     document.getElementsByClassName("no-image")[0].style.display = "";
@@ -401,7 +409,7 @@ function setupFunction () {
     document.getElementById("product-name-info").innerHTML =
       selectedProduct.title;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 80) + "...";
+      selectedProduct.desc.substr(0, 120) + "...";
     document.getElementById("open-product-menu").style.display = "None";
     document.getElementById("image-selected").src = selectedProduct.image;
     document.getElementById("image-selected").style.display = "";

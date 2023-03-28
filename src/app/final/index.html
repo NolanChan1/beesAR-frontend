@@ -64,7 +64,7 @@
         <div class="slider-background">
           <input type="range" min="0" max="360" value="0" class="slider" id="rotation-slider" style="margin-top: 1rem;" oninput="document.getElementById('angle').innerHTML = this.value;">
           <div style="display: flex; justify-content: space-between; width:91%; justify-self: center; font-size: 0.75rem; font-weight: 500; color: #0353a4; text-align: center;" id="angle-setup">
-            <div style="display: grid;">
+            <div style="display: grid; text-align: left;">
               <div>|</div>
               <div><span>0&#176;&nbsp;&nbsp;</span></div>
             </div>
@@ -98,7 +98,7 @@
       <div class="selection-control-container" id="selection-panel">
         <div class="selection-control-icons-container" style="display: flex;">
           <!-- icons to close/expand -->
-          <iconify-icon
+          <iconify-icon onclick="undoSelectionOfProduct()"
         icon="ic:baseline-delete"
         width="24"
         inline="true"
