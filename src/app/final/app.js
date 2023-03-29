@@ -346,11 +346,18 @@ function manageProductMenu(e) {
 function productSelected() {
   //selectedProduct = sunflowerProduct;
   selectedProduct = candleProduct;
+  selectedProduct.selectedIndex = 0; // for repeat selections
   document.getElementById("product-name-info").innerText =
     selectedProduct.title;
   document.getElementById("product-desc-info").innerText = selectedProduct.desc;
   setupFunction();
   manageProductMenu();
+}
+
+function undoSelectionOfProduct() {
+  selectedProduct = null;
+  setupFunction();
+  productViewManager();
 }
 
 window.app = new App();
@@ -400,6 +407,7 @@ function setupFunction() {
       defaultProduct.title;
     document.getElementsByClassName("product-description")[0].innerHTML =
       defaultProduct.desc;
+    document.getElementById('open-product-menu').style.display = "";
     document.getElementsByClassName("product-info")[0].style.display = "None";
     document.getElementById("image-selected").style.display = "none";
     document.getElementsByClassName("no-image")[0].style.display = "";
@@ -407,7 +415,7 @@ function setupFunction() {
     document.getElementById("product-name-info").innerHTML =
       selectedProduct.title;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 80) + "...";
+      selectedProduct.desc.substr(0, 120) + "...";
     document.getElementById("open-product-menu").style.display = "None";
     document.getElementById("image-selected").src = selectedProduct.image;
     document.getElementById("image-selected").style.display = "";
@@ -423,8 +431,7 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-height").innerHTML =
     selectedProduct.height[selectedProduct.index];
   document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
-  document.getElementById("fpc-price").innerHTML =
-    selectedProduct.price[selectedProduct.index];
+  document.getElementById("fpc-price").innerHTML = selectedProduct.price[selectedProduct.index];
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
   // colour??
   document.getElementById("footer-height").innerText =
@@ -444,6 +451,7 @@ function sunflowerClicked() {
 
 function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
+  document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
     document.getElementsByClassName("product-description")[0].innerHTML =
       selectedProduct.desc.substr(0, 85) + "...";
@@ -462,6 +470,7 @@ function hideExpandedProduct() {
 
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
+  document.getElementById("expand").innerText = "zoom_in_map";
   document.getElementById("product-desc-info").innerText = selectedProduct.desc;
   idx = 0;
   for (el of elements) {
@@ -484,3 +493,21 @@ function hideUnhideProduct() {
 }
 
 function hideUnhideMarker() {}
+
+function rotateSelection () {
+  productViewManager();
+  $('#enter-ar').addClass("hide");
+  $('#rotation-slider-container').removeClass("hide");
+  return false;
+}
+
+function stopRotation () {
+  // Hide/show virtual marker needs to be decided based on whether marker is placed.
+  productViewManager();
+  finishRotation()
+}
+
+function finishRotation () {
+  $('#enter-ar').removeClass('hide');
+  $('#rotation-slider-container').addClass('hide');
+}
