@@ -17,6 +17,7 @@
  * Query for WebXR support. If there's no support for the `immersive-ar` mode,
  * show an error.
  */
+
 let enteredAR = false;
 let objShow = false;
 let retShow = true;
@@ -314,19 +315,18 @@ function productViewManager(e) {
   isProductMenuOpen = !isProductMenuOpen;
   fixProductMenuIconHeight();
 }
-function productViewManager (e) {
+function productViewManager(e) {
   if (selectedProduct) {
-    if(!isProductMenuOpen) {
-      document.getElementById('expand').innerText = "zoom_in_map";
+    if (!isProductMenuOpen) {
+      document.getElementById("expand").innerText = "zoom_in_map";
       showExpandedProduct();
-    }
-    else if (isProductMenuOpen) {
-      document.getElementById('expand').innerText = "expand_content";
+    } else if (isProductMenuOpen) {
+      document.getElementById("expand").innerText = "expand_content";
       hideExpandedProduct();
     }
     isProductMenuOpen = !isProductMenuOpen;
-    fixProductMenuIconHeight()
-    }
+    fixProductMenuIconHeight();
+  }
 }
 
 function manageProductMenu(e) {
@@ -361,7 +361,10 @@ defaultProduct = new ProductDetails(
   "No product selected...",
   "Select a product by opening the product menu."
 );
-defaultProduct = new ProductDetails("Please select a product to project onto the placed marker", "");
+defaultProduct = new ProductDetails(
+  "Please select a product to project onto the placed marker",
+  ""
+);
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
 sunflowerProduct = new ProductDetails(
@@ -386,8 +389,11 @@ function fixProductMenuIconHeight() {
     value + "px";
 }
 
-function setupFunction () {
-  defaultProduct = new ProductDetails("Please select a product to project onto the placed marker", "");
+function setupFunction() {
+  defaultProduct = new ProductDetails(
+    "Please select a product to project onto the placed marker",
+    ""
+  );
   hideExpandedProduct(); //regular start
   if (selectedProduct == null) {
     document.getElementById("product-name-info").innerHTML =
@@ -412,7 +418,8 @@ function setupFunction () {
 }
 
 function updateProductDetailsOnExpandedCard(idxChange = false) {
-  document.getElementById("pc-price").innerHTML = selectedProduct.price[selectedProduct.index];
+  document.getElementById("pc-price").innerHTML =
+    selectedProduct.price[selectedProduct.index];
   document.getElementById("pc-height").innerHTML =
     selectedProduct.height[selectedProduct.index];
   document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
@@ -420,7 +427,8 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
     selectedProduct.price[selectedProduct.index];
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
   // colour??
-  document.getElementById('footer-height').innerText = selectedProduct.height[selectedProduct.index];
+  document.getElementById("footer-height").innerText =
+    selectedProduct.height[selectedProduct.index];
 }
 
 function changeIndex(value) {

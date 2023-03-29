@@ -125,7 +125,7 @@
   align-items: center;
 }
 
-.pmpc-store-redirect-button p {
+.pmpc-store-redirect-button a {
   margin: 0rem;
   padding: 0rem;
   margin-left: 0.25rem;
@@ -136,6 +136,7 @@
   font-size: 0.75rem;
   line-height: 100%;
   color: #0353a4;
+  text-decoration: none;
 }
 
 .pmpc-vertical-divider {

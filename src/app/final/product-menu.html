@@ -35,6 +35,20 @@
           <p>Select a product</p>
         </div>
       </div>
+
+      <div class="pm-cs-selection">
+        <h2>default-name</h2>
+        <div class="pm-cs-attributes-container">
+          <p class="pm-cs-price">default-price</p>
+          <hr class="pm-cs-divider" />
+          <h3>Height</h3>
+          <p class="pm-cs-height">default-height</p>
+          <hr class="pm-cs-divider" />
+          <h3>Colour</h3>
+          <p class="pm-cs-colour">default-colour</p>
+        </div>
+        <p class="pm-cs-description">default-description</p>
+      </div>
     </div>
   </div>
 
@@ -86,6 +100,110 @@
         <div class="pm-product-row-end-cap"></div>
       </div>
     </div>
+    <div class="pm-horizontal-divider"></div>
+    <div class="dpm-row-container">
+      <div class="dpm-header-container">
+        <h2>Taper Candles</h2>
+        <div class="pm-view-category-button-container">
+          <h3>View Category</h3>
+          <iconify-icon
+            icon="material-symbols:arrow-right-rounded"
+            height="24"
+            inline="true"
+            style="color: #0353a4"
+            class="pm-view-category-arrow"
+          ></iconify-icon>
+        </div>
+      </div>
+      <div class="dpm-product-row-container taper-candles"></div>
+      <div class="pm-product-row-end">
+        <div class="pm-product-row-end-cap"></div>
+        <div class="pm-product-row-end-middle"></div>
+        <div class="pm-product-row-end-cap"></div>
+      </div>
+    </div>
+
+    <div class="pm-horizontal-divider"></div>
+    <div class="dpm-row-container">
+      <div class="dpm-header-container">
+        <h2>Specialty Candles</h2>
+        <div class="pm-view-category-button-container">
+          <h3>View Category</h3>
+          <iconify-icon
+            icon="material-symbols:arrow-right-rounded"
+            height="24"
+            inline="true"
+            style="color: #0353a4"
+            class="pm-view-category-arrow"
+          ></iconify-icon>
+        </div>
+      </div>
+      <div class="dpm-product-row-container specialty-candles"></div>
+      <div class="pm-product-row-end">
+        <div class="pm-product-row-end-cap"></div>
+        <div class="pm-product-row-end-middle"></div>
+        <div class="pm-product-row-end-cap"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spm-container spm-category">
+    <h1>Product Categories</h1>
+    <h2>Candles</h2>
+    <div class="spm-category-buttton-container"></div>
+    <div class="pm-horizontal-divider"></div>
+    <h1>Search Results</h1>
+    <div class="spm-results-container">
+      <div class="spm-noresults-container">
+        <iconify-icon
+          icon="mdi:git-issue"
+          height="128"
+          inline="true"
+          style="color: #6c757d"
+          class="pm-center-align"
+        ></iconify-icon>
+        <p>
+          Please select at least one category from above to search for products
+          by category
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="spm-container spm-name">
+    <h1>Product Search</h1>
+    <div class="spm-row-container">
+      <input
+        type="text"
+        placeholder="Enter product name here"
+        class="spm-search-input"
+      />
+      <iconify-icon
+        icon="ph:x"
+        height="20"
+        inline="true"
+        style="color: #0353a4"
+        class="spm-cancelsearch-button"
+      ></iconify-icon>
+    </div>
+    <button class="spm-search-button">Search</button>
+    <div class="pm-horizontal-divider"></div>
+    <h1>Search Results</h1>
+    <div class="spm-results-container">
+      <div class="spm-noresults-container">
+        <iconify-icon
+          icon="mdi:git-issue"
+          height="128"
+          inline="true"
+          style="color: #6c757d"
+          class="pm-center-align"
+        ></iconify-icon>
+        <p>
+          Please enter some text above and then press the “Search” button to
+          search for products by their name
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -107,29 +225,26 @@
   <div class="pmpc-row-container">
     <h1>Price</h1>
     <p class="pmpc-attribute-height pmpc-price">$0.00</p>
-    <button
-      target="_blank"
-      class="pmpc-store-redirect-button pmpc-attribute-height"
-    >
+    <button class="pmpc-store-redirect-button pmpc-attribute-height">
       <iconify-icon
         icon="mdi:shop"
         height="15"
         inline="true"
         style="color: #0353a4"
       ></iconify-icon>
-      <p>Open Store Page</p>
+      <a target="_blank">Open Store Page</a>
     </button>
   </div>
   <div class="pmpc-row-container">
     <h1>Height</h1>
-    <p class="pmpc-attribute-height pmpc-height">0"</p>
+    <p class="pmpc-attribute-height pmpc-height pmpc-single-height">0"</p>
     <div class="pmpc-dropdown-container">
       <button
         aria-haspopup="listbox"
         aria-labelledby="dropdown-label"
         class="pmpc-dropdown-button pmpc-attribute-height"
       >
-        <p>0"</p>
+        <p class="pmpc-height">0"</p>
         <iconify-icon
           icon="mdi:chevron-up"
           flip="vertical"
