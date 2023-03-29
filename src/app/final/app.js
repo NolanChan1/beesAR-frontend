@@ -825,6 +825,8 @@ function updatePMPC() {
 
     pmcsProduct = pmpcProduct;
     updatePMCS();
+
+    // CODE TO UPDATE PRODUCT CARD HERE
   });
 
   // Make PMPC visible
