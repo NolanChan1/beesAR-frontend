@@ -692,6 +692,10 @@ function setupPM() {
   });
 }
 
+export { setupPM };
+
+/*
 $(document).ready(function () {
   setupPM();
 });
+*/
