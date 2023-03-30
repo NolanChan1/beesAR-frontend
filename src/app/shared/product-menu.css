@@ -560,15 +560,22 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 
-  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-
-  justify-content: center;
 }
 
 .spm-results-container::-webkit-scrollbar {
   display: none;
+}
+
+.spm-category-search {
+  display: flex;
+  justify-content: center;
+}
+
+.spm-name-search {
+  display: flex;
+  justify-content: center;
 }
 
 .spm-noresults-container {

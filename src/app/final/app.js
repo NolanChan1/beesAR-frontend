@@ -518,7 +518,7 @@ function finishRotation() {
 // PRODUCT MENU CODE
 async function fetchCategory(productCategory) {
   let fetchedData;
-  await fetch(`http://54.190.18.140:8080/api/categories/${productCategory}`, {
+  await fetch(`https://beesar-backend.com/api/categories/${productCategory}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -538,7 +538,7 @@ async function fetchCategory(productCategory) {
 
 async function fetchImage(productSKU) {
   let imageLink;
-  await fetch(`http://54.190.18.140:8080/api/product_images/${productSKU}`, {
+  await fetch(`https://beesar-backend.com/api/product_images/${productSKU}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -554,6 +554,52 @@ async function fetchImage(productSKU) {
       console.error("IMAGE FETCH ERROR: ", error);
     });
   return imageLink;
+}
+
+async function fetchCategories() {
+  let fetchResult = [];
+  if (candleCategories[0].selected) {
+    await fetch(`https://beesar-backend.com/api/products`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        fetchResult = fetchResult.concat(data);
+      })
+      .catch((error) => {
+        console.error("PRODUCT FETCH ERROR: ", error);
+      });
+  } else {
+    for (let k = 1; k < candleCategories.length; k++) {
+      if (candleCategories[k].selected) {
+        await fetch(
+          `https://beesar-backend.com/api/categories/${candleCategories[k].reqName}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            fetchResult = fetchResult.concat(data);
+          })
+          .catch((error) => {
+            console.error("PRODUCT FETCH ERROR: ", error);
+          });
+      }
+    }
+  }
+
+  return fetchResult;
 }
 
 // PM dropdown data
@@ -622,42 +668,52 @@ let candleCategories = [
   {
     id: 0,
     name: "All",
+    reqName: "",
     buttonWidth: "2.25rem",
     selected: false,
   },
   {
     id: 1,
     name: "Pillars",
+    reqName: "pillars",
     buttonWidth: "4.5rem",
     selected: false,
   },
   {
     id: 2,
     name: "Specialty",
+    reqName: "specialty",
     buttonWidth: "4.5rem",
     selected: false,
   },
   {
     id: 3,
     name: "Tealights",
+    reqName: "tealights",
     buttonWidth: "4.5rem",
     selected: false,
   },
   {
     id: 4,
     name: "Tapers",
+    reqName: "tapers",
     buttonWidth: "4.5rem",
     selected: false,
   },
   {
     id: 5,
     name: "Votives",
+    reqName: "votives",
     buttonWidth: "4.5rem",
     selected: false,
   },
 ];
 
+let pmCategorySearchResults = [];
+
 // PM Name Search data
+
+let pmNameSearchResults = [];
 
 function updatePMDropdownStyles() {
   if (menuDropdownOpen) {
@@ -909,6 +965,78 @@ function setupCategorySearchPM() {
           candleCategories[i].selected = !candleCategories[i].selected;
         }
         updateCategoryButtons();
+
+        let fetchRes = fetchCategories();
+        fetchRes.then((fetchedData) => {
+          console.log(fetchedData);
+          pmCategorySearchResults = fetchedData;
+
+          $(".spm-category-search").empty();
+          if (pmCategorySearchResults.length > 0) {
+            $(".spm-nocategory-search").css("display", "none");
+            $(".spm-category-search").css("justify-content", "flex-start");
+
+            let pmOption =
+              '<div class="pm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+
+            $.each(pmCategorySearchResults, function (m, data) {
+              $(".spm-category-search").append(pmOption);
+              console.log(data);
+              let imageLink = fetchImage(data.Product_SKU);
+              imageLink.then((link) => {
+                $(
+                  ".spm-category-search div:nth-child(" + (m + 1) + ") img"
+                ).attr("src", link);
+              });
+              $(".spm-category-search div:nth-child(" + (m + 1) + ") h3").html(
+                data.Name
+              );
+
+              // Handle on click event - Setup PMPC
+              $(".spm-category-search div:nth-child(" + (m + 1) + ")").on(
+                "click",
+                function () {
+                  heightIndex = 0;
+                  colourIndex = 0;
+
+                  pmpcProduct.productSKU = data.Product_SKU;
+                  pmpcProduct.imageLink = $(
+                    ".spm-category-search div:nth-child(" + (m + 1) + ") img"
+                  ).attr("src");
+                  pmpcProduct.name = data.Name;
+                  pmpcProduct.description = data.Description;
+                  pmpcProduct.prices = data.Price;
+                  pmpcProduct.selectedPrice = pmpcProduct.prices[heightIndex];
+                  pmpcProduct.storeLink = data["Product Page Link"];
+                  pmpcProduct.heights = data.Dimensions.Height;
+                  pmpcProduct.selectedHeight = pmpcProduct.heights[heightIndex];
+                  if ("Color Options" in data) {
+                    pmpcProduct.colours = data["Color Options"];
+                    pmpcProduct.selectedColour =
+                      pmpcProduct.colours[colourIndex];
+                  } else {
+                    pmpcProduct.colours = [];
+                    pmpcProduct.selectedColour = { name: "", hexcode: "" };
+                  }
+                  pmpcProduct.categories = data.Category;
+                  if ("Diameter" in data.Dimensions) {
+                    pmpcProduct.diameter = data.Dimensions.Diameter;
+                  } else {
+                    pmpcProduct.diameter = -1;
+                  }
+
+                  updatePMPC();
+                }
+              );
+            });
+            let newArr = $(".spm-category-search div").toArray();
+            console.log(newArr);
+          } else {
+            $(".spm-nocategory-search").css("display", "flex");
+            $(".spm-category-search").css("justify-content", "center");
+            console.log("TEST");
+          }
+        });
       }
     );
   });
