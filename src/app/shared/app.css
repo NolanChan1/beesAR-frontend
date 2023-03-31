@@ -354,12 +354,28 @@ body.ar.stabilized #stabilization {
   width: 30px;
 }
 
-.colours {
+/* .colours {
   display: flex;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
+} */
+.colours {
+  margin-top: 0.125rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+.colours::-webkit-scrollbar {
+  display: none;
+}
 .colour-template.selected {
   border: 1px solid white;
   box-shadow: 0 0 0 1px #023e7d;

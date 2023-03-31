@@ -285,22 +285,42 @@ class App {
 displayValues = Array(6);
 class ProductDetails {
   constructor(
-    n,
-    d,
-    p = ["-"],
-    h = ["-"],
-    c = ["-"],
-    imglink = "",
-    storelink = ""
+    productSKU = -1,
+    imageLink = "",
+    name = "",
+    description = "",
+    prices = [],
+    selectedPrice = -1,
+    storeLink = "",
+    heights = [],
+    selectedHeight = -1,
+    colours = [],
+    selectedColour = { name: "", hexcode: "" },
+    categories = [],
+    diameter = -1,
   ) {
-    this.title = n;
-    this.price = p;
-    this.height = h;
-    this.colour = c;
-    this.desc = d;
-    this.image = imglink;
-    this.index = 0;
-    this.storelink = storelink;
+    // this.title = n;
+    // this.price = p;
+    // this.height = h;
+    // this.colour = c;
+    // this.desc = d;
+    // this.image = imglink;
+    // this.index = 0;
+    // this.storelink = storelink;
+
+    this.productSKU = productSKU;
+    this.imageLink = imageLink;
+    this.name = name;
+    this.description = description;
+    this.prices = prices;
+    this.selectedPrice = selectedPrice;
+    this.storeLink = storeLink;
+    this.heights = heights;
+    this.selectedHeight = selectedHeight;
+    this.colours = colours;
+    this.selectedColour = selectedColour;
+    this.categories = categories;
+    this.diameter = diameter;
   }
 }
 
@@ -345,15 +365,29 @@ function manageProductMenu(e) {
   isMenuOpen = !isMenuOpen;
 }
 
-function productSelected() {
+function productSelected(currentSelection) { //refactoring done
   //selectedProduct = sunflowerProduct;
-  selectedProduct = candleProduct;
-  selectedProduct.selectedIndex = 0; // for repeat selections
+  // selectedProduct = candleProduct;
+  selectedProduct = new ProductDetails(
+    currentSelection.productSKU,
+    currentSelection.imageLink,
+    currentSelection.name,
+    currentSelection.description,
+    currentSelection.prices,
+    currentSelection.selectedPrice,
+    currentSelection.storeLink,
+    currentSelection.heights,
+    currentSelection.selectedHeight,
+    currentSelection.colours,
+    currentSelection.selectedColour,
+    currentSelection.categories,
+    currentSelection.diameter);
+  // selectedProduct.selectedIndex = 0; // for repeat selections
   document.getElementById("product-name-info").innerText =
-    selectedProduct.title;
-  document.getElementById("product-desc-info").innerText = selectedProduct.desc;
+    selectedProduct.name;
+  document.getElementById("product-desc-info").innerText = selectedProduct.description;
   setupFunction();
-  manageProductMenu();
+  // manageProductMenu();
 }
 
 function undoSelectionOfProduct() {
@@ -366,13 +400,8 @@ window.app = new App();
 selectedProduct = null; //assume product class
 productHidden = false;
 markerHidden = false;
-defaultProduct = new ProductDetails(
-  "No product selected...",
-  "Select a product by opening the product menu."
-);
-defaultProduct = new ProductDetails(
-  "Please select a product to project onto the placed marker",
-  ""
+defaultProduct = new ProductDetails( -1, "",
+  "Please select a product to project onto the placed marker"
 );
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
@@ -398,28 +427,86 @@ function fixProductMenuIconHeight() {
     value + "px";
 }
 
+function updateColourRows () {
+  $(".pmpc-colour-row-container").empty();
+  if (selectedProduct.colours.length > 0) {
+    $("#fpc-colour").html(pmpcProduct.selectedColour.name);
+
+    let pmpcColourOption =
+      '<div class="pmpc-colour-option-container"><div class="pmpc-colour-option-border"><div class="pmpc-colour-option-colour"></div></div><h1 class="pmpc-colour-option-text">default-colour</h1></div>';
+    $.each(selectedProduct.colours, function (j, pmpcOption) {
+      $(".colours").append(pmpcColourOption);
+
+      if (j === colourIndex) {
+        $(".colours div:nth-child(" + (j + 1) + ")")
+          .children(".pmpc-colour-option-border")
+          .addClass("pmpc-colour-option-border-selected");
+        $(
+          ".colours div:nth-child(" + (j + 1) + ") h1"
+        ).addClass("pmpc-colour-option-text-selected");
+      }
+
+      $(".colours div:nth-child(" + (j + 1) + ")")
+        .children(".pmpc-colour-option-border")
+        .children()
+        .css("background-color", pmpcOption.hexcode);
+      $(".colours div:nth-child(" + (j + 1) + ") h1").html(
+        pmpcOption.name
+      );
+
+      $(".colours div:nth-child(" + (j + 1) + ")").on(
+        "click",
+        function () {
+          colourIndex = j;
+          selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
+
+          $("#pc-colour").html(selectedProduct.selectedColour.name);
+          $('#fpc-colour').html(selectedProduct.selectedColour.name);
+          $(".pmpc-colour-option-border-selected").removeClass(
+            "pmpc-colour-option-border-selected"
+          );
+          $(".pmpc-colour-option-text-selected").removeClass(
+            "pmpc-colour-option-text-selected"
+          );
+          $(
+            ".colours div:nth-child(" +
+              (colourIndex + 1) +
+              ")"
+          )
+            .children(".pmpc-colour-option-border")
+            .addClass("pmpc-colour-option-border-selected");
+          $(
+            ".colours div:nth-child(" +
+              (colourIndex + 1) +
+              ") h1"
+          ).addClass("pmpc-colour-option-text-selected");
+        }
+      );
+    });
+  }
+}
+
 function setupFunction() {
-  defaultProduct = new ProductDetails(
-    "Please select a product to project onto the placed marker",
-    ""
-  );
+  // defaultProduct = new ProductDetails( -1, "",
+  // "Please select a product to project onto the placed marker"
+  // );
   hideExpandedProduct(); //regular start
   if (selectedProduct == null) {
     document.getElementById("product-name-info").innerHTML =
-      defaultProduct.title;
+      defaultProduct.name;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      defaultProduct.desc;
+      defaultProduct.description;
     document.getElementById("open-product-menu").style.display = "";
     document.getElementsByClassName("product-info")[0].style.display = "None";
     document.getElementById("image-selected").style.display = "none";
     document.getElementsByClassName("no-image")[0].style.display = "";
   } else {
     document.getElementById("product-name-info").innerHTML =
-      selectedProduct.title;
+      selectedProduct.name;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 120) + "...";
+      selectedProduct.description.substr(0, 120) + "...";
     document.getElementById("open-product-menu").style.display = "None";
-    document.getElementById("image-selected").src = selectedProduct.image;
+    document.getElementById("image-selected").src = selectedProduct.imageLink;
     document.getElementById("image-selected").style.display = "";
     document.getElementsByClassName("no-image")[0].style.display = "none";
     updateProductDetailsOnExpandedCard();
@@ -429,21 +516,27 @@ function setupFunction() {
 
 function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-price").innerHTML =
-    selectedProduct.price[selectedProduct.index];
+    "$" + selectedProduct.selectedPrice + ".00"; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
-    selectedProduct.height[selectedProduct.index];
-  document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
+    selectedProduct.selectedHeight + "\"";
+  document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour;
   document.getElementById("fpc-price").innerHTML =
-    selectedProduct.price[selectedProduct.index];
-  if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
-  // colour??
+    "$" + selectedProduct.selectedPrice + ".00";
+  if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
+  // colour
+  if (selectedProduct.colours.length > 0)
+    updateColourRows();
+  else 
+  $('#fpc-colour').html("No colour options")
+
   document.getElementById("footer-height").innerText =
-    selectedProduct.height[selectedProduct.index];
+    selectedProduct.selectedHeight;
 }
 
 function changeIndex(value) {
   //tracks height and price
-  selectedProduct.index = value.selectedIndex;
+  selectedProduct.selectedPrice = selectedProduct.prices[value.selectedIndex];
+  selectedProduct.selectedHeight = selectedProduct.heights[value.selectedIndex];
   // change price
   updateProductDetailsOnExpandedCard(true);
 }
@@ -457,7 +550,7 @@ function hideExpandedProduct() {
   document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 85) + "...";
+      selectedProduct.description.substr(0, 85) + "...";
   }
   idx = 0;
   for (el of elements) {
@@ -474,7 +567,7 @@ function hideExpandedProduct() {
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "zoom_in_map";
-  document.getElementById("product-desc-info").innerText = selectedProduct.desc;
+  document.getElementById("product-desc-info").innerText = selectedProduct.description;
   idx = 0;
   for (el of elements) {
     el.style.display = "";
@@ -518,7 +611,7 @@ function finishRotation() {
 // PRODUCT MENU CODE
 async function fetchCategory(productCategory) {
   let fetchedData;
-  await fetch(`http://54.190.18.140:8080/api/categories/${productCategory}`, {
+  await fetch(`https://beesar-backend.com/api/categories/${productCategory}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -538,7 +631,7 @@ async function fetchCategory(productCategory) {
 
 async function fetchImage(productSKU) {
   let imageLink;
-  await fetch(`http://54.190.18.140:8080/api/product_images/${productSKU}`, {
+  await fetch(`https://beesar-backend.com/api/product_images/${productSKU}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -827,6 +920,7 @@ function updatePMPC() {
     updatePMCS();
 
     // CODE TO UPDATE PRODUCT CARD HERE
+    productSelected(pmcsProduct);
   });
 
   // Make PMPC visible
