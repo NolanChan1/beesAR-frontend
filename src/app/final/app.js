@@ -324,18 +324,18 @@ class ProductDetails {
   }
 }
 
-function productViewManager(e) {
-  if (!isProductMenuOpen) {
-    document.getElementById("expand").innerText = "zoom_in_map";
-    showExpandedProduct();
-  } else {
-    document.getElementById("expand").innerText = "expand_content";
-    hideExpandedProduct();
-  }
-  isProductMenuOpen = !isProductMenuOpen;
-  fixProductMenuIconHeight();
-}
-/*
+// function productViewManager(e) {
+//   if (!isProductMenuOpen) {
+//     document.getElementById("expand").innerText = "zoom_in_map";
+//     showExpandedProduct();
+//   } else {
+//     document.getElementById("expand").innerText = "expand_content";
+//     hideExpandedProduct();
+//   }
+//   isProductMenuOpen = !isProductMenuOpen;
+//   fixProductMenuIconHeight();
+// }
+
 function productViewManager(e) {
   if (selectedProduct) {
     if (!isProductMenuOpen) {
@@ -349,7 +349,7 @@ function productViewManager(e) {
     fixProductMenuIconHeight();
   }
 }
-*/
+
 
 function manageProductMenu(e) {
   if (isMenuOpen) {
@@ -393,7 +393,22 @@ function productSelected(currentSelection) { //refactoring done
 function undoSelectionOfProduct() {
   selectedProduct = null;
   setupFunction();
-  productViewManager();
+  productViewManager(); 
+  pmcsProduct = {
+    productSKU: -1,
+    imageLink: "",
+    name: "",
+    description: "",
+    prices: [],
+    selectedPrice: -1,
+    storeLink: "",
+    heights: [],
+    selectedHeight: -1,
+    colours: [],
+    selectedColour: { name: "", hexcode: "" },
+    categories: [],
+    diameter: -1 }
+    updatePMCS();
 }
 
 window.app = new App();
@@ -405,22 +420,22 @@ defaultProduct = new ProductDetails( -1, "",
 );
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
-sunflowerProduct = new ProductDetails(
-  "Sunflower",
-  "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!",
-  ["$25.00"],
-  ['8"'],
-  ["Yellow"],
-  "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg"
-);
-candleProduct = new ProductDetails(
-  "Solid Beeswax Pillar Candle",
-  "Made from 100% Alberta beeswax, our pillar candles are hand poured and show off the beautiful natural colouring of the wax. As they burn, the lovely, subtle scent of beeswax is released.",
-  ["$20.00", "$31.00", "$42.00", "$53.00"],
-  ['3"', '5"', '7"', '9"'],
-  ["Stuart"],
-  "https://i.imgur.com/kPO7HXN.jpg"
-);
+// sunflowerProduct = new ProductDetails(
+//   "Sunflower",
+//   "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!",
+//   ["$25.00"],
+//   ['8"'],
+//   ["Yellow"],
+//   "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg"
+// );
+// candleProduct = new ProductDetails(
+//   "Solid Beeswax Pillar Candle",
+//   "Made from 100% Alberta beeswax, our pillar candles are hand poured and show off the beautiful natural colouring of the wax. As they burn, the lovely, subtle scent of beeswax is released.",
+//   ["$20.00", "$31.00", "$42.00", "$53.00"],
+//   ['3"', '5"', '7"', '9"'],
+//   ["Stuart"],
+//   "https://i.imgur.com/kPO7HXN.jpg"
+// );
 function fixProductMenuIconHeight() {
   value = document.getElementById("selection-panel").offsetHeight;
   document.getElementById("product-menu-icon-container").style.bottom =
@@ -519,7 +534,7 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
     "$" + selectedProduct.selectedPrice + ".00"; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
     selectedProduct.selectedHeight + "\"";
-  document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour;
+  document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour.name;
   document.getElementById("fpc-price").innerHTML =
     "$" + selectedProduct.selectedPrice + ".00";
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
@@ -527,10 +542,15 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   if (selectedProduct.colours.length > 0)
     updateColourRows();
   else 
-  $('#fpc-colour').html("No colour options")
+    $('#fpc-colour').html("No colour options");
 
-  document.getElementById("footer-height").innerText =
-    selectedProduct.selectedHeight;
+  $('#category-container > .value-p').remove();
+  selectedProduct.categories.forEach(category => {
+    $('#category-container').append(`<span class="value-p">${category}</span>`)
+  })
+  
+
+  document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
 }
 
 function changeIndex(value) {
