@@ -572,7 +572,7 @@ async function fetchCategories() {
         fetchResult = fetchResult.concat(data);
       })
       .catch((error) => {
-        console.error("PRODUCT FETCH ERROR: ", error);
+        console.error("ALL PRODUCT FETCH ERROR: ", error);
       });
   } else {
     for (let k = 1; k < candleCategories.length; k++) {
@@ -593,11 +593,34 @@ async function fetchCategories() {
             fetchResult = fetchResult.concat(data);
           })
           .catch((error) => {
-            console.error("PRODUCT FETCH ERROR: ", error);
+            console.error("CATEGORIZED PRODUCT FETCH ERROR: ", error);
           });
       }
     }
   }
+
+  return fetchResult;
+}
+
+async function fetchByName(searchTerm) {
+  const fetchURI = `https://beesar-backend.com/api/products/name/${searchTerm}`;
+  let fetchResult = [];
+
+  await fetch(encodeURI(fetchURI), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      fetchResult = data;
+    })
+    .catch((error) => {
+      console.error("NAMED PRODUCT FETCH ERROR: ", error);
+    });
 
   return fetchResult;
 }
@@ -713,6 +736,7 @@ let pmCategorySearchResults = [];
 
 // PM Name Search data
 
+let pmNameSearchTerm = "";
 let pmNameSearchResults = [];
 
 function updatePMDropdownStyles() {
@@ -968,20 +992,19 @@ function setupCategorySearchPM() {
 
         let fetchRes = fetchCategories();
         fetchRes.then((fetchedData) => {
-          console.log(fetchedData);
           pmCategorySearchResults = fetchedData;
 
           $(".spm-category-search").empty();
           if (pmCategorySearchResults.length > 0) {
             $(".spm-nocategory-search").css("display", "none");
-            $(".spm-category-search").css("justify-content", "flex-start");
+            $(".spm-category-search").css("display", "flex");
 
             let pmOption =
-              '<div class="pm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+              '<div class="pm-product-container spm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
             $.each(pmCategorySearchResults, function (m, data) {
               $(".spm-category-search").append(pmOption);
-              console.log(data);
+
               let imageLink = fetchImage(data.Product_SKU);
               imageLink.then((link) => {
                 $(
@@ -1029,12 +1052,9 @@ function setupCategorySearchPM() {
                 }
               );
             });
-            let newArr = $(".spm-category-search div").toArray();
-            console.log(newArr);
           } else {
             $(".spm-nocategory-search").css("display", "flex");
-            $(".spm-category-search").css("justify-content", "center");
-            console.log("TEST");
+            $(".spm-category-search").css("display", "none");
           }
         });
       }
@@ -1044,7 +1064,99 @@ function setupCategorySearchPM() {
   updateCategoryButtons();
 }
 
-function setupNameSearchPM() {}
+function updateNameSearchPM() {
+  if (pmNameSearchTerm.length > 0) {
+    $(".spm-cancelsearch-button").css("display", "block");
+  } else {
+    $(".spm-cancelsearch-button").css("display", "none");
+  }
+}
+
+function setupNameSearchPM() {
+  updateNameSearchPM();
+  $(".spm-search-input").keyup(function (val) {
+    pmNameSearchTerm = val.target.value;
+
+    updateNameSearchPM();
+  });
+
+  $(".spm-cancelsearch-button").on("click", function () {
+    $(".spm-search-input").val("");
+    pmNameSearchTerm = "";
+
+    updateNameSearchPM();
+  });
+
+  $(".spm-search-button").on("click", function () {
+    let fetchRes = fetchByName(pmNameSearchTerm);
+    fetchRes.then((fetchedData) => {
+      pmNameSearchResults = fetchedData;
+
+      $(".spm-name-search").empty();
+      if (pmNameSearchResults.length > 0) {
+        $(".spm-noname-search").css("display", "none");
+        $(".spm-name-search").css("display", "flex");
+
+        let pmOption =
+          '<div class="pm-product-container spm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+
+        $.each(pmNameSearchResults, function (m, data) {
+          $(".spm-name-search").append(pmOption);
+
+          let imageLink = fetchImage(data.Product_SKU);
+          imageLink.then((link) => {
+            $(".spm-name-search div:nth-child(" + (m + 1) + ") img").attr(
+              "src",
+              link
+            );
+          });
+          $(".spm-name-search div:nth-child(" + (m + 1) + ") h3").html(
+            data.Name
+          );
+
+          // Handle on click event - Setup PMPC
+          $(".spm-name-search div:nth-child(" + (m + 1) + ")").on(
+            "click",
+            function () {
+              heightIndex = 0;
+              colourIndex = 0;
+
+              pmpcProduct.productSKU = data.Product_SKU;
+              pmpcProduct.imageLink = $(
+                ".spm-name-search div:nth-child(" + (m + 1) + ") img"
+              ).attr("src");
+              pmpcProduct.name = data.Name;
+              pmpcProduct.description = data.Description;
+              pmpcProduct.prices = data.Price;
+              pmpcProduct.selectedPrice = pmpcProduct.prices[heightIndex];
+              pmpcProduct.storeLink = data["Product Page Link"];
+              pmpcProduct.heights = data.Dimensions.Height;
+              pmpcProduct.selectedHeight = pmpcProduct.heights[heightIndex];
+              if ("Color Options" in data) {
+                pmpcProduct.colours = data["Color Options"];
+                pmpcProduct.selectedColour = pmpcProduct.colours[colourIndex];
+              } else {
+                pmpcProduct.colours = [];
+                pmpcProduct.selectedColour = { name: "", hexcode: "" };
+              }
+              pmpcProduct.categories = data.Category;
+              if ("Diameter" in data.Dimensions) {
+                pmpcProduct.diameter = data.Dimensions.Diameter;
+              } else {
+                pmpcProduct.diameter = -1;
+              }
+
+              updatePMPC();
+            }
+          );
+        });
+      } else {
+        $(".spm-noname-search").css("display", "flex");
+        $(".spm-name-search").css("display", "none");
+      }
+    });
+  });
+}
 
 function setupPM() {
   $(document).ready(function () {
@@ -1221,7 +1333,6 @@ function setupPM() {
             updatePMPC();
           }
         );
-        console.log(data);
       });
     });
 
@@ -1275,7 +1386,6 @@ function setupPM() {
             updatePMPC();
           }
         );
-        //console.log(data);
       });
     });
 
@@ -1331,7 +1441,6 @@ function setupPM() {
             updatePMPC();
           }
         );
-        //console.log(data);
       });
     });
 
