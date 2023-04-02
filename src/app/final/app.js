@@ -1581,4 +1581,24 @@ function setupPM() {
   });
 }
 
+function setupHP() {
+  $(document).ready(function () {
+    $(".hm-wrapper").load(
+      "help-menu.html",
+      function (responseTxt, statusTxt, xhr) {
+        if (statusTxt == "success") {
+          console.log("SUCCESSFULLY LOADED HELP MENU");
+        } else if (statusTxt == "error") {
+          console.log("ERROR LOADING HELP MENU: " + xhr.statusText);
+        }
+      }
+    );
+
+    $(".open-hm-button").on("click", function () {
+      $(".hm-container").animate({ left: 0 });
+    });
+  });
+}
+
 setupPM();
+setupHP();
