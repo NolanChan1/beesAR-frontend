@@ -325,13 +325,15 @@ class ProductDetails {
 }
 
 function manageHeightDropdown (data) {
-  if ($('#height-menu > .material-symbols-outlined').text() == "expand_more") {
-    $('#height-menu > .material-symbols-outlined').html('expand_less');
-    $('#height-menu-dropdown').css('display','block')
-  }
-  else {
-    $('#height-menu > .material-symbols-outlined').html('expand_more');
-    $('#height-menu-dropdown').css('display','none')
+  if (selectedProduct.heights.length > 1) {
+    if ($('#height-menu > .material-symbols-outlined').text() == "expand_more") {
+      $('#height-menu > .material-symbols-outlined').html('expand_less');
+      $('#height-menu-dropdown').css('display','block')
+    }
+    else {
+      $('#height-menu > .material-symbols-outlined').html('expand_more');
+      $('#height-menu-dropdown').css('display','none')
+    }
   }
 }
 
@@ -557,6 +559,9 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
 
     $('#height-menu-dropdown').empty()
     $('.height-text').text(selectedProduct.selectedHeight + '"')
+    $('#height-menu > .material-symbols-outlined').removeClass('hide');
+    if (selectedProduct.heights.length <= 1)
+      $('#height-menu > .material-symbols-outlined').addClass('hide');
     selectedProduct.heights.forEach((height, index) => {
       if(height != selectedProduct.selectedHeight)
         $('#height-menu-dropdown').append(`<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`)
@@ -570,6 +575,12 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   
 
   document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
+  if (selectedProduct.diameter != -1) {
+    $('.footer-width-text').text(selectedProduct.diameter)
+    $('.footer-width').removeClass('hide')
+  }
+  else 
+    $('.footer-width').addClass('hide');
 }
 
 function changeIndex(node) {
