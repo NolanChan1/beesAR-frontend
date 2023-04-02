@@ -147,14 +147,22 @@
                 style="color: #0353a4;"
               ></iconify-icon>Open on Store Page</span></a updated>
             </div>
-            <div class="show-for-fpc" style="padding: 5px;margin-left: 1rem;">
+            <div class="show-for-fpc" style="display: flex; align-items: center; padding: 5px; margin-left: 1rem;">
               <span class="ht"><b>Height</b></span>
-              <select class="form-select height-form" aria-label=".form-select" onchange="changeIndex(this)">
+              <div class="dropdown" style="display:inline-block;">
+                <span class="value-p" onclick="manageHeightDropdown(this)" id="height-menu" style="display: flex; align-items: center; width: 2.9rem;" data-toggle="dropdown"><span class="height-text">10</span><span class="material-symbols-outlined">expand_more</span></span>
+                <ul class="dropdown-menu" id="height-menu-dropdown" role="menu" style="width: 2.8rem; --bs-dropdown-min-width: 2.9rem; --bs-dropdown-padding-y: 0;">
+                  <li role="presentation" role="option">HTML</li>
+                  <li role="presentation" role="option">CSS</li>
+                </ul>
+              </div>
+              <!-- <select class="form-select height-form" aria-label=".form-select" onchange="changeIndex(this)">
                 <option selected value="0">3"</option>
                 <option value="1">5"</option>
                 <option value="2">7"</option>
                 <option value="3">9"</option>
-              </select>
+              </select> -->
+
               <span class="colour" style="margin-left: 2rem;"><b>Colour</b></span>
               <span class="colour-value value-p" id="fpc-colour">Stuart</span>
             </div>
@@ -185,9 +193,9 @@
               <hr class="show-for-fpc" style="width: 91%; margin: 8px 0px; justify-self: left;">
               <div class="flex-row" id="category-container" style="margin-top: 1rem">
                   <span class="category"><b>Categories</b></span>
-                  <span class="value-p" style="margin-right: .5rem;">Candles</span>
+                  <!-- <span class="value-p" style="margin-right: .5rem;">Candles</span>
                   <span class="value-p" style="margin-right: .5rem;">Pillars</span>
-                  <span class="value-p">Products</span>
+                  <span class="value-p">Products</span> -->
                 </div>
               <div class="flex-row" style="margin: 0.1rem 0; padding: 0.5rem 0px">
                 <span ><b>Sizing</b></span>

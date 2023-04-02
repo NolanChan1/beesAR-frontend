@@ -324,6 +324,17 @@ class ProductDetails {
   }
 }
 
+function manageHeightDropdown (data) {
+  if ($('#height-menu > .material-symbols-outlined').text() == "expand_more") {
+    $('#height-menu > .material-symbols-outlined').html('expand_less');
+    $('#height-menu-dropdown').css('display','block')
+  }
+  else {
+    $('#height-menu > .material-symbols-outlined').html('expand_more');
+    $('#height-menu-dropdown').css('display','none')
+  }
+}
+
 // function productViewManager(e) {
 //   if (!isProductMenuOpen) {
 //     document.getElementById("expand").innerText = "zoom_in_map";
@@ -443,7 +454,6 @@ function fixProductMenuIconHeight() {
 }
 
 function updateColourRows () {
-  $(".pmpc-colour-row-container").empty();
   if (selectedProduct.colours.length > 0) {
     $("#fpc-colour").html(pmpcProduct.selectedColour.name);
 
@@ -539,11 +549,20 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
     "$" + selectedProduct.selectedPrice + ".00";
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
   // colour
+  $(".colours").empty();
   if (selectedProduct.colours.length > 0)
     updateColourRows();
   else 
     $('#fpc-colour').html("No colour options");
 
+    $('#height-menu-dropdown').empty()
+    $('.height-text').text(selectedProduct.selectedHeight + '"')
+    selectedProduct.heights.forEach((height, index) => {
+      if(height != selectedProduct.selectedHeight)
+        $('#height-menu-dropdown').append(`<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`)
+        else 
+        $('#height-menu-dropdown').append(`<li class='value-p height-selected' role='option' onclick='changeIndex(this)'>${height}"</li>`)
+    }) 
   $('#category-container > .value-p').remove();
   selectedProduct.categories.forEach(category => {
     $('#category-container').append(`<span class="value-p">${category}</span>`)
@@ -553,11 +572,12 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
 }
 
-function changeIndex(value) {
+function changeIndex(node) {
   //tracks height and price
-  selectedProduct.selectedPrice = selectedProduct.prices[value.selectedIndex];
-  selectedProduct.selectedHeight = selectedProduct.heights[value.selectedIndex];
+  selectedProduct.selectedHeight = parseInt(node.innerText.slice(0,-1));
+  selectedProduct.selectedPrice = selectedProduct.prices[selectedProduct.heights.indexOf(selectedProduct.selectedHeight)]
   // change price
+  manageHeightDropdown(); //close it after height selection
   updateProductDetailsOnExpandedCard(true);
 }
 
@@ -569,8 +589,8 @@ function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
-    document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.description.substr(0, 85) + "...";
+    document.getElementsByClassName("product-description")[0].innerHTML = selectedProduct.description.length > 103 ?
+      selectedProduct.description.substr(0, 103) + "..." : selectedProduct.description;
   }
   idx = 0;
   for (el of elements) {
