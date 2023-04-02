@@ -285,37 +285,70 @@ class App {
 displayValues = Array(6);
 class ProductDetails {
   constructor(
-    n,
-    d,
-    p = ["-"],
-    h = ["-"],
-    c = ["-"],
-    imglink = "",
-    storelink = ""
+    productSKU = -1,
+    imageLink = "",
+    name = "",
+    description = "",
+    prices = [],
+    selectedPrice = -1,
+    storeLink = "",
+    heights = [],
+    selectedHeight = -1,
+    colours = [],
+    selectedColour = { name: "", hexcode: "" },
+    categories = [],
+    diameter = -1,
   ) {
-    this.title = n;
-    this.price = p;
-    this.height = h;
-    this.colour = c;
-    this.desc = d;
-    this.image = imglink;
-    this.index = 0;
-    this.storelink = storelink;
+    // this.title = n;
+    // this.price = p;
+    // this.height = h;
+    // this.colour = c;
+    // this.desc = d;
+    // this.image = imglink;
+    // this.index = 0;
+    // this.storelink = storelink;
+
+    this.productSKU = productSKU;
+    this.imageLink = imageLink;
+    this.name = name;
+    this.description = description;
+    this.prices = prices;
+    this.selectedPrice = selectedPrice;
+    this.storeLink = storeLink;
+    this.heights = heights;
+    this.selectedHeight = selectedHeight;
+    this.colours = colours;
+    this.selectedColour = selectedColour;
+    this.categories = categories;
+    this.diameter = diameter;
   }
 }
 
-function productViewManager(e) {
-  if (!isProductMenuOpen) {
-    document.getElementById("expand").innerText = "zoom_in_map";
-    showExpandedProduct();
-  } else {
-    document.getElementById("expand").innerText = "expand_content";
-    hideExpandedProduct();
+function manageHeightDropdown (data) {
+  if (selectedProduct.heights.length > 1) {
+    if ($('#height-menu > .material-symbols-outlined').text() == "expand_more") {
+      $('#height-menu > .material-symbols-outlined').html('expand_less');
+      $('#height-menu-dropdown').css('display','block')
+    }
+    else {
+      $('#height-menu > .material-symbols-outlined').html('expand_more');
+      $('#height-menu-dropdown').css('display','none')
+    }
   }
-  isProductMenuOpen = !isProductMenuOpen;
-  fixProductMenuIconHeight();
 }
-/*
+
+// function productViewManager(e) {
+//   if (!isProductMenuOpen) {
+//     document.getElementById("expand").innerText = "zoom_in_map";
+//     showExpandedProduct();
+//   } else {
+//     document.getElementById("expand").innerText = "expand_content";
+//     hideExpandedProduct();
+//   }
+//   isProductMenuOpen = !isProductMenuOpen;
+//   fixProductMenuIconHeight();
+// }
+
 function productViewManager(e) {
   if (selectedProduct) {
     if (!isProductMenuOpen) {
@@ -329,7 +362,7 @@ function productViewManager(e) {
     fixProductMenuIconHeight();
   }
 }
-*/
+
 
 function manageProductMenu(e) {
   if (isMenuOpen) {
@@ -345,81 +378,162 @@ function manageProductMenu(e) {
   isMenuOpen = !isMenuOpen;
 }
 
-function productSelected() {
+function productSelected(currentSelection) { //refactoring done
   //selectedProduct = sunflowerProduct;
-  selectedProduct = candleProduct;
-  selectedProduct.selectedIndex = 0; // for repeat selections
+  // selectedProduct = candleProduct;
+  selectedProduct = new ProductDetails(
+    currentSelection.productSKU,
+    currentSelection.imageLink,
+    currentSelection.name,
+    currentSelection.description,
+    currentSelection.prices,
+    currentSelection.selectedPrice,
+    currentSelection.storeLink,
+    currentSelection.heights,
+    currentSelection.selectedHeight,
+    currentSelection.colours,
+    currentSelection.selectedColour,
+    currentSelection.categories,
+    currentSelection.diameter);
+  // selectedProduct.selectedIndex = 0; // for repeat selections
   document.getElementById("product-name-info").innerText =
-    selectedProduct.title;
-  document.getElementById("product-desc-info").innerText = selectedProduct.desc;
+    selectedProduct.name;
+  document.getElementById("product-desc-info").innerText = selectedProduct.description;
   setupFunction();
-  manageProductMenu();
+  // manageProductMenu();
 }
 
 function undoSelectionOfProduct() {
   selectedProduct = null;
   setupFunction();
-  productViewManager();
+  productViewManager(); 
+  pmcsProduct = {
+    productSKU: -1,
+    imageLink: "",
+    name: "",
+    description: "",
+    prices: [],
+    selectedPrice: -1,
+    storeLink: "",
+    heights: [],
+    selectedHeight: -1,
+    colours: [],
+    selectedColour: { name: "", hexcode: "" },
+    categories: [],
+    diameter: -1 }
+    updatePMCS();
 }
 
 window.app = new App();
 selectedProduct = null; //assume product class
 productHidden = false;
 markerHidden = false;
-defaultProduct = new ProductDetails(
-  "No product selected...",
-  "Select a product by opening the product menu."
-);
-defaultProduct = new ProductDetails(
-  "Please select a product to project onto the placed marker",
-  ""
+defaultProduct = new ProductDetails( -1, "",
+  "Please select a product to project onto the placed marker"
 );
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
 isMenuOpen = false;
-sunflowerProduct = new ProductDetails(
-  "Sunflower",
-  "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!",
-  ["$25.00"],
-  ['8"'],
-  ["Yellow"],
-  "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg"
-);
-candleProduct = new ProductDetails(
-  "Solid Beeswax Pillar Candle",
-  "Made from 100% Alberta beeswax, our pillar candles are hand poured and show off the beautiful natural colouring of the wax. As they burn, the lovely, subtle scent of beeswax is released.",
-  ["$20.00", "$31.00", "$42.00", "$53.00"],
-  ['3"', '5"', '7"', '9"'],
-  ["Stuart"],
-  "https://i.imgur.com/kPO7HXN.jpg"
-);
+// sunflowerProduct = new ProductDetails(
+//   "Sunflower",
+//   "A regular synthetic sunflower that can point in any direction rather than always pointing towards the sun!",
+//   ["$25.00"],
+//   ['8"'],
+//   ["Yellow"],
+//   "https://upload.wikimedia.org/wikipedia/commons/4/40/Sunflower_sky_backdrop.jpg"
+// );
+// candleProduct = new ProductDetails(
+//   "Solid Beeswax Pillar Candle",
+//   "Made from 100% Alberta beeswax, our pillar candles are hand poured and show off the beautiful natural colouring of the wax. As they burn, the lovely, subtle scent of beeswax is released.",
+//   ["$20.00", "$31.00", "$42.00", "$53.00"],
+//   ['3"', '5"', '7"', '9"'],
+//   ["Stuart"],
+//   "https://i.imgur.com/kPO7HXN.jpg"
+// );
 function fixProductMenuIconHeight() {
   value = document.getElementById("selection-panel").offsetHeight;
   document.getElementById("product-menu-icon-container").style.bottom =
     value + "px";
 }
 
+function updateColourRows () {
+  if (selectedProduct.colours.length > 0) {
+    $("#fpc-colour").html(pmpcProduct.selectedColour.name);
+
+    let pmpcColourOption =
+      '<div class="pmpc-colour-option-container"><div class="pmpc-colour-option-border"><div class="pmpc-colour-option-colour"></div></div><h1 class="pmpc-colour-option-text">default-colour</h1></div>';
+    $.each(selectedProduct.colours, function (j, pmpcOption) {
+      $(".colours").append(pmpcColourOption);
+
+      if (j === colourIndex) {
+        $(".colours div:nth-child(" + (j + 1) + ")")
+          .children(".pmpc-colour-option-border")
+          .addClass("pmpc-colour-option-border-selected");
+        $(
+          ".colours div:nth-child(" + (j + 1) + ") h1"
+        ).addClass("pmpc-colour-option-text-selected");
+      }
+
+      $(".colours div:nth-child(" + (j + 1) + ")")
+        .children(".pmpc-colour-option-border")
+        .children()
+        .css("background-color", pmpcOption.hexcode);
+      $(".colours div:nth-child(" + (j + 1) + ") h1").html(
+        pmpcOption.name
+      );
+
+      $(".colours div:nth-child(" + (j + 1) + ")").on(
+        "click",
+        function () {
+          colourIndex = j;
+          selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
+
+          $("#pc-colour").html(selectedProduct.selectedColour.name);
+          $('#fpc-colour').html(selectedProduct.selectedColour.name);
+          $(".pmpc-colour-option-border-selected").removeClass(
+            "pmpc-colour-option-border-selected"
+          );
+          $(".pmpc-colour-option-text-selected").removeClass(
+            "pmpc-colour-option-text-selected"
+          );
+          $(
+            ".colours div:nth-child(" +
+              (colourIndex + 1) +
+              ")"
+          )
+            .children(".pmpc-colour-option-border")
+            .addClass("pmpc-colour-option-border-selected");
+          $(
+            ".colours div:nth-child(" +
+              (colourIndex + 1) +
+              ") h1"
+          ).addClass("pmpc-colour-option-text-selected");
+        }
+      );
+    });
+  }
+}
+
 function setupFunction() {
-  defaultProduct = new ProductDetails(
-    "Please select a product to project onto the placed marker",
-    ""
-  );
+  // defaultProduct = new ProductDetails( -1, "",
+  // "Please select a product to project onto the placed marker"
+  // );
   hideExpandedProduct(); //regular start
   if (selectedProduct == null) {
     document.getElementById("product-name-info").innerHTML =
-      defaultProduct.title;
+      defaultProduct.name;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      defaultProduct.desc;
+      defaultProduct.description;
     document.getElementById("open-product-menu").style.display = "";
     document.getElementsByClassName("product-info")[0].style.display = "None";
     document.getElementById("image-selected").style.display = "none";
     document.getElementsByClassName("no-image")[0].style.display = "";
   } else {
     document.getElementById("product-name-info").innerHTML =
-      selectedProduct.title;
+      selectedProduct.name;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 120) + "...";
+      selectedProduct.description.substr(0, 120) + "...";
     document.getElementById("open-product-menu").style.display = "None";
-    document.getElementById("image-selected").src = selectedProduct.image;
+    document.getElementById("image-selected").src = selectedProduct.imageLink;
     document.getElementById("image-selected").style.display = "";
     document.getElementsByClassName("no-image")[0].style.display = "none";
     updateProductDetailsOnExpandedCard();
@@ -429,22 +543,52 @@ function setupFunction() {
 
 function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-price").innerHTML =
-    selectedProduct.price[selectedProduct.index];
+    "$" + selectedProduct.selectedPrice + ".00"; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
-    selectedProduct.height[selectedProduct.index];
-  document.getElementById("pc-colour").innerHTML = selectedProduct.colour[0];
+    selectedProduct.selectedHeight + "\"";
+  document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour.name;
   document.getElementById("fpc-price").innerHTML =
-    selectedProduct.price[selectedProduct.index];
-  if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storelink);
-  // colour??
-  document.getElementById("footer-height").innerText =
-    selectedProduct.height[selectedProduct.index];
+    "$" + selectedProduct.selectedPrice + ".00";
+  if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
+  // colour
+  $(".colours").empty();
+  if (selectedProduct.colours.length > 0)
+    updateColourRows();
+  else 
+    $('#fpc-colour').html("No colour options");
+
+    $('#height-menu-dropdown').empty()
+    $('.height-text').text(selectedProduct.selectedHeight + '"')
+    $('#height-menu > .material-symbols-outlined').removeClass('hide');
+    if (selectedProduct.heights.length <= 1)
+      $('#height-menu > .material-symbols-outlined').addClass('hide');
+    selectedProduct.heights.forEach((height, index) => {
+      if(height != selectedProduct.selectedHeight)
+        $('#height-menu-dropdown').append(`<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`)
+        else 
+        $('#height-menu-dropdown').append(`<li class='value-p height-selected' role='option' onclick='changeIndex(this)'>${height}"</li>`)
+    }) 
+  $('#category-container > .value-p').remove();
+  selectedProduct.categories.forEach(category => {
+    $('#category-container').append(`<span class="value-p">${category}</span>`)
+  })
+  
+
+  document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
+  if (selectedProduct.diameter != -1) {
+    $('.footer-width-text').text(selectedProduct.diameter)
+    $('.footer-width').removeClass('hide')
+  }
+  else 
+    $('.footer-width').addClass('hide');
 }
 
-function changeIndex(value) {
+function changeIndex(node) {
   //tracks height and price
-  selectedProduct.index = value.selectedIndex;
+  selectedProduct.selectedHeight = parseInt(node.innerText.slice(0,-1));
+  selectedProduct.selectedPrice = selectedProduct.prices[selectedProduct.heights.indexOf(selectedProduct.selectedHeight)]
   // change price
+  manageHeightDropdown(); //close it after height selection
   updateProductDetailsOnExpandedCard(true);
 }
 
@@ -456,8 +600,8 @@ function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
-    document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.desc.substr(0, 85) + "...";
+    document.getElementsByClassName("product-description")[0].innerHTML = selectedProduct.description.length > 103 ?
+      selectedProduct.description.substr(0, 103) + "..." : selectedProduct.description;
   }
   idx = 0;
   for (el of elements) {
@@ -474,7 +618,7 @@ function hideExpandedProduct() {
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "zoom_in_map";
-  document.getElementById("product-desc-info").innerText = selectedProduct.desc;
+  document.getElementById("product-desc-info").innerText = selectedProduct.description;
   idx = 0;
   for (el of elements) {
     el.style.display = "";
@@ -907,6 +1051,7 @@ function updatePMPC() {
     updatePMCS();
 
     // CODE TO UPDATE PRODUCT CARD HERE
+    productSelected(pmcsProduct);
   });
 
   // Make PMPC visible
