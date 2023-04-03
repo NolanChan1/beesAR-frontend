@@ -568,6 +568,7 @@ function undoSelectionOfProduct() {
 }
 
 window.app = new App();
+listenersAdded = false;
 selectedProduct = null; //assume product class
 productHidden = false;
 markerHidden = false;
@@ -657,9 +658,14 @@ function updateColourRows () {
 }
 
 function setupFunction() {
-  // defaultProduct = new ProductDetails( -1, "",
-  // "Please select a product to project onto the placed marker"
-  // );
+  if (!listenersAdded) {
+    listenersAdded = true;
+    $('#product-modal-button').on('click', function (evn) {
+      if(selectedProduct != null) {
+        $('#ProductModal').modal('show');
+      }
+    });
+  }
   hideExpandedProduct(); //regular start
   if (selectedProduct == null) {
     document.getElementById("product-name-info").innerHTML =
