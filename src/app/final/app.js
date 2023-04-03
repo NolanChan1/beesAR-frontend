@@ -614,8 +614,7 @@ function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
-    document.getElementsByClassName("product-description")[0].innerHTML = selectedProduct.description.length > 103 ?
-      selectedProduct.description.substr(0, 103) + "..." : selectedProduct.description;
+    $('#product-desc-info').addClass('collapsed-card')
   }
   idx = 0;
   for (el of elements) {
@@ -632,7 +631,8 @@ function hideExpandedProduct() {
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "zoom_in_map";
-  document.getElementById("product-desc-info").innerText = selectedProduct.description;
+  // document.getElementById("product-desc-info").innerText = selectedProduct.description;
+  $('#product-desc-info').removeClass('collapsed-card')
   idx = 0;
   for (el of elements) {
     el.style.display = "";

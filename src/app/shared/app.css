@@ -138,6 +138,9 @@ body.ar.stabilized #stabilization {
   margin-top: 0.2rem;
   font-size: 0.6875rem;
   line-height: 0.75rem;
+}
+
+.product-description.collapsed-card {
   text-overflow: ellipsis;
   word-wrap: break-word;
   overflow: hidden;
