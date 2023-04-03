@@ -276,6 +276,9 @@ body.ar.stabilized #stabilization {
   background-color: #023e7d;
   color: white;
 }
+.value-p.value-p-clickable {
+  color:#0353a4;
+}
 
 .height-form {
   width: fit-content;

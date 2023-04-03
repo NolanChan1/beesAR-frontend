@@ -584,7 +584,7 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
 
   document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
   if (selectedProduct.diameter != -1) {
-    $('.footer-width-text').text(selectedProduct.diameter)
+    $('.footer-width-text').text(selectedProduct.diameter + '"')
     $('.footer-width').removeClass('hide')
   }
   else 
