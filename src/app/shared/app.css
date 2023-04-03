@@ -521,3 +521,25 @@ body.ar.stabilized #stabilization {
   font-family: "Inter";
   line-height: 0.91rem;
 }
+
+.custom-modal {
+  text-align: center;
+  justify-content: center;
+}
+
+.custom-modal .modal-content {
+  border-radius: 2rem;
+}
+
+.modal-header {
+  justify-content: center;
+}
+.modal-footer {
+  justify-content: center;
+  flex-wrap:nowrap;
+}
+
+.transparent-button {
+  background-color: #fff;
+  border: white;
+}
