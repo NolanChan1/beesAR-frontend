@@ -269,3 +269,31 @@
 .remove-bottom-margin {
   margin-bottom: 0rem;
 }
+
+/* Temporary screenshot feature styles */
+.close-screenshot-button {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  width: 100vw;
+
+  background-color: #f8f9fa;
+  opacity: 0.5;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0rem;
+  bottom: 0rem;
+}
+
+.close-screenshot-button p {
+  margin: 0rem;
+  padding: 0rem;
+  margin-left: 0.5rem;
+
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: #0466c8;
+}

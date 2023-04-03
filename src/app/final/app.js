@@ -1598,6 +1598,17 @@ function setupHP() {
       $(".hm-container").animate({ left: 0 });
     });
   });
+
+  // Setup temp screenshot feature
+  $(".close-screenshot-button").hide();
+  $(".open-screenshot-button").on("click", function () {
+    $(".app-UI").hide();
+    $(".close-screenshot-button").show();
+  });
+  $(".close-screenshot-button").on("click", function () {
+    $(".app-UI").show();
+    $(".close-screenshot-button").hide();
+  });
 }
 
 setupPM();
