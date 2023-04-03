@@ -138,6 +138,10 @@ body.ar.stabilized #stabilization {
   margin-top: 0.2rem;
   font-size: 0.6875rem;
   line-height: 0.75rem;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 1.5rem;
 }
 
 .h6-modified {

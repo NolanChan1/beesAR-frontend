@@ -545,7 +545,7 @@ function setupFunction() {
     document.getElementById("product-name-info").innerHTML =
       selectedProduct.name;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.description.substr(0, 120) + "...";
+      selectedProduct.description;
     document.getElementById("open-product-menu").style.display = "None";
     document.getElementById("image-selected").src = selectedProduct.imageLink;
     document.getElementById("image-selected").style.display = "";
