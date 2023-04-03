@@ -69,6 +69,7 @@ class App {
     this.current_obj = null;
     this.colour = { name: "", hexcode: "" };
     this.colourOption = false;
+    this.changeCol = false;
   }
 
   /**
@@ -158,6 +159,21 @@ class App {
   };
 
 
+  swapColour = () => {    
+    if(this.colourOption == true) {
+      console.log("swapping colour");
+      const model = this.current_obj;
+      //apply colour
+      console.log("colour options available. colour chosen: " + this.colour.hexcode);
+     // let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
+      model.traverse((o) => {
+        if(o.isMesh) {
+          o.material.color.set(this.colour.hexcode);
+          console.log("changed colour to: " + this.colour.name);
+        }
+      });
+    }
+  }
 
   placeModel = (model) => {
   //  if(this.current_obj != model) {
@@ -165,7 +181,7 @@ class App {
       if(this.colourOption == true) {
         //apply colour
         console.log("colour options available. colour chosen: " + this.colour.hexcode);
-        let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
+       // let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
         model.traverse((o) => {
           if(o.isMesh) {
             o.material.color.set(this.colour.hexcode);
@@ -218,7 +234,7 @@ class App {
   };
 
   rotateModel = () => {
-    if (window.sunflower) {
+    if (this.current_obj) {
       this.current_obj.rotation.y += 0.7;
       console.log("rotated");
     }
@@ -436,21 +452,39 @@ function manageProductMenu(e) {
   isMenuOpen = !isMenuOpen;
 }
 
-function productSelected(currentSelection) { //refactoring done
-  //selectedProduct = sunflowerProduct;
-  // selectedProduct = candleProduct;
+//parameters: sku and selectedColour hexcode
+function swapProducts(selected, colour) {
   const cur = window.app.current_obj;
-  if(cur !== null && window.app.scene.children.length > 4) {
+  let changeCol = false;
+  if(window.app.selected == selected) { //same model
+    //look for colour change 
+    if(window.app.colourOption == true && 
+      window.app.colour.hexcode != colour) {
+        changeCol = true;
+        //window.app.swapColour(cur);
+        //swap colours
+
+      }
+  }
+
+  window.app.changeCol = changeCol;
+
+  //remove object when the model is currently displayed
+  //and when changing models (different SKUs)
+  if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
     //remove the currently selected product from scene
     //this will be the last element in the scene.children array
     //there's 5 elements when a object gets added. 
-    console.log("Removing Previous Object")
-    
+    console.log("Removing Previous Object")   
     let remove_obj = window.app.scene.children[4]; 
     window.app.scene.remove(remove_obj);
    // window.app.current_obj = null;
   }
+}
 
+function productSelected(currentSelection) { //refactoring done
+  //selectedProduct = sunflowerProduct;
+  // selectedProduct = candleProduct;
   selectedProduct = new ProductDetails(
     currentSelection.productSKU,
     currentSelection.imageLink,
@@ -477,6 +511,8 @@ function productSelected(currentSelection) { //refactoring done
   //   {
   //     window.app.selected = selectedProduct.productSKU;
   //   }
+
+  swapProducts(selectedProduct.productSKU, selectedProduct.selectedColour.hexcode);
   window.app.selected = selectedProduct.productSKU;  
   if(selectedProduct.colours.length == 0) {
     console.log("colourOption=false")
@@ -490,6 +526,10 @@ function productSelected(currentSelection) { //refactoring done
       window.app.colour = selectedProduct.colours[0];
       console.log("default colour: " + window.app.colour.name);
     }
+  }
+
+  if(window.app.changeCol == true) {
+    window.app.swapColour();
   }
 
   document.getElementById("product-name-info").innerText =
