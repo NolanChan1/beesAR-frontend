@@ -216,12 +216,12 @@ class App {
         console.log("3″ Rolled Beeswax Pillar Candle placed");
         break; 
       case 634:
-        //this.placeModel(window.candle[634]);
-        console.log("too much");
-        //console.log("Rolled Mini Taper Beeswax Candle placed");
+        this.placeModel(window.candle[634]);
+        //console.log("too much");
+        console.log("Rolled Mini Taper Beeswax Candle placed");
         break;               
       default:
-        if(this.selected != null) {
+        if(this.selected == null) {
           console.log("Nothing was selected");
         } else {
           this.placeModel(window.sunflower);
@@ -232,6 +232,12 @@ class App {
 
     console.log("scene children array length: " + this.scene.children.length);
   };
+
+  sliderRotate = (slider) => {
+    console.log("rotating object.");
+    const angle = slider.value * Math.PI / 180;
+    this.current_obj.rotation.y = angle;
+  }
 
   rotateModel = () => {
     if (this.current_obj) {
@@ -782,6 +788,10 @@ function rotateSelection() {
   productViewManager();
   $("#enter-ar").addClass("hide");
   $("#rotation-slider-container").removeClass("hide");
+  const slider = document.getElementById("rotation-slider");
+  slider.addEventListener('input', function() {
+    window.app.sliderRotate(slider);
+  });
   return false;
 }
 
