@@ -396,7 +396,7 @@
         <div class="dpm-row-container">
           <div class="dpm-header-container">
             <h2>Pillar Candles</h2>
-            <div class="pm-view-category-button-container">
+            <div class="pm-view-category-button-container pm-vc-pillar">
               <h3>View Category</h3>
               <iconify-icon
                 icon="material-symbols:arrow-right-rounded"
@@ -418,7 +418,7 @@
         <div class="dpm-row-container">
           <div class="dpm-header-container">
             <h2>Taper Candles</h2>
-            <div class="pm-view-category-button-container">
+            <div class="pm-view-category-button-container pm-vc-taper">
               <h3>View Category</h3>
               <iconify-icon
                 icon="material-symbols:arrow-right-rounded"
@@ -441,7 +441,7 @@
         <div class="dpm-row-container">
           <div class="dpm-header-container">
             <h2>Specialty Candles</h2>
-            <div class="pm-view-category-button-container">
+            <div class="pm-view-category-button-container pm-vc-specialty">
               <h3>View Category</h3>
               <iconify-icon
                 icon="material-symbols:arrow-right-rounded"
@@ -467,20 +467,18 @@
         <div class="spm-category-buttton-container"></div>
         <div class="pm-horizontal-divider"></div>
         <h1>Search Results</h1>
-        <div class="spm-results-container">
-          <div class="spm-noresults-container">
-            <iconify-icon
-              icon="mdi:git-issue"
-              height="128"
-              inline="true"
-              style="color: #6c757d"
-              class="pm-center-align"
-            ></iconify-icon>
-            <p>
-              Please select at least one category from above to search for products
-              by category
-            </p>
-          </div>
+        <div class="spm-results-container spm-category-search"></div>
+        <div class="spm-noresults-container spm-nocategory-search">
+          <iconify-icon
+            icon="mdi:git-issue"
+            height="128"
+            inline="true"
+            style="color: #6c757d"
+            class="pm-center-align"
+          ></iconify-icon>
+          <p>
+            There are no products that match the selected categories
+          </p>
         </div>
       </div>
     
@@ -503,20 +501,18 @@
         <button class="spm-search-button">Search</button>
         <div class="pm-horizontal-divider"></div>
         <h1>Search Results</h1>
-        <div class="spm-results-container">
-          <div class="spm-noresults-container">
-            <iconify-icon
-              icon="mdi:git-issue"
-              height="128"
-              inline="true"
-              style="color: #6c757d"
-              class="pm-center-align"
-            ></iconify-icon>
-            <p>
-              Please enter some text above and then press the “Search” button to
-              search for products by their name
-            </p>
-          </div>
+        <div class="spm-results-container spm-name-search"></div>
+        <div class="spm-noresults-container spm-noname-search">
+          <iconify-icon
+            icon="mdi:git-issue"
+            height="128"
+            inline="true"
+            style="color: #6c757d"
+            class="pm-center-align"
+          ></iconify-icon>
+          <p>
+            There are no products that match the specified search term
+          </p>
         </div>
       </div>
     </div>
