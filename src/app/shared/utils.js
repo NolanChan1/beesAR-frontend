@@ -14,6 +14,11 @@
  */
 
 window.gltfLoader = new THREE.GLTFLoader();
+const dracoLoader = new THREE.DRACOLoader();
+dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+dracoLoader.preload();
+window.gltfLoader.setDRACOLoader( dracoLoader );
+
 /**
  * The Reticle class creates an object that repeatedly calls
  * `xrSession.requestHitTest()` to render a ring along a found
@@ -35,6 +40,7 @@ window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf
   const flower = gltf.scene.children.find(c => c.name === 'sunflower')
   flower.castShadow = true;
   window.sunflower = gltf.scene;
+  console.log("sunflower loaded!");
 });
 
 
@@ -126,4 +132,48 @@ window.DemoUtils = {
  */
 function onNoXRDevice() {
   document.body.classList.add('unsupported');
+}
+
+fetchProduct = async (productSKU) => {
+  let imageLink;
+  await fetch(`http://54.190.18.140:8080/api/gltf/${productSKU}`, {
+    method: "GET",
+    headers: {
+      "Access-Control-Allow-Origin": "http://127.0.0.1:5500",
+      "Access-Control-Allow-Methods": "GET",
+      "Access-Control-Allow-Headers": "Content-Type",      
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    console.log("img link parsed - " + productSKU);
+    return response.text();    
+  }).then((data) => {
+    imageLink = data;
+    console.log("img link retrieved - " + productSKU);
+  }).catch((err) => {
+    console.log("error: fetchImage - " + productSKU, err);
+  });
+
+  return imageLink;
+}
+
+loadProducts = async () => {
+  window.candle = {2015: null, 644: null, 629: null, 634: null};
+  let skuIDs = [2015, 644, 629]; //634
+  for(const id of skuIDs) {
+    console.log(`loading product: ` + id);
+    let imgLink = fetchProduct(id);
+    imgLink.then((link) => {
+        console.log("image link (in loadProducts): " + link);    
+        window.gltfLoader.load(link, (gltf) => {
+        //window.api = gltf.scene;
+        window.candle[id] = gltf.scene;
+        console.log("loaded product: " + id);
+      });
+    }).catch((err) => {
+        console.log("Could not load product: " + id);
+        console.log("Image Loading Error.  " + err);
+    });
+  }
+
 }

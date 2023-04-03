@@ -28,9 +28,11 @@ let placed = false;
     navigator.xr.isSessionSupported &&
     (await navigator.xr.isSessionSupported("immersive-ar"));
   if (isArSessionSupported) {
+    loadProducts();
     document
       .getElementById("enter-ar")
       .addEventListener("click", window.app.activateXR);
+      
   } else {
     onNoXRDevice();
   }
@@ -60,6 +62,15 @@ const capture = async () => {
  * and handle rendering on every frame.
  */
 class App {
+
+
+  constructor() {
+    this.selected = null;
+    this.current_obj = null;
+    this.colour = { name: "", hexcode: "" };
+    this.colourOption = false;
+  }
+
   /**
    * Run when the Start AR button is pressed.
    */
@@ -103,8 +114,9 @@ class App {
   onSessionStarted = async () => {
     // Add the `ar` class to our body, which will hide our 2D components
     document.body.classList.add("ar");
-    const element = document.getElementById("enter-ar");
-    element.remove();
+    const elementAR = document.getElementById("enter-ar");
+    //element.remove();
+    elementAR.style.display = "none"; 
     document.getElementById("btn-place").style.display = "unset";
 
     // To help with working with 3D on the web, we'll use three.js.
@@ -129,7 +141,7 @@ class App {
     //make it same css as the removed btn
     document.getElementById("btn-place").addEventListener("click", (e) => {
       this.arPlace();
-      console.log("button clicked");
+      console.log("Place product button clicked");
     });
 
     document.getElementById("btn-rotate").addEventListener("click", (e) => {
@@ -145,31 +157,69 @@ class App {
     // this.xrSession.addEventListener("select", this.onSelect);
   };
 
-  /** Place a sunflower when the screen is tapped. */
-  // onSelect = () => {
-  //   if (window.sunflower) {
-  //     const clone = window.sunflower.clone();
-  //     clone.position.copy(this.reticle.position);
-  //     this.scene.add(clone)
 
-  //     const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-  //     shadowMesh.position.y = clone.position.y;
-  //   }
-  // }
 
-  arPlace = () => {
-    if (window.sunflower && this.reticle.visible) {
-      window.sunflower.position.setFromMatrixPosition(this.reticle.matrix);
-      window.sunflower.visible = true;
-      this.scene.add(window.sunflower);
+  placeModel = (model) => {
+  //  if(this.current_obj != model) {
+      this.current_obj = model;
+      if(this.colourOption == true) {
+        //apply colour
+        console.log("colour options available. colour chosen: " + this.colour.hexcode);
+        let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
+        model.traverse((o) => {
+          if(o.isMesh) {
+            o.material.color.set(this.colour.hexcode);
+            console.log("changed colour to: " + this.colour.name);
+          }
+        });
+      }
+  //  }
+
+    if (model && this.reticle.visible) {
+      model.position.setFromMatrixPosition(this.reticle.matrix);
+      model.visible = true;
+      this.scene.add(model);
       objShow = true;
       placed = true;
+    } 
+  }
+
+  arPlace = () => {
+
+    switch(this.selected) {
+      case 2015:
+        this.placeModel(window.candle[2015]);
+        console.log("3″ Solid Beeswax Pillar Candle placed");
+        break;
+      case 644:
+        this.placeModel(window.candle[644]);
+        console.log("Beehive Rolled Beeswax Candle placed");
+        break;  
+      case 629: 
+        this.placeModel(window.candle[629]);
+        console.log("3″ Rolled Beeswax Pillar Candle placed");
+        break; 
+      case 634:
+        //this.placeModel(window.candle[634]);
+        console.log("too much");
+        //console.log("Rolled Mini Taper Beeswax Candle placed");
+        break;               
+      default:
+        if(this.selected != null) {
+          console.log("Nothing was selected");
+        } else {
+          this.placeModel(window.sunflower);
+          console.log("sunflower placed");
+        }
+        
     }
+
+    console.log("scene children array length: " + this.scene.children.length);
   };
 
   rotateModel = () => {
     if (window.sunflower) {
-      window.sunflower.rotation.y += 0.7;
+      this.current_obj.rotation.y += 0.7;
       console.log("rotated");
     }
   };
@@ -177,7 +227,7 @@ class App {
   objToggle = () => {
     if (placed) {
       objShow = !objShow;
-      window.sunflower.visible = objShow;
+      this.current_obj.visible = objShow;
       if (objShow === true) {
         document.getElementById("obj-toggle").innerText = "Hide Product";
       } else if (objShow === false) {
@@ -368,6 +418,18 @@ function manageProductMenu(e) {
 function productSelected(currentSelection) { //refactoring done
   //selectedProduct = sunflowerProduct;
   // selectedProduct = candleProduct;
+  const cur = window.app.current_obj;
+  if(cur !== null && window.app.scene.children.length > 4) {
+    //remove the currently selected product from scene
+    //this will be the last element in the scene.children array
+    //there's 5 elements when a object gets added. 
+    console.log("Removing Previous Object")
+    
+    let remove_obj = window.app.scene.children[4]; 
+    window.app.scene.remove(remove_obj);
+   // window.app.current_obj = null;
+  }
+
   selectedProduct = new ProductDetails(
     currentSelection.productSKU,
     currentSelection.imageLink,
@@ -383,9 +445,36 @@ function productSelected(currentSelection) { //refactoring done
     currentSelection.categories,
     currentSelection.diameter);
   // selectedProduct.selectedIndex = 0; // for repeat selections
+  // if(selectedProduct.productSKU != 2015 ||
+  //   selectedProduct.productSKU != 644 ||
+  //   selectedProduct.productSKU != 629 ||
+  //   selectedProduct.productSKU != 634) 
+  //   {      
+  //     window.app.selected = 0;
+  //   } 
+  // else 
+  //   {
+  //     window.app.selected = selectedProduct.productSKU;
+  //   }
+  window.app.selected = selectedProduct.productSKU;  
+  if(selectedProduct.colours.length == 0) {
+    console.log("colourOption=false")
+    window.app.colourOption = false;
+    window.app.colour = selectedProduct.selectedColour;
+  } else if (selectedProduct.colours.length > 1) {
+    console.log("colourOption=true. ")
+    window.app.colourOption = true;
+    window.app.colour = selectedProduct.selectedColour;
+    if(window.app.colour == null) {
+      window.app.colour = selectedProduct.colours[0];
+      console.log("default colour: " + window.app.colour.name);
+    }
+  }
+
   document.getElementById("product-name-info").innerText =
     selectedProduct.name;
   document.getElementById("product-desc-info").innerText = selectedProduct.description;
+  
   setupFunction();
   // manageProductMenu();
 }
@@ -1160,6 +1249,7 @@ function setupPM() {
             colourIndex = 0;
 
             pmpcProduct.productSKU = data.Product_SKU;
+            console.log("currently selected product: " + pmpcProduct.productSKU);
             pmpcProduct.imageLink = $(
               ".pillar-candles div:nth-child(" + (i + 1) + ") img"
             ).attr("src");
@@ -1183,13 +1273,14 @@ function setupPM() {
             } else {
               pmpcProduct.diameter = -1;
             }
-
             updatePMPC();
           }
         );
         console.log(data);
       });
     });
+
+
 
     // Setup Default PM - Taper Candles
     let taperCandles = fetchCategory("tapers");
@@ -1214,6 +1305,7 @@ function setupPM() {
             colourIndex = 0;
 
             pmpcProduct.productSKU = data.Product_SKU;
+            console.log("currently selected product: " + pmpcProduct.productSKU);
             pmpcProduct.imageLink = $(
               ".taper-candles div:nth-child(" + (i + 1) + ") img"
             ).attr("src");
@@ -1270,6 +1362,7 @@ function setupPM() {
             colourIndex = 0;
 
             pmpcProduct.productSKU = data.Product_SKU;
+            console.log("currently selected product: " + pmpcProduct.productSKU);
             pmpcProduct.imageLink = $(
               ".specialty-candles div:nth-child(" + (i + 1) + ") img"
             ).attr("src");
