@@ -179,9 +179,13 @@ class App {
       objShow = !objShow;
       window.sunflower.visible = objShow;
       if (objShow === true) {
-        document.getElementById("obj-toggle").innerText = "Hide Product";
+        $("#obj-toggle > span").text("Hide Product");
+        $('#obj-toggle > img').attr('src', '../assets/images/hide_projection_blue.png')
+        $('#obj-toggle').removeClass('value-p-highlighted')
       } else if (objShow === false) {
-        document.getElementById("obj-toggle").innerText = "Show Product";
+        $("#obj-toggle > span").text("Show Product");
+        $('#obj-toggle > img').attr('src', '../assets/images/hide_projection_white.png');
+        $('#obj-toggle').addClass('value-p-highlighted');
       }
     }
   };
@@ -190,9 +194,13 @@ class App {
     retShow = !retShow;
     this.reticle.visible = retShow;
     if (retShow === true) {
-      document.getElementById("ret-toggle").innerText = "Hide Marker";
+      $("#ret-toggle > span").text("Hide Marker");
+      $('#ret-toggle > img').attr('src', '../assets/images/hide_virtualmarker_blue.png')
+      $('#ret-toggle').removeClass('value-p-highlighted')
     } else if (retShow === false) {
-      document.getElementById("ret-toggle").innerText = "Show Marker";
+      $("#ret-toggle > span").text("Show Marker");
+      $('#ret-toggle').addClass('value-p-highlighted');
+      $('#ret-toggle > img').attr('src', '../assets/images/hide_virtualmarker_white.png')
     }
   };
 

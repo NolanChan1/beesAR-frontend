@@ -272,6 +272,11 @@ body.ar.stabilized #stabilization {
   text-align: center;
 }
 
+.value-p.value-p-highlighted {
+  background-color: #023e7d;
+  color: white;
+}
+
 .height-form {
   width: fit-content;
   margin: 0;
