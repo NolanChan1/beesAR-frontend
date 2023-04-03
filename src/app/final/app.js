@@ -557,12 +557,12 @@ function setupFunction() {
 
 function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-price").innerHTML =
-    "$" + selectedProduct.selectedPrice + ".00"; //backend should store the decimals
+    "$" + selectedProduct.selectedPrice; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
     selectedProduct.selectedHeight + "\"";
   document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour.name;
   document.getElementById("fpc-price").innerHTML =
-    "$" + selectedProduct.selectedPrice + ".00";
+    "$" + selectedProduct.selectedPrice;
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
   // colour
   $(".colours").empty();
