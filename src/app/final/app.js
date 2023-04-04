@@ -624,10 +624,16 @@ function undoSelectionOfProduct() {
   console.log("deleting");
 
   if (retShow == false) {
-    retToggle();
+    window.app.retToggle();
   }
   if (objShow == false) {
-    objToggle();
+    $("#obj-toggle > span").text("Hide Product");
+    $("#obj-toggle > img").attr(
+      "src",
+      "../assets/images/hide_projection_blue.png"
+    );
+    $("#obj-toggle").removeClass("value-p-highlighted");
+    $('#obj-toggle').addClass('value-p-clickable');
   }
   setupFunction();
   productViewManager();
