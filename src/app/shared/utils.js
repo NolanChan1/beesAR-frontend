@@ -150,7 +150,7 @@ function onNoXRDevice() {
 
 fetchProduct = async (productSKU) => {
   let imageLink;
-  await fetch(`http://54.190.18.140:8080/api/gltf/${productSKU}`, {
+  await fetch(`https://beesar-backend/api/gltf/${productSKU}`, {
     method: "GET",
     headers: {
       "Access-Control-Allow-Origin": "http://127.0.0.1:5500",

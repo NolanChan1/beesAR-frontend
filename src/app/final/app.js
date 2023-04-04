@@ -266,18 +266,18 @@ class App {
         $("#obj-toggle > span").text("Hide Product");
         $("#obj-toggle > img").attr(
           "src",
-          "../assets/images/hide_projection_blue.png"
+          "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/hide_projection_blue.png"
         );
         $("#obj-toggle").removeClass("value-p-highlighted");
-        $('#obj-toggle').addClass('value-p-clickable');
+        $("#obj-toggle").addClass("value-p-clickable");
       } else if (objShow === false) {
         $("#obj-toggle > span").text("Show Product");
         $("#obj-toggle > img").attr(
           "src",
-          "../assets/images/hide_projection_white.png"
+          "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/hide_projection_white.png"
         );
         $("#obj-toggle").addClass("value-p-highlighted");
-        $('#obj-toggle').removeClass('value-p-clickable');
+        $("#obj-toggle").removeClass("value-p-clickable");
       }
     }
   };
@@ -289,17 +289,17 @@ class App {
       $("#ret-toggle > span").text("Hide Marker");
       $("#ret-toggle > img").attr(
         "src",
-        "../assets/images/hide_virtualmarker_blue.png"
+        "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/hide_virtualmarker_blue.png"
       );
       $("#ret-toggle").removeClass("value-p-highlighted");
-      $('#ret-toggle').addClass('value-p-clickable')
+      $("#ret-toggle").addClass("value-p-clickable");
     } else if (retShow === false) {
       $("#ret-toggle > span").text("Show Marker");
       $("#ret-toggle").addClass("value-p-highlighted");
-      $('#ret-toggle').removeClass('value-p-clickable')
+      $("#ret-toggle").removeClass("value-p-clickable");
       $("#ret-toggle > img").attr(
         "src",
-        "../assets/images/hide_virtualmarker_white.png"
+        "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/hide_virtualmarker_white.png"
       );
     }
   };
@@ -630,10 +630,10 @@ function undoSelectionOfProduct() {
     $("#obj-toggle > span").text("Hide Product");
     $("#obj-toggle > img").attr(
       "src",
-      "../assets/images/hide_projection_blue.png"
+      "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/hide_projection_blue.png"
     );
     $("#obj-toggle").removeClass("value-p-highlighted");
-    $('#obj-toggle').addClass('value-p-clickable');
+    $("#obj-toggle").addClass("value-p-clickable");
   }
   setupFunction();
   productViewManager();
@@ -1318,7 +1318,10 @@ function updatePMPC() {
 
 function updatePMCS() {
   if (pmcsProduct.productSKU === -1) {
-    $(".pm-cs-image").attr("src", "../assets/images/no-selection-picture.png");
+    $(".pm-cs-image").attr(
+      "src",
+      "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png"
+    );
     $(".pm-cs-image").css("border-color", "#adb5bd");
 
     $(".pm-cs-noselection").css("display", "block");
@@ -1402,7 +1405,7 @@ function setupCategorySearchPM() {
             $(".spm-category-search").css("display", "flex");
 
             let pmOption =
-              '<div class="pm-product-container spm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+              '<div class="pm-product-container spm-product-container"><img src="https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
             $.each(pmCategorySearchResults, function (m, data) {
               $(".spm-category-search").append(pmOption);
@@ -1530,7 +1533,7 @@ function goToCategorySearch(categoryID) {
       $(".spm-category-search").css("display", "flex");
 
       let pmOption =
-        '<div class="pm-product-container spm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+        '<div class="pm-product-container spm-product-container"><img src="https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
       $.each(pmCategorySearchResults, function (m, data) {
         $(".spm-category-search").append(pmOption);
@@ -1623,7 +1626,7 @@ function setupNameSearchPM() {
         $(".spm-name-search").css("display", "flex");
 
         let pmOption =
-          '<div class="pm-product-container spm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+          '<div class="pm-product-container spm-product-container"><img src="https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
         $.each(pmNameSearchResults, function (m, data) {
           $(".spm-name-search").append(pmOption);
@@ -1806,7 +1809,7 @@ function setupPM() {
     $(selectedMenuType.class).css("display", "block");
 
     let pmOption =
-      '<div class="pm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+      '<div class="pm-product-container"><img src="https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
     // Setup Default PM - Pillar Candles
     let pillarCandles = fetchCategory("pillars");

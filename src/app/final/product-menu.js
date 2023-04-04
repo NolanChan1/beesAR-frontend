@@ -316,7 +316,10 @@ function updatePMPC() {
 
 function updatePMCS() {
   if (pmcsProduct.productSKU === -1) {
-    $(".pm-cs-image").attr("src", "../assets/images/no-selection-picture.png");
+    $(".pm-cs-image").attr(
+      "src",
+      "https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png"
+    );
     $(".pm-cs-image").css("border-color", "#adb5bd");
 
     $(".pm-cs-noselection").css("display", "block");
@@ -521,7 +524,7 @@ function setupPM() {
     $(selectedMenuType.class).css("display", "block");
 
     let pmOption =
-      '<div class="pm-product-container"><img src="../assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
+      '<div class="pm-product-container"><img src="https://beesar-frontend-deployment.s3.us-west-2.amazonaws.com/assets/images/no-selection-picture.png" alt="default-product-image" width="84" height="84" class="pm-product-image"/><h3>default-name</h3></div>';
 
     // Setup Default PM - Pillar Candles
     let pillarCandles = fetchCategory("pillars");
