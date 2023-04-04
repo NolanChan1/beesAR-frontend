@@ -269,6 +269,7 @@ class App {
           "../assets/images/hide_projection_blue.png"
         );
         $("#obj-toggle").removeClass("value-p-highlighted");
+        $('#obj-toggle').addClass('value-p-clickable');
       } else if (objShow === false) {
         $("#obj-toggle > span").text("Show Product");
         $("#obj-toggle > img").attr(
@@ -276,6 +277,7 @@ class App {
           "../assets/images/hide_projection_white.png"
         );
         $("#obj-toggle").addClass("value-p-highlighted");
+        $('#obj-toggle').removeClass('value-p-clickable');
       }
     }
   };
@@ -290,9 +292,11 @@ class App {
         "../assets/images/hide_virtualmarker_blue.png"
       );
       $("#ret-toggle").removeClass("value-p-highlighted");
+      $('#ret-toggle').addClass('value-p-clickable')
     } else if (retShow === false) {
       $("#ret-toggle > span").text("Show Marker");
       $("#ret-toggle").addClass("value-p-highlighted");
+      $('#ret-toggle').removeClass('value-p-clickable')
       $("#ret-toggle > img").attr(
         "src",
         "../assets/images/hide_virtualmarker_white.png"
