@@ -626,6 +626,9 @@ function undoSelectionOfProduct() {
   if (retShow == false) {
     retToggle();
   }
+  if (objShow == false) {
+    objToggle();
+  }
   setupFunction();
   productViewManager();
   pmcsProduct = {
