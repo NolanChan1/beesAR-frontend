@@ -70,6 +70,7 @@ class App {
     this.colour = { name: "", hexcode: "" };
     this.colourOption = false;
     this.changeCol = false;
+    this.objAngle = 0;
   }
 
   /**
@@ -237,6 +238,12 @@ class App {
 
     console.log("scene children array length: " + this.scene.children.length);
   };
+
+  revertRotation = (angle) => {
+    const oldAngle = angle * Math.PI / 180;
+    this.objAngle = oldAngle;
+    this.current_obj.rotation.y = oldAngle;
+  }
 
   sliderRotate = (slider) => {
     console.log("rotating object.");
@@ -469,7 +476,7 @@ function deleteProduct(selected) {
   const cur = window.app.current_obj;
   //remove object when the model is currently displayed
   //and when changing models (different SKUs)
-  if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
+  if(cur !== null && window.app.scene.children.length > 4) {
     //remove the currently selected product from scene
     //this will be the last element in the scene.children array
     //there's 5 elements when a object gets added. 
@@ -498,21 +505,21 @@ function swapProducts(selected, colour) {
   }
 
   window.app.changeCol = changeCol;
-  deleteProduct(selected);
+ // deleteProduct(selected);
 
   //remove object when the model is currently displayed
   //and when changing models (different SKUs)
-  // if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
-  //   //remove the currently selected product from scene
-  //   //this will be the last element in the scene.children array
-  //   //there's 5 elements when a object gets added. 
-  //   console.log("Removing Previous Object")   
-  //   let remove_obj = window.app.scene.children[4]; 
-  //   window.app.scene.remove(remove_obj);
-  //   placed = false;
-  //   objShow = false;
-  //  // window.app.current_obj = null;
-  // }
+  if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
+    //remove the currently selected product from scene
+    //this will be the last element in the scene.children array
+    //there's 5 elements when a object gets added. 
+    console.log("Removing Previous Object")   
+    let remove_obj = window.app.scene.children[4]; 
+    window.app.scene.remove(remove_obj);
+    placed = false;
+    objShow = false;
+   // window.app.current_obj = null;
+  }
 }
 
 function productSelected(currentSelection) { //refactoring done
@@ -815,6 +822,7 @@ function showExpandedProduct() {
     idx += 1;
   }
   document.getElementsByClassName("product-info")[0].style.display = "None";
+  window.app.swapColour(selectedProduct.selectedColour);
 }
 
 function hideUnhideProduct() {
@@ -848,13 +856,16 @@ function rotateSelection() {
 
 function stopRotation() {
   // Hide/show virtual marker needs to be decided based on whether marker is placed.
+  const angle = window.app.objAngle;
   productViewManager();
   finishRotation();
+  window.app.revertRotation(angle);
 }
 
 function finishRotation() {
   $("#enter-ar").removeClass("hide");
   $("#rotation-slider-container").addClass("hide");
+  window.app.objAngle = document.getElementById("rotation-slider").value;
 }
 
 // PRODUCT MENU CODE
