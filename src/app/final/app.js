@@ -298,7 +298,7 @@ class App {
       $("#ret-toggle").addClass("value-p-highlighted");
       $('#ret-toggle').removeClass('value-p-clickable')
       $("#ret-toggle > img").attr(
-        "src", 
+        "src",
         "../assets/images/hide_virtualmarker_white.png"
       );
     }
