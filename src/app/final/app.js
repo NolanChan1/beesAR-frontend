@@ -1975,4 +1975,35 @@ function setupPM() {
   });
 }
 
+function setupHP() {
+  $(document).ready(function () {
+    $(".hm-wrapper").load(
+      "help-menu.html",
+      function (responseTxt, statusTxt, xhr) {
+        if (statusTxt == "success") {
+          console.log("SUCCESSFULLY LOADED HELP MENU");
+        } else if (statusTxt == "error") {
+          console.log("ERROR LOADING HELP MENU: " + xhr.statusText);
+        }
+      }
+    );
+
+    $(".open-hm-button").on("click", function () {
+      $(".hm-container").animate({ left: 0 });
+    });
+  });
+
+  // Setup temp screenshot feature
+  $(".close-screenshot-button").hide();
+  $(".open-screenshot-button").on("click", function () {
+    $(".app-UI").hide();
+    $(".close-screenshot-button").show();
+  });
+  $(".close-screenshot-button").on("click", function () {
+    $(".app-UI").show();
+    $(".close-screenshot-button").hide();
+  });
+}
+
 setupPM();
+setupHP();
