@@ -140,6 +140,13 @@ body.ar.stabilized #stabilization {
   line-height: 0.75rem;
 }
 
+.product-description.collapsed-card {
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 1.5rem;
+}
+
 .h6-modified {
   font-size: 0.876rem;
   line-height: 1rem;

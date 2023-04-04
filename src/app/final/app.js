@@ -749,7 +749,7 @@ function setupFunction() {
     document.getElementById("product-name-info").innerHTML =
       selectedProduct.name;
     document.getElementsByClassName("product-description")[0].innerHTML =
-      selectedProduct.description.substr(0, 120) + "...";
+      selectedProduct.description;
     document.getElementById("open-product-menu").style.display = "None";
     document.getElementById("image-selected").src = selectedProduct.imageLink;
     document.getElementById("image-selected").style.display = "";
@@ -761,7 +761,7 @@ function setupFunction() {
 
 function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-price").innerHTML =
-    "$" + selectedProduct.selectedPrice + ".00"; //backend should store the decimals
+    "$" + selectedProduct.selectedPrice; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
     selectedProduct.selectedHeight + '"';
   document.getElementById("pc-colour").innerHTML =
@@ -769,7 +769,7 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
       ? "N/A"
       : selectedProduct.selectedColour.name;
   document.getElementById("fpc-price").innerHTML =
-    "$" + selectedProduct.selectedPrice + ".00";
+    "$" + selectedProduct.selectedPrice;
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
   // colour
   $(".colours").empty();
@@ -828,6 +828,7 @@ function hideExpandedProduct() {
       selectedProduct.description.length > 103
         ? selectedProduct.description.substr(0, 103) + "..."
         : selectedProduct.description;
+    $("#product-desc-info").addClass("collapsed-card");
   }
   idx = 0;
   for (el of elements) {
@@ -844,8 +845,8 @@ function hideExpandedProduct() {
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "zoom_in_map";
-  document.getElementById("product-desc-info").innerText =
-    selectedProduct.description;
+  // document.getElementById("product-desc-info").innerText = selectedProduct.description;
+  $("#product-desc-info").removeClass("collapsed-card");
   idx = 0;
   for (el of elements) {
     el.style.display = "";
@@ -1153,7 +1154,7 @@ function updatePMPC() {
   $(".pmpc-product-image").attr("src", pmpcProduct.imageLink);
   $(".pmpc-header-text-container h1").html(pmpcProduct.name);
   $(".pmpc-header-text-container p").html(pmpcProduct.description);
-  $(".pmpc-price").html("$" + pmpcProduct.selectedPrice + ".00");
+  $(".pmpc-price").html("$" + pmpcProduct.selectedPrice);
   $(".pmpc-store-redirect-button a").attr("href", pmpcProduct.storeLink);
 
   $(".pmpc-height").html(pmpcProduct.selectedHeight + '"');
@@ -1184,7 +1185,7 @@ function updatePMPC() {
 
           pmpcProduct.selectedPrice = pmpcProduct.prices[heightIndex];
           pmpcProduct.selectedHeight = pmpcProduct.heights[heightIndex];
-          $(".pmpc-price").html("$" + pmpcProduct.selectedPrice + ".00");
+          $(".pmpc-price").html("$" + pmpcProduct.selectedPrice);
           $(".pmpc-height").html(pmpcProduct.selectedHeight + '"');
 
           $(".pmpc-selected-option").removeClass("pmpc-selected-option");
@@ -1314,7 +1315,7 @@ function updatePMCS() {
     $(".pm-cs-selection").css("display", "block");
 
     $(".pm-cs-selection h2").html(pmcsProduct.name);
-    $(".pm-cs-price").html("$" + pmcsProduct.selectedPrice + ".00");
+    $(".pm-cs-price").html("$" + pmcsProduct.selectedPrice);
     $(".pm-cs-height").html(pmcsProduct.selectedHeight + '"');
     if (pmcsProduct.colours.length > 0) {
       $(".pm-cs-colour").html(pmcsProduct.selectedColour.name);
