@@ -119,6 +119,7 @@ class App {
     //element.remove();
     elementAR.style.display = "none"; 
     document.getElementById("btn-place").style.display = "unset";
+    enteredAR = true;
 
     // To help with working with 3D on the web, we'll use three.js.
     this.setupThreeJs();
@@ -175,6 +176,10 @@ class App {
     }
   }
 
+  setObject = (obj) => {
+    this.current_obj = obj; 
+  }
+
   placeModel = (model) => {
   //  if(this.current_obj != model) {
       this.current_obj = model;
@@ -191,7 +196,7 @@ class App {
       }
   //  }
 
-    if (model && this.reticle.visible) {
+    if (model && model != null && this.reticle.visible) {
       model.position.setFromMatrixPosition(this.reticle.matrix);
       model.visible = true;
       this.scene.add(model);
@@ -310,6 +315,8 @@ class App {
       // If we have results, consider the environment stabilized.
       if (!this.stabilized && hitTestResults.length > 0) {
         this.stabilized = true;
+        retShow = true;
+        console.log("stabilized! showing reticle");
         document.body.classList.add("stabilized");
       }
       if (hitTestResults.length > 0) {
@@ -458,9 +465,26 @@ function manageProductMenu(e) {
   isMenuOpen = !isMenuOpen;
 }
 
+function deleteProduct(selected) {
+  const cur = window.app.current_obj;
+  //remove object when the model is currently displayed
+  //and when changing models (different SKUs)
+  if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
+    //remove the currently selected product from scene
+    //this will be the last element in the scene.children array
+    //there's 5 elements when a object gets added. 
+    console.log("Removing Previous Object")   
+    let remove_obj = window.app.scene.children[4]; 
+    window.app.scene.remove(remove_obj);
+    placed = false;
+    objShow = false;
+   // window.app.current_obj = null;
+  }
+}
+
 //parameters: sku and selectedColour hexcode
 function swapProducts(selected, colour) {
-  const cur = window.app.current_obj;
+  //const cur = window.app.current_obj;
   let changeCol = false;
   if(window.app.selected == selected) { //same model
     //look for colour change 
@@ -474,18 +498,21 @@ function swapProducts(selected, colour) {
   }
 
   window.app.changeCol = changeCol;
+  deleteProduct(selected);
 
   //remove object when the model is currently displayed
   //and when changing models (different SKUs)
-  if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
-    //remove the currently selected product from scene
-    //this will be the last element in the scene.children array
-    //there's 5 elements when a object gets added. 
-    console.log("Removing Previous Object")   
-    let remove_obj = window.app.scene.children[4]; 
-    window.app.scene.remove(remove_obj);
-   // window.app.current_obj = null;
-  }
+  // if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
+  //   //remove the currently selected product from scene
+  //   //this will be the last element in the scene.children array
+  //   //there's 5 elements when a object gets added. 
+  //   console.log("Removing Previous Object")   
+  //   let remove_obj = window.app.scene.children[4]; 
+  //   window.app.scene.remove(remove_obj);
+  //   placed = false;
+  //   objShow = false;
+  //  // window.app.current_obj = null;
+  // }
 }
 
 function productSelected(currentSelection) { //refactoring done
@@ -520,6 +547,7 @@ function productSelected(currentSelection) { //refactoring done
 
   swapProducts(selectedProduct.productSKU, selectedProduct.selectedColour.hexcode);
   window.app.selected = selectedProduct.productSKU;  
+  
   if(selectedProduct.colours.length == 0) {
     console.log("colourOption=false")
     window.app.colourOption = false;
@@ -547,7 +575,20 @@ function productSelected(currentSelection) { //refactoring done
 }
 
 function undoSelectionOfProduct() {
+  if(window.app.selected == null) {
+    console.log("nothing was selected");
+    return;
+  }
+
+  deleteProduct(selectedProduct.productSKU);
   selectedProduct = null;
+  
+  objShow = false;
+  placed = false;
+  window.app.current_obj = null;
+  window.app.selected = null;
+  console.log("deleting");
+
   setupFunction();
   productViewManager(); 
   pmcsProduct = {
@@ -791,6 +832,10 @@ function hideUnhideProduct() {
 function hideUnhideMarker() {}
 
 function rotateSelection() {
+  if(!placed || !objShow) {
+    console.log("Product needs to be placed and displayed to rotate");
+    return false;
+  }
   productViewManager();
   $("#enter-ar").addClass("hide");
   $("#rotation-slider-container").removeClass("hide");
