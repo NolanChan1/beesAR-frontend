@@ -491,7 +491,7 @@ function deleteProduct(selected) {
 
 //parameters: sku and selectedColour hexcode
 function swapProducts(selected, colour) {
-  //const cur = window.app.current_obj;
+  const cur = window.app.current_obj;
   let changeCol = false;
   if(window.app.selected == selected) { //same model
     //look for colour change 
