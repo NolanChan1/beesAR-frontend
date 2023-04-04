@@ -15,9 +15,11 @@
 
 window.gltfLoader = new THREE.GLTFLoader();
 const dracoLoader = new THREE.DRACOLoader();
-dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+dracoLoader.setDecoderPath(
+  "https://www.gstatic.com/draco/versioned/decoders/1.5.6/"
+);
 dracoLoader.preload();
-window.gltfLoader.setDRACOLoader( dracoLoader );
+window.gltfLoader.setDRACOLoader(dracoLoader);
 
 /**
  * The Reticle class creates an object that repeatedly calls
@@ -29,20 +31,26 @@ class Reticle extends THREE.Object3D {
     super();
 
     this.loader = new THREE.GLTFLoader();
-    this.loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf", (gltf) => {
-      this.add(gltf.scene);
-    })
+    this.loader.load(
+      "https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf",
+      (gltf) => {
+        this.add(gltf.scene);
+      }
+    );
 
     this.visible = false;
-  }}
+  }
+}
 
-window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", function(gltf) {
-  const flower = gltf.scene.children.find(c => c.name === 'sunflower')
-  flower.castShadow = true;
-  window.sunflower = gltf.scene;
-  console.log("sunflower loaded!");
-});
-
+window.gltfLoader.load(
+  "https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf",
+  function (gltf) {
+    const flower = gltf.scene.children.find((c) => c.name === "sunflower");
+    flower.castShadow = true;
+    window.sunflower = gltf.scene;
+    console.log("sunflower loaded!");
+  }
+);
 
 window.DemoUtils = {
   /**
@@ -72,14 +80,17 @@ window.DemoUtils = {
 
     // Create a mesh with a shadow material, resulting in a mesh
     // that only renders shadows once we flip the `receiveShadow` property.
-    const shadowMesh = new THREE.Mesh(planeGeometry, new THREE.ShadowMaterial({
-      color: 0x111111,
-      opacity: 0.2,
-    }));
+    const shadowMesh = new THREE.Mesh(
+      planeGeometry,
+      new THREE.ShadowMaterial({
+        color: 0x111111,
+        opacity: 0.2,
+      })
+    );
 
     // Give it a name so we can reference it later, and set `receiveShadow`
     // to true so that it can render our model's shadow.
-    shadowMesh.name = 'shadowMesh';
+    shadowMesh.name = "shadowMesh";
     shadowMesh.receiveShadow = true;
     shadowMesh.position.y = 10000;
 
@@ -105,7 +116,7 @@ window.DemoUtils = {
       new THREE.MeshBasicMaterial({ color: 0x00ff00 }),
       new THREE.MeshBasicMaterial({ color: 0xff00ff }),
       new THREE.MeshBasicMaterial({ color: 0x00ffff }),
-      new THREE.MeshBasicMaterial({ color: 0xffff00 })
+      new THREE.MeshBasicMaterial({ color: 0xffff00 }),
     ];
 
     const ROW_COUNT = 4;
@@ -114,7 +125,10 @@ window.DemoUtils = {
     for (let i = 0; i < ROW_COUNT; i++) {
       for (let j = 0; j < ROW_COUNT; j++) {
         for (let k = 0; k < ROW_COUNT; k++) {
-          const box = new THREE.Mesh(new THREE.BoxBufferGeometry(0.2, 0.2, 0.2), materials);
+          const box = new THREE.Mesh(
+            new THREE.BoxBufferGeometry(0.2, 0.2, 0.2),
+            materials
+          );
           box.position.set(i - HALF, j - HALF, k - HALF);
           box.position.multiplyScalar(SPREAD);
           scene.add(box);
@@ -131,7 +145,7 @@ window.DemoUtils = {
  * button and display the unsupported browser message.
  */
 function onNoXRDevice() {
-  document.body.classList.add('unsupported');
+  document.body.classList.add("unsupported");
 }
 
 fetchProduct = async (productSKU) => {
@@ -141,40 +155,44 @@ fetchProduct = async (productSKU) => {
     headers: {
       "Access-Control-Allow-Origin": "http://127.0.0.1:5500",
       "Access-Control-Allow-Methods": "GET",
-      "Access-Control-Allow-Headers": "Content-Type",      
+      "Access-Control-Allow-Headers": "Content-Type",
       "Content-Type": "application/json",
     },
-  }).then((response) => {
-    console.log("img link parsed - " + productSKU);
-    return response.text();    
-  }).then((data) => {
-    imageLink = data;
-    console.log("img link retrieved - " + productSKU);
-  }).catch((err) => {
-    console.log("error: fetchImage - " + productSKU, err);
-  });
+  })
+    .then((response) => {
+      console.log("img link parsed - " + productSKU);
+      return response.text();
+    })
+    .then((data) => {
+      imageLink = data;
+      console.log("img link retrieved - " + productSKU);
+    })
+    .catch((err) => {
+      console.log("error: fetchImage - " + productSKU, err);
+    });
 
   return imageLink;
-}
+};
 
 loadProducts = async () => {
-  window.candle = {2015: null, 644: null, 629: null, 634: null, 0:null};
-  let skuIDs = [2015, 644, 629, 634]; 
-  //let skuIDs = [2015, 644, 629, 634, 0]; 
-  for(const id of skuIDs) {
+  window.candle = { 2015: null, 644: null, 629: null, 634: null, 0: null };
+  //let skuIDs = [2015, 644, 629, 634];
+  let skuIDs = [2015, 644, 629, 634, 0];
+  for (const id of skuIDs) {
     console.log(`loading product: ` + id);
     let imgLink = fetchProduct(id);
-    imgLink.then((link) => {
-        console.log("image link (in loadProducts): " + link);    
+    imgLink
+      .then((link) => {
+        console.log("image link (in loadProducts): " + link);
         window.gltfLoader.load(link, (gltf) => {
-        //window.api = gltf.scene;
-        window.candle[id] = gltf.scene;
-        console.log("loaded product: " + id);
-      });
-    }).catch((err) => {
+          //window.api = gltf.scene;
+          window.candle[id] = gltf.scene;
+          console.log("loaded product: " + id);
+        });
+      })
+      .catch((err) => {
         console.log("Could not load product: " + id);
         console.log("Image Loading Error.  " + err);
-    });
+      });
   }
-
-}
+};

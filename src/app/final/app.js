@@ -32,7 +32,6 @@ let placed = false;
     document
       .getElementById("enter-ar")
       .addEventListener("click", window.app.activateXR);
-      
   } else {
     onNoXRDevice();
   }
@@ -62,8 +61,6 @@ const capture = async () => {
  * and handle rendering on every frame.
  */
 class App {
-
-
   constructor() {
     this.selected = null;
     this.current_obj = null;
@@ -118,7 +115,7 @@ class App {
     document.body.classList.add("ar");
     const elementAR = document.getElementById("enter-ar");
     //element.remove();
-    elementAR.style.display = "none"; 
+    elementAR.style.display = "none";
     document.getElementById("btn-place").style.display = "unset";
     enteredAR = true;
 
@@ -160,42 +157,45 @@ class App {
     // this.xrSession.addEventListener("select", this.onSelect);
   };
 
-
-  swapColour = () => {    
-    if(this.colourOption == true) {
+  swapColour = () => {
+    if (this.colourOption == true) {
       console.log("swapping colour");
       const model = this.current_obj;
       //apply colour
-      console.log("colour options available. colour chosen: " + this.colour.hexcode);
-     // let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
+      console.log(
+        "colour options available. colour chosen: " + this.colour.hexcode
+      );
+      // let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
       model.traverse((o) => {
-        if(o.isMesh) {
+        if (o.isMesh) {
           o.material.color.set(this.colour.hexcode);
           console.log("changed colour to: " + this.colour.name);
         }
       });
     }
-  }
+  };
 
   setObject = (obj) => {
-    this.current_obj = obj; 
-  }
+    this.current_obj = obj;
+  };
 
   placeModel = (model) => {
-  //  if(this.current_obj != model) {
-      this.current_obj = model;
-      if(this.colourOption == true) {
-        //apply colour
-        console.log("colour options available. colour chosen: " + this.colour.hexcode);
-       // let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
-        model.traverse((o) => {
-          if(o.isMesh) {
-            o.material.color.set(this.colour.hexcode);
-            console.log("changed colour to: " + this.colour.name);
-          }
-        });
-      }
-  //  }
+    //  if(this.current_obj != model) {
+    this.current_obj = model;
+    if (this.colourOption == true) {
+      //apply colour
+      console.log(
+        "colour options available. colour chosen: " + this.colour.hexcode
+      );
+      // let material = new THREE.MeshBasicMaterial({ color: this.colour.hexcode });
+      model.traverse((o) => {
+        if (o.isMesh) {
+          o.material.color.set(this.colour.hexcode);
+          console.log("changed colour to: " + this.colour.name);
+        }
+      });
+    }
+    //  }
 
     if (model && model != null && this.reticle.visible) {
       model.position.setFromMatrixPosition(this.reticle.matrix);
@@ -203,12 +203,11 @@ class App {
       this.scene.add(model);
       objShow = true;
       placed = true;
-    } 
-  }
+    }
+  };
 
   arPlace = () => {
-
-    switch(this.selected) {
+    switch (this.selected) {
       case 2015:
         this.placeModel(window.candle[2015]);
         console.log("3″ Solid Beeswax Pillar Candle placed");
@@ -216,42 +215,41 @@ class App {
       case 644:
         this.placeModel(window.candle[644]);
         console.log("Beehive Rolled Beeswax Candle placed");
-        break;  
-      case 629: 
+        break;
+      case 629:
         this.placeModel(window.candle[629]);
         console.log("3″ Rolled Beeswax Pillar Candle placed");
-        break; 
+        break;
       case 634:
         this.placeModel(window.candle[634]);
         //console.log("too much");
         console.log("Rolled Mini Taper Beeswax Candle placed");
-        break;               
+        break;
       default:
-        if(this.selected == null) {
+        if (this.selected == null) {
           console.log("Nothing was selected");
         } else {
-          this.placeModel(window.sunflower);
-          console.log("sunflower placed");
-          //this.placeModel(window.candle[0]);
-          //console.log("Tin Candle placed");          
+          //this.placeModel(window.sunflower);
+          //console.log("sunflower placed");
+          this.placeModel(window.candle[0]);
+          console.log("Tin Candle placed");
         }
-        
     }
 
     console.log("scene children array length: " + this.scene.children.length);
   };
 
   revertRotation = (angle) => {
-    const oldAngle = angle * Math.PI / 180;
+    const oldAngle = (angle * Math.PI) / 180;
     this.objAngle = oldAngle;
     this.current_obj.rotation.y = oldAngle;
-  }
+  };
 
   sliderRotate = (slider) => {
     console.log("rotating object.");
-    const angle = slider.value * Math.PI / 180;
+    const angle = (slider.value * Math.PI) / 180;
     this.current_obj.rotation.y = angle;
-  }
+  };
 
   rotateModel = () => {
     if (this.current_obj) {
@@ -266,12 +264,18 @@ class App {
       this.current_obj.visible = objShow;
       if (objShow === true) {
         $("#obj-toggle > span").text("Hide Product");
-        $('#obj-toggle > img').attr('src', '../assets/images/hide_projection_blue.png')
-        $('#obj-toggle').removeClass('value-p-highlighted')
+        $("#obj-toggle > img").attr(
+          "src",
+          "../assets/images/hide_projection_blue.png"
+        );
+        $("#obj-toggle").removeClass("value-p-highlighted");
       } else if (objShow === false) {
         $("#obj-toggle > span").text("Show Product");
-        $('#obj-toggle > img').attr('src', '../assets/images/hide_projection_white.png');
-        $('#obj-toggle').addClass('value-p-highlighted');
+        $("#obj-toggle > img").attr(
+          "src",
+          "../assets/images/hide_projection_white.png"
+        );
+        $("#obj-toggle").addClass("value-p-highlighted");
       }
     }
   };
@@ -281,12 +285,18 @@ class App {
     this.reticle.visible = retShow;
     if (retShow === true) {
       $("#ret-toggle > span").text("Hide Marker");
-      $('#ret-toggle > img').attr('src', '../assets/images/hide_virtualmarker_blue.png')
-      $('#ret-toggle').removeClass('value-p-highlighted')
+      $("#ret-toggle > img").attr(
+        "src",
+        "../assets/images/hide_virtualmarker_blue.png"
+      );
+      $("#ret-toggle").removeClass("value-p-highlighted");
     } else if (retShow === false) {
       $("#ret-toggle > span").text("Show Marker");
-      $('#ret-toggle').addClass('value-p-highlighted');
-      $('#ret-toggle > img').attr('src', '../assets/images/hide_virtualmarker_white.png')
+      $("#ret-toggle").addClass("value-p-highlighted");
+      $("#ret-toggle > img").attr(
+        "src",
+        "../assets/images/hide_virtualmarker_white.png"
+      );
     }
   };
 
@@ -393,7 +403,7 @@ class ProductDetails {
     colours = [],
     selectedColour = { name: "", hexcode: "" },
     categories = [],
-    diameter = -1,
+    diameter = -1
   ) {
     // this.title = n;
     // this.price = p;
@@ -420,15 +430,16 @@ class ProductDetails {
   }
 }
 
-function manageHeightDropdown (data) {
+function manageHeightDropdown(data) {
   if (selectedProduct.heights.length > 1) {
-    if ($('#height-menu > .material-symbols-outlined').text() == "expand_more") {
-      $('#height-menu > .material-symbols-outlined').html('expand_less');
-      $('#height-menu-dropdown').css('display','block')
-    }
-    else {
-      $('#height-menu > .material-symbols-outlined').html('expand_more');
-      $('#height-menu-dropdown').css('display','none')
+    if (
+      $("#height-menu > .material-symbols-outlined").text() == "expand_more"
+    ) {
+      $("#height-menu > .material-symbols-outlined").html("expand_less");
+      $("#height-menu-dropdown").css("display", "block");
+    } else {
+      $("#height-menu > .material-symbols-outlined").html("expand_more");
+      $("#height-menu-dropdown").css("display", "none");
     }
   }
 }
@@ -459,7 +470,6 @@ function productViewManager(e) {
   }
 }
 
-
 function manageProductMenu(e) {
   if (isMenuOpen) {
     document.getElementById("product-menu-container").style.display = "none";
@@ -478,16 +488,16 @@ function deleteProduct(selected) {
   const cur = window.app.current_obj;
   //remove object when the model is currently displayed
   //and when changing models (different SKUs)
-  if(cur !== null && window.app.scene.children.length > 4) {
+  if (cur !== null && window.app.scene.children.length > 4) {
     //remove the currently selected product from scene
     //this will be the last element in the scene.children array
-    //there's 5 elements when a object gets added. 
-    console.log("Removing Previous Object")   
-    let remove_obj = window.app.scene.children[4]; 
+    //there's 5 elements when a object gets added.
+    console.log("Removing Previous Object");
+    let remove_obj = window.app.scene.children[4];
     window.app.scene.remove(remove_obj);
     placed = false;
     objShow = false;
-   // window.app.current_obj = null;
+    // window.app.current_obj = null;
   }
 }
 
@@ -495,36 +505,43 @@ function deleteProduct(selected) {
 function swapProducts(selected, colour) {
   const cur = window.app.current_obj;
   let changeCol = false;
-  if(window.app.selected == selected) { //same model
-    //look for colour change 
-    if(window.app.colourOption == true && 
-      window.app.colour.hexcode != colour) {
-        changeCol = true;
-        //window.app.swapColour(cur);
-        //swap colours
-
-      }
+  if (window.app.selected == selected) {
+    //same model
+    //look for colour change
+    if (
+      window.app.colourOption == true &&
+      window.app.colour.hexcode != colour
+    ) {
+      changeCol = true;
+      //window.app.swapColour(cur);
+      //swap colours
+    }
   }
 
   window.app.changeCol = changeCol;
- // deleteProduct(selected);
+  // deleteProduct(selected);
 
   //remove object when the model is currently displayed
   //and when changing models (different SKUs)
-  if(window.app.selected != selected && cur !== null && window.app.scene.children.length > 4) {
+  if (
+    window.app.selected != selected &&
+    cur !== null &&
+    window.app.scene.children.length > 4
+  ) {
     //remove the currently selected product from scene
     //this will be the last element in the scene.children array
-    //there's 5 elements when a object gets added. 
-    console.log("Removing Previous Object")   
-    let remove_obj = window.app.scene.children[4]; 
+    //there's 5 elements when a object gets added.
+    console.log("Removing Previous Object");
+    let remove_obj = window.app.scene.children[4];
     window.app.scene.remove(remove_obj);
     placed = false;
     objShow = false;
-   // window.app.current_obj = null;
+    // window.app.current_obj = null;
   }
 }
 
-function productSelected(currentSelection) { //refactoring done
+function productSelected(currentSelection) {
+  //refactoring done
   //selectedProduct = sunflowerProduct;
   // selectedProduct = candleProduct;
   selectedProduct = new ProductDetails(
@@ -540,58 +557,62 @@ function productSelected(currentSelection) { //refactoring done
     currentSelection.colours,
     currentSelection.selectedColour,
     currentSelection.categories,
-    currentSelection.diameter);
+    currentSelection.diameter
+  );
   // selectedProduct.selectedIndex = 0; // for repeat selections
   // if(selectedProduct.productSKU != 2015 ||
   //   selectedProduct.productSKU != 644 ||
   //   selectedProduct.productSKU != 629 ||
-  //   selectedProduct.productSKU != 634) 
-  //   {      
+  //   selectedProduct.productSKU != 634)
+  //   {
   //     window.app.selected = 0;
-  //   } 
-  // else 
+  //   }
+  // else
   //   {
   //     window.app.selected = selectedProduct.productSKU;
   //   }
 
-  swapProducts(selectedProduct.productSKU, selectedProduct.selectedColour.hexcode);
-  window.app.selected = selectedProduct.productSKU;  
-  
-  if(selectedProduct.colours.length == 0) {
-    console.log("colourOption=false")
+  swapProducts(
+    selectedProduct.productSKU,
+    selectedProduct.selectedColour.hexcode
+  );
+  window.app.selected = selectedProduct.productSKU;
+
+  if (selectedProduct.colours.length == 0) {
+    console.log("colourOption=false");
     window.app.colourOption = false;
     window.app.colour = selectedProduct.selectedColour;
   } else if (selectedProduct.colours.length > 1) {
-    console.log("colourOption=true. ")
+    console.log("colourOption=true. ");
     window.app.colourOption = true;
     window.app.colour = selectedProduct.selectedColour;
-    if(window.app.colour == null) {
+    if (window.app.colour == null) {
       window.app.colour = selectedProduct.colours[0];
       console.log("default colour: " + window.app.colour.name);
     }
   }
 
-  if(window.app.changeCol == true) {
+  if (window.app.changeCol == true) {
     window.app.swapColour();
   }
 
-  document.getElementById("product-name-info").innerText =
-    selectedProduct.name;
-  document.getElementById("product-desc-info").innerText = selectedProduct.description;
-  
+  document.getElementById("product-name-info").innerText = selectedProduct.name;
+  document.getElementById("product-desc-info").innerText =
+    selectedProduct.description;
+
   setupFunction();
   // manageProductMenu();
 }
 
 function undoSelectionOfProduct() {
-  if(window.app.selected == null) {
+  if (window.app.selected == null) {
     console.log("nothing was selected");
     return;
   }
 
   deleteProduct(selectedProduct.productSKU);
   selectedProduct = null;
-  
+
   objShow = false;
   placed = false;
   window.app.current_obj = null;
@@ -599,7 +620,7 @@ function undoSelectionOfProduct() {
   console.log("deleting");
 
   setupFunction();
-  productViewManager(); 
+  productViewManager();
   pmcsProduct = {
     productSKU: -1,
     imageLink: "",
@@ -613,8 +634,9 @@ function undoSelectionOfProduct() {
     colours: [],
     selectedColour: { name: "", hexcode: "" },
     categories: [],
-    diameter: -1 }
-    updatePMCS();
+    diameter: -1,
+  };
+  updatePMCS();
 }
 
 window.app = new App();
@@ -622,7 +644,9 @@ listenersAdded = false;
 selectedProduct = null; //assume product class
 productHidden = false;
 markerHidden = false;
-defaultProduct = new ProductDetails( -1, "",
+defaultProduct = new ProductDetails(
+  -1,
+  "",
   "Please select a product to project onto the placed marker"
 );
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
@@ -649,7 +673,7 @@ function fixProductMenuIconHeight() {
     value + "px";
 }
 
-function updateColourRows () {
+function updateColourRows() {
   if (selectedProduct.colours.length > 0) {
     $("#fpc-colour").html(pmpcProduct.selectedColour.name);
 
@@ -662,52 +686,42 @@ function updateColourRows () {
         $(".colours div:nth-child(" + (j + 1) + ")")
           .children(".pmpc-colour-option-border")
           .addClass("pmpc-colour-option-border-selected");
-        $(
-          ".colours div:nth-child(" + (j + 1) + ") h1"
-        ).addClass("pmpc-colour-option-text-selected");
+        $(".colours div:nth-child(" + (j + 1) + ") h1").addClass(
+          "pmpc-colour-option-text-selected"
+        );
       }
 
       $(".colours div:nth-child(" + (j + 1) + ")")
         .children(".pmpc-colour-option-border")
         .children()
         .css("background-color", pmpcOption.hexcode);
-      $(".colours div:nth-child(" + (j + 1) + ") h1").html(
-        pmpcOption.name
-      );
+      $(".colours div:nth-child(" + (j + 1) + ") h1").html(pmpcOption.name);
 
-      $(".colours div:nth-child(" + (j + 1) + ")").on(
-        "click",
-        function () {
-          colourIndex = j;
-          selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
-          window.app.colour = selectedProduct.selectedColour;
-          window.app.swapColour();
+      $(".colours div:nth-child(" + (j + 1) + ")").on("click", function () {
+        colourIndex = j;
+        selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
+        window.app.colour = selectedProduct.selectedColour;
+        window.app.swapColour();
 
-          console.log("In updateColourRows: " + selectedProduct.selectedColour.name);
+        console.log(
+          "In updateColourRows: " + selectedProduct.selectedColour.name
+        );
 
-          $("#pc-colour").html(selectedProduct.selectedColour.name);
-          $('#fpc-colour').html(selectedProduct.selectedColour.name);
-          $(".pmpc-colour-option-border-selected").removeClass(
-            "pmpc-colour-option-border-selected"
-          );
-          $(".pmpc-colour-option-text-selected").removeClass(
-            "pmpc-colour-option-text-selected"
-          );
-          $(
-            ".colours div:nth-child(" +
-              (colourIndex + 1) +
-              ")"
-          )
-            .children(".pmpc-colour-option-border")
-            .addClass("pmpc-colour-option-border-selected");
-          $(
-            ".colours div:nth-child(" +
-              (colourIndex + 1) +
-              ") h1"
-          ).addClass("pmpc-colour-option-text-selected");
-          
-        }
-      );
+        $("#pc-colour").html(selectedProduct.selectedColour.name);
+        $("#fpc-colour").html(selectedProduct.selectedColour.name);
+        $(".pmpc-colour-option-border-selected").removeClass(
+          "pmpc-colour-option-border-selected"
+        );
+        $(".pmpc-colour-option-text-selected").removeClass(
+          "pmpc-colour-option-text-selected"
+        );
+        $(".colours div:nth-child(" + (colourIndex + 1) + ")")
+          .children(".pmpc-colour-option-border")
+          .addClass("pmpc-colour-option-border-selected");
+        $(".colours div:nth-child(" + (colourIndex + 1) + ") h1").addClass(
+          "pmpc-colour-option-text-selected"
+        );
+      });
     });
   }
 }
@@ -715,9 +729,9 @@ function updateColourRows () {
 function setupFunction() {
   if (!listenersAdded) {
     listenersAdded = true;
-    $('#product-modal-button').on('click', function (evn) {
-      if(selectedProduct != null) {
-        $('#ProductModal').modal('show');
+    $("#product-modal-button").on("click", function (evn) {
+      if (selectedProduct != null) {
+        $("#ProductModal").modal("show");
       }
     });
   }
@@ -749,48 +763,54 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-price").innerHTML =
     "$" + selectedProduct.selectedPrice + ".00"; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
-    selectedProduct.selectedHeight + "\"";
-  document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour.name;
+    selectedProduct.selectedHeight + '"';
+  document.getElementById("pc-colour").innerHTML =
+    selectedProduct.colours.length == 0
+      ? "N/A"
+      : selectedProduct.selectedColour.name;
   document.getElementById("fpc-price").innerHTML =
     "$" + selectedProduct.selectedPrice + ".00";
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
   // colour
   $(".colours").empty();
-  if (selectedProduct.colours.length > 0)
-    updateColourRows();
-  else 
-    $('#fpc-colour').html("No colour options");
+  if (selectedProduct.colours.length > 0) updateColourRows();
+  else $("#fpc-colour").html("No colour options");
 
-    $('#height-menu-dropdown').empty()
-    $('.height-text').text(selectedProduct.selectedHeight + '"')
-    $('#height-menu > .material-symbols-outlined').removeClass('hide');
-    if (selectedProduct.heights.length <= 1)
-      $('#height-menu > .material-symbols-outlined').addClass('hide');
-    selectedProduct.heights.forEach((height, index) => {
-      if(height != selectedProduct.selectedHeight)
-        $('#height-menu-dropdown').append(`<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`)
-        else 
-        $('#height-menu-dropdown').append(`<li class='value-p height-selected' role='option' onclick='changeIndex(this)'>${height}"</li>`)
-    }) 
-  $('#category-container > .value-p').remove();
-  selectedProduct.categories.forEach(category => {
-    $('#category-container').append(`<span class="value-p">${category}</span>`)
-  })
-  
+  $("#height-menu-dropdown").empty();
+  $(".height-text").text(selectedProduct.selectedHeight + '"');
+  $("#height-menu > .material-symbols-outlined").removeClass("hide");
+  if (selectedProduct.heights.length <= 1)
+    $("#height-menu > .material-symbols-outlined").addClass("hide");
+  selectedProduct.heights.forEach((height, index) => {
+    if (height != selectedProduct.selectedHeight)
+      $("#height-menu-dropdown").append(
+        `<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`
+      );
+    else
+      $("#height-menu-dropdown").append(
+        `<li class='value-p height-selected' role='option' onclick='changeIndex(this)'>${height}"</li>`
+      );
+  });
+  $("#category-container > .value-p").remove();
+  selectedProduct.categories.forEach((category) => {
+    $("#category-container").append(`<span class="value-p">${category}</span>`);
+  });
 
-  document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
+  document.getElementById("footer-height").innerText =
+    selectedProduct.selectedHeight + '"';
   if (selectedProduct.diameter != -1) {
-    $('.footer-width-text').text(selectedProduct.diameter + '"')
-    $('.footer-width').removeClass('hide')
-  }
-  else 
-    $('.footer-width').addClass('hide');
+    $(".footer-width-text").text(selectedProduct.diameter + '"');
+    $(".footer-width").removeClass("hide");
+  } else $(".footer-width").addClass("hide");
 }
 
 function changeIndex(node) {
   //tracks height and price
-  selectedProduct.selectedHeight = parseInt(node.innerText.slice(0,-1));
-  selectedProduct.selectedPrice = selectedProduct.prices[selectedProduct.heights.indexOf(selectedProduct.selectedHeight)]
+  selectedProduct.selectedHeight = parseInt(node.innerText.slice(0, -1));
+  selectedProduct.selectedPrice =
+    selectedProduct.prices[
+      selectedProduct.heights.indexOf(selectedProduct.selectedHeight)
+    ];
   // change price
   manageHeightDropdown(); //close it after height selection
   updateProductDetailsOnExpandedCard(true);
@@ -804,8 +824,10 @@ function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
-    document.getElementsByClassName("product-description")[0].innerHTML = selectedProduct.description.length > 103 ?
-      selectedProduct.description.substr(0, 103) + "..." : selectedProduct.description;
+    document.getElementsByClassName("product-description")[0].innerHTML =
+      selectedProduct.description.length > 103
+        ? selectedProduct.description.substr(0, 103) + "..."
+        : selectedProduct.description;
   }
   idx = 0;
   for (el of elements) {
@@ -822,14 +844,15 @@ function hideExpandedProduct() {
 function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "zoom_in_map";
-  document.getElementById("product-desc-info").innerText = selectedProduct.description;
+  document.getElementById("product-desc-info").innerText =
+    selectedProduct.description;
   idx = 0;
   for (el of elements) {
     el.style.display = "";
     idx += 1;
   }
   document.getElementsByClassName("product-info")[0].style.display = "None";
- // window.app.swapColour(pmpcProduct.selectedColour);
+  // window.app.swapColour(pmpcProduct.selectedColour);
 }
 
 function hideUnhideProduct() {
@@ -847,7 +870,7 @@ function hideUnhideProduct() {
 function hideUnhideMarker() {}
 
 function rotateSelection() {
-  if(!placed || !objShow) {
+  if (!placed || !objShow) {
     console.log("Product needs to be placed and displayed to rotate");
     return false;
   }
@@ -855,7 +878,7 @@ function rotateSelection() {
   $("#enter-ar").addClass("hide");
   $("#rotation-slider-container").removeClass("hide");
   const slider = document.getElementById("rotation-slider");
-  slider.addEventListener('input', function() {
+  slider.addEventListener("input", function () {
     window.app.sliderRotate(slider);
   });
   return false;
@@ -1791,7 +1814,9 @@ function setupPM() {
             colourIndex = 0;
 
             pmpcProduct.productSKU = data.Product_SKU;
-            console.log("currently selected product: " + pmpcProduct.productSKU);
+            console.log(
+              "currently selected product: " + pmpcProduct.productSKU
+            );
             pmpcProduct.imageLink = $(
               ".pillar-candles div:nth-child(" + (i + 1) + ") img"
             ).attr("src");
@@ -1824,8 +1849,6 @@ function setupPM() {
       goToCategorySearch(1);
     });
 
-
-
     // Setup Default PM - Taper Candles
     let taperCandles = fetchCategory("tapers");
     taperCandles.then((fetchedData) => {
@@ -1849,7 +1872,9 @@ function setupPM() {
             colourIndex = 0;
 
             pmpcProduct.productSKU = data.Product_SKU;
-            console.log("currently selected product: " + pmpcProduct.productSKU);
+            console.log(
+              "currently selected product: " + pmpcProduct.productSKU
+            );
             pmpcProduct.imageLink = $(
               ".taper-candles div:nth-child(" + (i + 1) + ") img"
             ).attr("src");
@@ -1908,7 +1933,9 @@ function setupPM() {
             colourIndex = 0;
 
             pmpcProduct.productSKU = data.Product_SKU;
-            console.log("currently selected product: " + pmpcProduct.productSKU);
+            console.log(
+              "currently selected product: " + pmpcProduct.productSKU
+            );
             pmpcProduct.imageLink = $(
               ".specialty-candles div:nth-child(" + (i + 1) + ") img"
             ).attr("src");
