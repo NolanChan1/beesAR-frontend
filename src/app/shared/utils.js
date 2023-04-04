@@ -158,8 +158,9 @@ fetchProduct = async (productSKU) => {
 }
 
 loadProducts = async () => {
-  window.candle = {2015: null, 644: null, 629: null, 634: null};
-  let skuIDs = [2015, 644, 629, 634]; //634
+  window.candle = {2015: null, 644: null, 629: null, 634: null, 0:null};
+  let skuIDs = [2015, 644, 629, 634]; 
+  //let skuIDs = [2015, 644, 629, 634, 0]; 
   for(const id of skuIDs) {
     console.log(`loading product: ` + id);
     let imgLink = fetchProduct(id);

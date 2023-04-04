@@ -232,6 +232,8 @@ class App {
         } else {
           this.placeModel(window.sunflower);
           console.log("sunflower placed");
+          //this.placeModel(window.candle[0]);
+          //console.log("Tin Candle placed");          
         }
         
     }
@@ -699,6 +701,7 @@ function updateColourRows () {
               (colourIndex + 1) +
               ") h1"
           ).addClass("pmpc-colour-option-text-selected");
+          window.app.swapColour(selectedProduct.selectedColour);
         }
       );
     });
@@ -822,7 +825,7 @@ function showExpandedProduct() {
     idx += 1;
   }
   document.getElementsByClassName("product-info")[0].style.display = "None";
-  window.app.swapColour(selectedProduct.selectedColour);
+ // window.app.swapColour(pmpcProduct.selectedColour);
 }
 
 function hideUnhideProduct() {
@@ -860,6 +863,7 @@ function stopRotation() {
   productViewManager();
   finishRotation();
   window.app.revertRotation(angle);
+  document.getElementById("rotation-slider").value = angle;
 }
 
 function finishRotation() {
