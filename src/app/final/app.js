@@ -180,12 +180,18 @@ class App {
       window.sunflower.visible = objShow;
       if (objShow === true) {
         $("#obj-toggle > span").text("Hide Product");
-        $('#obj-toggle > img').attr('src', '../assets/images/hide_projection_blue.png')
-        $('#obj-toggle').removeClass('value-p-highlighted')
+        $("#obj-toggle > img").attr(
+          "src",
+          "../assets/images/hide_projection_blue.png"
+        );
+        $("#obj-toggle").removeClass("value-p-highlighted");
       } else if (objShow === false) {
         $("#obj-toggle > span").text("Show Product");
-        $('#obj-toggle > img').attr('src', '../assets/images/hide_projection_white.png');
-        $('#obj-toggle').addClass('value-p-highlighted');
+        $("#obj-toggle > img").attr(
+          "src",
+          "../assets/images/hide_projection_white.png"
+        );
+        $("#obj-toggle").addClass("value-p-highlighted");
       }
     }
   };
@@ -195,12 +201,18 @@ class App {
     this.reticle.visible = retShow;
     if (retShow === true) {
       $("#ret-toggle > span").text("Hide Marker");
-      $('#ret-toggle > img').attr('src', '../assets/images/hide_virtualmarker_blue.png')
-      $('#ret-toggle').removeClass('value-p-highlighted')
+      $("#ret-toggle > img").attr(
+        "src",
+        "../assets/images/hide_virtualmarker_blue.png"
+      );
+      $("#ret-toggle").removeClass("value-p-highlighted");
     } else if (retShow === false) {
       $("#ret-toggle > span").text("Show Marker");
-      $('#ret-toggle').addClass('value-p-highlighted');
-      $('#ret-toggle > img').attr('src', '../assets/images/hide_virtualmarker_white.png')
+      $("#ret-toggle").addClass("value-p-highlighted");
+      $("#ret-toggle > img").attr(
+        "src",
+        "../assets/images/hide_virtualmarker_white.png"
+      );
     }
   };
 
@@ -305,7 +317,7 @@ class ProductDetails {
     colours = [],
     selectedColour = { name: "", hexcode: "" },
     categories = [],
-    diameter = -1,
+    diameter = -1
   ) {
     // this.title = n;
     // this.price = p;
@@ -332,15 +344,16 @@ class ProductDetails {
   }
 }
 
-function manageHeightDropdown (data) {
+function manageHeightDropdown(data) {
   if (selectedProduct.heights.length > 1) {
-    if ($('#height-menu > .material-symbols-outlined').text() == "expand_more") {
-      $('#height-menu > .material-symbols-outlined').html('expand_less');
-      $('#height-menu-dropdown').css('display','block')
-    }
-    else {
-      $('#height-menu > .material-symbols-outlined').html('expand_more');
-      $('#height-menu-dropdown').css('display','none')
+    if (
+      $("#height-menu > .material-symbols-outlined").text() == "expand_more"
+    ) {
+      $("#height-menu > .material-symbols-outlined").html("expand_less");
+      $("#height-menu-dropdown").css("display", "block");
+    } else {
+      $("#height-menu > .material-symbols-outlined").html("expand_more");
+      $("#height-menu-dropdown").css("display", "none");
     }
   }
 }
@@ -371,7 +384,6 @@ function productViewManager(e) {
   }
 }
 
-
 function manageProductMenu(e) {
   if (isMenuOpen) {
     document.getElementById("product-menu-container").style.display = "none";
@@ -386,7 +398,8 @@ function manageProductMenu(e) {
   isMenuOpen = !isMenuOpen;
 }
 
-function productSelected(currentSelection) { //refactoring done
+function productSelected(currentSelection) {
+  //refactoring done
   //selectedProduct = sunflowerProduct;
   // selectedProduct = candleProduct;
   selectedProduct = new ProductDetails(
@@ -402,11 +415,12 @@ function productSelected(currentSelection) { //refactoring done
     currentSelection.colours,
     currentSelection.selectedColour,
     currentSelection.categories,
-    currentSelection.diameter);
+    currentSelection.diameter
+  );
   // selectedProduct.selectedIndex = 0; // for repeat selections
-  document.getElementById("product-name-info").innerText =
-    selectedProduct.name;
-  document.getElementById("product-desc-info").innerText = selectedProduct.description;
+  document.getElementById("product-name-info").innerText = selectedProduct.name;
+  document.getElementById("product-desc-info").innerText =
+    selectedProduct.description;
   setupFunction();
   // manageProductMenu();
 }
@@ -414,7 +428,7 @@ function productSelected(currentSelection) { //refactoring done
 function undoSelectionOfProduct() {
   selectedProduct = null;
   setupFunction();
-  productViewManager(); 
+  productViewManager();
   pmcsProduct = {
     productSKU: -1,
     imageLink: "",
@@ -428,8 +442,9 @@ function undoSelectionOfProduct() {
     colours: [],
     selectedColour: { name: "", hexcode: "" },
     categories: [],
-    diameter: -1 }
-    updatePMCS();
+    diameter: -1,
+  };
+  updatePMCS();
 }
 
 window.app = new App();
@@ -437,7 +452,9 @@ listenersAdded = false;
 selectedProduct = null; //assume product class
 productHidden = false;
 markerHidden = false;
-defaultProduct = new ProductDetails( -1, "",
+defaultProduct = new ProductDetails(
+  -1,
+  "",
   "Please select a product to project onto the placed marker"
 );
 isProductMenuOpen = false; //this is actually expanded product, not product menu!
@@ -464,7 +481,7 @@ function fixProductMenuIconHeight() {
     value + "px";
 }
 
-function updateColourRows () {
+function updateColourRows() {
   if (selectedProduct.colours.length > 0) {
     $("#fpc-colour").html(pmpcProduct.selectedColour.name);
 
@@ -477,47 +494,36 @@ function updateColourRows () {
         $(".colours div:nth-child(" + (j + 1) + ")")
           .children(".pmpc-colour-option-border")
           .addClass("pmpc-colour-option-border-selected");
-        $(
-          ".colours div:nth-child(" + (j + 1) + ") h1"
-        ).addClass("pmpc-colour-option-text-selected");
+        $(".colours div:nth-child(" + (j + 1) + ") h1").addClass(
+          "pmpc-colour-option-text-selected"
+        );
       }
 
       $(".colours div:nth-child(" + (j + 1) + ")")
         .children(".pmpc-colour-option-border")
         .children()
         .css("background-color", pmpcOption.hexcode);
-      $(".colours div:nth-child(" + (j + 1) + ") h1").html(
-        pmpcOption.name
-      );
+      $(".colours div:nth-child(" + (j + 1) + ") h1").html(pmpcOption.name);
 
-      $(".colours div:nth-child(" + (j + 1) + ")").on(
-        "click",
-        function () {
-          colourIndex = j;
-          selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
+      $(".colours div:nth-child(" + (j + 1) + ")").on("click", function () {
+        colourIndex = j;
+        selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
 
-          $("#pc-colour").html(selectedProduct.selectedColour.name);
-          $('#fpc-colour').html(selectedProduct.selectedColour.name);
-          $(".pmpc-colour-option-border-selected").removeClass(
-            "pmpc-colour-option-border-selected"
-          );
-          $(".pmpc-colour-option-text-selected").removeClass(
-            "pmpc-colour-option-text-selected"
-          );
-          $(
-            ".colours div:nth-child(" +
-              (colourIndex + 1) +
-              ")"
-          )
-            .children(".pmpc-colour-option-border")
-            .addClass("pmpc-colour-option-border-selected");
-          $(
-            ".colours div:nth-child(" +
-              (colourIndex + 1) +
-              ") h1"
-          ).addClass("pmpc-colour-option-text-selected");
-        }
-      );
+        $("#pc-colour").html(selectedProduct.selectedColour.name);
+        $("#fpc-colour").html(selectedProduct.selectedColour.name);
+        $(".pmpc-colour-option-border-selected").removeClass(
+          "pmpc-colour-option-border-selected"
+        );
+        $(".pmpc-colour-option-text-selected").removeClass(
+          "pmpc-colour-option-text-selected"
+        );
+        $(".colours div:nth-child(" + (colourIndex + 1) + ")")
+          .children(".pmpc-colour-option-border")
+          .addClass("pmpc-colour-option-border-selected");
+        $(".colours div:nth-child(" + (colourIndex + 1) + ") h1").addClass(
+          "pmpc-colour-option-text-selected"
+        );
+      });
     });
   }
 }
@@ -525,9 +531,9 @@ function updateColourRows () {
 function setupFunction() {
   if (!listenersAdded) {
     listenersAdded = true;
-    $('#product-modal-button').on('click', function (evn) {
-      if(selectedProduct != null) {
-        $('#ProductModal').modal('show');
+    $("#product-modal-button").on("click", function (evn) {
+      if (selectedProduct != null) {
+        $("#ProductModal").modal("show");
       }
     });
   }
@@ -559,48 +565,54 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
   document.getElementById("pc-price").innerHTML =
     "$" + selectedProduct.selectedPrice; //backend should store the decimals
   document.getElementById("pc-height").innerHTML =
-    selectedProduct.selectedHeight + "\"";
-  document.getElementById("pc-colour").innerHTML = selectedProduct.colours.length == 0 ? "N/A" : selectedProduct.selectedColour.name;
+    selectedProduct.selectedHeight + '"';
+  document.getElementById("pc-colour").innerHTML =
+    selectedProduct.colours.length == 0
+      ? "N/A"
+      : selectedProduct.selectedColour.name;
   document.getElementById("fpc-price").innerHTML =
     "$" + selectedProduct.selectedPrice;
   if (!idxChange) $("#fpc-storelink").attr("href", selectedProduct.storeLink);
   // colour
   $(".colours").empty();
-  if (selectedProduct.colours.length > 0)
-    updateColourRows();
-  else 
-    $('#fpc-colour').html("No colour options");
+  if (selectedProduct.colours.length > 0) updateColourRows();
+  else $("#fpc-colour").html("No colour options");
 
-    $('#height-menu-dropdown').empty()
-    $('.height-text').text(selectedProduct.selectedHeight + '"')
-    $('#height-menu > .material-symbols-outlined').removeClass('hide');
-    if (selectedProduct.heights.length <= 1)
-      $('#height-menu > .material-symbols-outlined').addClass('hide');
-    selectedProduct.heights.forEach((height, index) => {
-      if(height != selectedProduct.selectedHeight)
-        $('#height-menu-dropdown').append(`<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`)
-        else 
-        $('#height-menu-dropdown').append(`<li class='value-p height-selected' role='option' onclick='changeIndex(this)'>${height}"</li>`)
-    }) 
-  $('#category-container > .value-p').remove();
-  selectedProduct.categories.forEach(category => {
-    $('#category-container').append(`<span class="value-p">${category}</span>`)
-  })
-  
+  $("#height-menu-dropdown").empty();
+  $(".height-text").text(selectedProduct.selectedHeight + '"');
+  $("#height-menu > .material-symbols-outlined").removeClass("hide");
+  if (selectedProduct.heights.length <= 1)
+    $("#height-menu > .material-symbols-outlined").addClass("hide");
+  selectedProduct.heights.forEach((height, index) => {
+    if (height != selectedProduct.selectedHeight)
+      $("#height-menu-dropdown").append(
+        `<li class='value-p' role='option' onclick='changeIndex(this)'>${height}"</li>`
+      );
+    else
+      $("#height-menu-dropdown").append(
+        `<li class='value-p height-selected' role='option' onclick='changeIndex(this)'>${height}"</li>`
+      );
+  });
+  $("#category-container > .value-p").remove();
+  selectedProduct.categories.forEach((category) => {
+    $("#category-container").append(`<span class="value-p">${category}</span>`);
+  });
 
-  document.getElementById("footer-height").innerText = selectedProduct.selectedHeight + '"';
+  document.getElementById("footer-height").innerText =
+    selectedProduct.selectedHeight + '"';
   if (selectedProduct.diameter != -1) {
-    $('.footer-width-text').text(selectedProduct.diameter + '"')
-    $('.footer-width').removeClass('hide')
-  }
-  else 
-    $('.footer-width').addClass('hide');
+    $(".footer-width-text").text(selectedProduct.diameter + '"');
+    $(".footer-width").removeClass("hide");
+  } else $(".footer-width").addClass("hide");
 }
 
 function changeIndex(node) {
   //tracks height and price
-  selectedProduct.selectedHeight = parseInt(node.innerText.slice(0,-1));
-  selectedProduct.selectedPrice = selectedProduct.prices[selectedProduct.heights.indexOf(selectedProduct.selectedHeight)]
+  selectedProduct.selectedHeight = parseInt(node.innerText.slice(0, -1));
+  selectedProduct.selectedPrice =
+    selectedProduct.prices[
+      selectedProduct.heights.indexOf(selectedProduct.selectedHeight)
+    ];
   // change price
   manageHeightDropdown(); //close it after height selection
   updateProductDetailsOnExpandedCard(true);
@@ -614,7 +626,7 @@ function hideExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "expand_content";
   if (selectedProduct != null) {
-    $('#product-desc-info').addClass('collapsed-card')
+    $("#product-desc-info").addClass("collapsed-card");
   }
   idx = 0;
   for (el of elements) {
@@ -632,7 +644,7 @@ function showExpandedProduct() {
   elements = document.getElementsByClassName("show-for-fpc");
   document.getElementById("expand").innerText = "zoom_in_map";
   // document.getElementById("product-desc-info").innerText = selectedProduct.description;
-  $('#product-desc-info').removeClass('collapsed-card')
+  $("#product-desc-info").removeClass("collapsed-card");
   idx = 0;
   for (el of elements) {
     el.style.display = "";
@@ -927,7 +939,7 @@ function updatePMPC() {
   $(".pmpc-product-image").attr("src", pmpcProduct.imageLink);
   $(".pmpc-header-text-container h1").html(pmpcProduct.name);
   $(".pmpc-header-text-container p").html(pmpcProduct.description);
-  $(".pmpc-price").html("$" + pmpcProduct.selectedPrice + ".00");
+  $(".pmpc-price").html("$" + pmpcProduct.selectedPrice);
   $(".pmpc-store-redirect-button a").attr("href", pmpcProduct.storeLink);
 
   $(".pmpc-height").html(pmpcProduct.selectedHeight + '"');
@@ -958,7 +970,7 @@ function updatePMPC() {
 
           pmpcProduct.selectedPrice = pmpcProduct.prices[heightIndex];
           pmpcProduct.selectedHeight = pmpcProduct.heights[heightIndex];
-          $(".pmpc-price").html("$" + pmpcProduct.selectedPrice + ".00");
+          $(".pmpc-price").html("$" + pmpcProduct.selectedPrice);
           $(".pmpc-height").html(pmpcProduct.selectedHeight + '"');
 
           $(".pmpc-selected-option").removeClass("pmpc-selected-option");
@@ -1088,7 +1100,7 @@ function updatePMCS() {
     $(".pm-cs-selection").css("display", "block");
 
     $(".pm-cs-selection h2").html(pmcsProduct.name);
-    $(".pm-cs-price").html("$" + pmcsProduct.selectedPrice + ".00");
+    $(".pm-cs-price").html("$" + pmcsProduct.selectedPrice);
     $(".pm-cs-height").html(pmcsProduct.selectedHeight + '"');
     if (pmcsProduct.colours.length > 0) {
       $(".pm-cs-colour").html(pmcsProduct.selectedColour.name);
