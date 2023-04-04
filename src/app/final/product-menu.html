@@ -1,0 +1,315 @@
+<div class="pm-container">
+  <div class="pm-header-container">
+    <h1 class="pm-cs-header-text">Current Selection</h1>
+    <div class="close-pm-button-container">
+      <h2>Close Menu</h2>
+      <iconify-icon
+        icon="mdi:chevron-right"
+        width="20"
+        inline="true"
+        style="color: #023e7d"
+        class="close-pm-button-icon"
+      ></iconify-icon>
+    </div>
+  </div>
+
+  <div class="pm-cs-container">
+    <img
+      src="../assets/images/no-selection-picture.png"
+      alt="no-selected-product-image"
+      width="82"
+      height="82"
+      class="pm-cs-image"
+    />
+
+    <div class="pm-cs-textinfo-container">
+      <div class="pm-cs-noselection">
+        <h2>Please select a product in this menu to view AR content</h2>
+        <div class="pm-cs-ns-badge-container">
+          <iconify-icon
+            icon="ic:round-menu-book"
+            width="15"
+            inline="true"
+            style="color: #0353a4"
+          ></iconify-icon>
+          <p>Select a product</p>
+        </div>
+      </div>
+
+      <div class="pm-cs-selection">
+        <h2>default-name</h2>
+        <div class="pm-cs-attributes-container">
+          <p class="pm-cs-price">default-price</p>
+          <hr class="pm-cs-divider" />
+          <h3>Height</h3>
+          <p class="pm-cs-height">default-height</p>
+          <hr class="pm-cs-divider" />
+          <h3>Colour</h3>
+          <p class="pm-cs-colour">default-colour</p>
+        </div>
+        <p class="pm-cs-description">default-description</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pm-dropdown-container">
+    <button
+      class="pm-dropdown-button"
+      aria-haspopup="listbox"
+      aria-labelledby="dropdown-label"
+    >
+      <iconify-icon
+        icon="mdi:book-open"
+        width="16"
+        inline="true"
+        style="color: #0353a4"
+        class="pm-dropdown-button-icon"
+      ></iconify-icon>
+      <p class="pm-dropdown-button-text">default-menu</p>
+      <iconify-icon
+        icon="mdi:chevron-up"
+        flip="vertical"
+        width="24"
+        inline="true"
+        style="color: #023e7d"
+        class="pm-dropdown-button-arrow"
+      ></iconify-icon>
+    </button>
+    <ul class="pm-dropdown-list" role="listbox" aria-expanded="false"></ul>
+  </div>
+
+  <div class="dpm-container">
+    <div class="dpm-row-container">
+      <div class="dpm-header-container">
+        <h2>Pillar Candles</h2>
+        <div class="pm-view-category-button-container">
+          <h3>View Category</h3>
+          <iconify-icon
+            icon="material-symbols:arrow-right-rounded"
+            height="24"
+            inline="true"
+            style="color: #0353a4"
+            class="pm-view-category-arrow"
+          ></iconify-icon>
+        </div>
+      </div>
+      <div class="dpm-product-row-container pillar-candles"></div>
+      <div class="pm-product-row-end">
+        <div class="pm-product-row-end-cap"></div>
+        <div class="pm-product-row-end-middle"></div>
+        <div class="pm-product-row-end-cap"></div>
+      </div>
+    </div>
+    <div class="pm-horizontal-divider"></div>
+    <div class="dpm-row-container">
+      <div class="dpm-header-container">
+        <h2>Taper Candles</h2>
+        <div class="pm-view-category-button-container">
+          <h3>View Category</h3>
+          <iconify-icon
+            icon="material-symbols:arrow-right-rounded"
+            height="24"
+            inline="true"
+            style="color: #0353a4"
+            class="pm-view-category-arrow"
+          ></iconify-icon>
+        </div>
+      </div>
+      <div class="dpm-product-row-container taper-candles"></div>
+      <div class="pm-product-row-end">
+        <div class="pm-product-row-end-cap"></div>
+        <div class="pm-product-row-end-middle"></div>
+        <div class="pm-product-row-end-cap"></div>
+      </div>
+    </div>
+
+    <div class="pm-horizontal-divider"></div>
+    <div class="dpm-row-container">
+      <div class="dpm-header-container">
+        <h2>Specialty Candles</h2>
+        <div class="pm-view-category-button-container">
+          <h3>View Category</h3>
+          <iconify-icon
+            icon="material-symbols:arrow-right-rounded"
+            height="24"
+            inline="true"
+            style="color: #0353a4"
+            class="pm-view-category-arrow"
+          ></iconify-icon>
+        </div>
+      </div>
+      <div class="dpm-product-row-container specialty-candles"></div>
+      <div class="pm-product-row-end">
+        <div class="pm-product-row-end-cap"></div>
+        <div class="pm-product-row-end-middle"></div>
+        <div class="pm-product-row-end-cap"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spm-container spm-category">
+    <h1>Product Categories</h1>
+    <h2>Candles</h2>
+    <div class="spm-category-buttton-container"></div>
+    <div class="pm-horizontal-divider"></div>
+    <h1>Search Results</h1>
+    <div class="spm-results-container">
+      <div class="spm-noresults-container">
+        <iconify-icon
+          icon="mdi:git-issue"
+          height="128"
+          inline="true"
+          style="color: #6c757d"
+          class="pm-center-align"
+        ></iconify-icon>
+        <p>
+          Please select at least one category from above to search for products
+          by category
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="spm-container spm-name">
+    <h1>Product Search</h1>
+    <div class="spm-row-container">
+      <input
+        type="text"
+        placeholder="Enter product name here"
+        class="spm-search-input"
+      />
+      <iconify-icon
+        icon="ph:x"
+        height="20"
+        inline="true"
+        style="color: #0353a4"
+        class="spm-cancelsearch-button"
+      ></iconify-icon>
+    </div>
+    <button class="spm-search-button">Search</button>
+    <div class="pm-horizontal-divider"></div>
+    <h1>Search Results</h1>
+    <div class="spm-results-container">
+      <div class="spm-noresults-container">
+        <iconify-icon
+          icon="mdi:git-issue"
+          height="128"
+          inline="true"
+          style="color: #6c757d"
+          class="pm-center-align"
+        ></iconify-icon>
+        <p>
+          Please enter some text above and then press the “Search” button to
+          search for products by their name
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pmpc-background-dim"></div>
+<div class="pmpc-container">
+  <div class="pmpc-header-container">
+    <img
+      src="../assets/images/no-selection-picture.png"
+      alt="no-selection"
+      width="84"
+      height="84"
+      class="pmpc-product-image"
+    />
+    <div class="pmpc-header-text-container">
+      <h1>default-description</h1>
+      <p>default-description</p>
+    </div>
+  </div>
+  <div class="pmpc-row-container">
+    <h1>Price</h1>
+    <p class="pmpc-attribute-height pmpc-price">$0.00</p>
+    <button class="pmpc-store-redirect-button pmpc-attribute-height">
+      <iconify-icon
+        icon="mdi:shop"
+        height="15"
+        inline="true"
+        style="color: #0353a4"
+      ></iconify-icon>
+      <a target="_blank">Open Store Page</a>
+    </button>
+  </div>
+  <div class="pmpc-row-container">
+    <h1>Height</h1>
+    <p class="pmpc-attribute-height pmpc-height pmpc-single-height">0"</p>
+    <div class="pmpc-dropdown-container">
+      <button
+        aria-haspopup="listbox"
+        aria-labelledby="dropdown-label"
+        class="pmpc-dropdown-button pmpc-attribute-height"
+      >
+        <p class="pmpc-height">0"</p>
+        <iconify-icon
+          icon="mdi:chevron-up"
+          flip="vertical"
+          width="15"
+          inline="true"
+          style="color: #001845"
+          class="pmpc-dropdown-button-icon"
+        ></iconify-icon>
+      </button>
+      <ul class="pmpc-dropdown-list" role="listbox" aria-expanded="false"></ul>
+    </div>
+    <hr class="pmpc-vertical-divider" />
+    <h1>Colour</h1>
+    <p class="pmpc-attribute-height pmpc-colour">default-colour</p>
+  </div>
+
+  <div class="pmpc-colour-row-container"></div>
+  <div class="pmpc-horizontal-divider"></div>
+
+  <div class="pmpc-row-container">
+    <h1>Categories</h1>
+    <div class="pmpc-categories"></div>
+  </div>
+  <div class="pmpc-row-container no-b-margin">
+    <h1>Dimensions</h1>
+    <div class="pmpc-attribute-container pmpc-attribute-height">
+      <iconify-icon
+        icon="ant-design:column-height-outlined"
+        height="15"
+        inline="true"
+        style="color: #023e7d"
+      ></iconify-icon>
+      <p class="pmpc-height">0"</p>
+    </div>
+    <div class="pmpc-attribute-container pmpc-attribute-height pmpc-diameter">
+      <iconify-icon
+        icon="mdi:diameter-outline"
+        height="15"
+        inline="true"
+        style="color: #023e7d"
+      ></iconify-icon>
+      <p>0"</p>
+    </div>
+  </div>
+  <div class="pmpc-horizontal-divider"></div>
+  <div class="pmpc-button-row-container">
+    <button class="pmpc-button pmpc-go-back-button">
+      <iconify-icon
+        icon="mdi:arrow-u-left-top"
+        height="15"
+        inline="true"
+        style="color: #f8f9fa"
+      ></iconify-icon>
+      <p>Go Back</p>
+    </button>
+    <button class="pmpc-button pmpc-swap-button">
+      <iconify-icon
+        icon="ic:round-swap-vert"
+        height="15"
+        inline="true"
+        style="color: #f8f9fa"
+      ></iconify-icon>
+      <p>Swap Products</p>
+    </button>
+  </div>
+</div>
+
+<script src="product-menu.js" type="text/javascript"></script>
