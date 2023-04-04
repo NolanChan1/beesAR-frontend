@@ -680,6 +680,10 @@ function updateColourRows () {
         function () {
           colourIndex = j;
           selectedProduct.selectedColour = selectedProduct.colours[colourIndex];
+          window.app.colour = selectedProduct.selectedColour;
+          window.app.swapColour();
+
+          console.log("In updateColourRows: " + selectedProduct.selectedColour.name);
 
           $("#pc-colour").html(selectedProduct.selectedColour.name);
           $('#fpc-colour').html(selectedProduct.selectedColour.name);
@@ -701,7 +705,7 @@ function updateColourRows () {
               (colourIndex + 1) +
               ") h1"
           ).addClass("pmpc-colour-option-text-selected");
-          window.app.swapColour(selectedProduct.selectedColour);
+          
         }
       );
     });
