@@ -623,6 +623,9 @@ function undoSelectionOfProduct() {
   window.app.selected = null;
   console.log("deleting");
 
+  if (retShow == false) {
+    retToggle();
+  }
   setupFunction();
   productViewManager();
   pmcsProduct = {
