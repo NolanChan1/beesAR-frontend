@@ -1,4 +1,4 @@
-# Bees AR Front-end
+# Bees AR Frontend
 
 This mobile web application project was built using vanilla JavaScript, HTML and CSS. It uses jQuery for support and WebXR and Three.js as the primary libraries for AR functionality.
 
@@ -8,7 +8,7 @@ As this web app depends on WebXR for AR functionality and as Apple does not prov
 
 Due to time constraints, this web app was developed without the use of any front-end web frameworks. For future work, developers should investigate porting this project to React and to make use of react-three-fiber for 3D and AR support. Additionally, a wider selection of products and features such as multiple product projections on the camera feed should be considered.
 
-[Try the web app for yourself](https://discord.com/channels/1018575424097362080/1018575425699594270/1092664394212708362)
+[Try the web app for yourself](https://d23xwhblbslgmo.cloudfront.net/)
 
 [YouTube demo video](https://www.youtube.com/watch?v=PAmQzdepNf4)
 
