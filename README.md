@@ -1,10 +1,22 @@
-# BeesARFrontend
+# Bees AR Frontend
 
 This mobile web application project was built using vanilla JavaScript, HTML and CSS. It uses jQuery for support and WebXR and Three.js as the primary libraries for AR functionality.
 
+Have you ever ordered a product online only to receive it and realize it does not exactly look like whatever you were expecting? This is a problem that YYC Beeswax is familiar with as a frequent cause for returns is customers mistaking the size of their products despite their dimensions being clearly labelled on YYC Beeswax’s e-commerce website. This augmented reality (AR) web app, developed by a team of software engineering students at the University of Calgary as a capstone project, aims to solve this problem. By accessing this web app, users can select a product that this app supports and specify a position in their surroundings to use AR to get a visualization of the product.
+
+As this web app depends on WebXR for AR functionality and as Apple does not provide WebXR support for their smartphones, this web app does not work on iPhones as of the completion of this capstone project. Also, as of the completion of the capstone project, the screenshot feature and the ability to switch between product heights remain unimplemented.
+
+Due to time constraints, this web app was developed without the use of any front-end web frameworks. For future work, developers should investigate porting this project to React and to make use of react-three-fiber for 3D and AR support. Additionally, a wider selection of products and features such as multiple product projections on the camera feed should be considered.
+
+[Try the web app for yourself](https://d23xwhblbslgmo.cloudfront.net/)
+
+[YouTube demo video](https://www.youtube.com/watch?v=PAmQzdepNf4)
+
+[Link to backend repository](https://github.com/NolanChan1/beesAR-backend)
+
 ## Running Development server locally
 
-Since vanilla JavaScript/HTML pages lack a server by default, we use an app to serve the pages for us. One of the options is to use 'Web Server for Chrome' extension on Chrome Web Store (https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related). 
+Since vanilla JavaScript/HTML pages lack a server by default, we use an app to serve the pages for us. One of the options is to use ['Web Server for Chrome'](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/related) extension on Chrome Web Store.
 
 Download the Web Server app and run it, then click Choose Folder and navigate to src/app.
 
@@ -30,7 +42,6 @@ ngrok http 8887 --oauth google
 (--oauth google is a basic protection that requires users to log in via a google account. It is better than allowing free access to anyone on the website, but anyone with a google account can also log in. ngrok has further resources on defining more sophisticated authentication mechanisms).
 
 ngrok will show a display of the url generated to host this application. Use the phone to navigate to the url displayed and login using google (if google authentication is kept as is) to access the application normally.
-
 
 ## Contributors
 
