@@ -313,18 +313,6 @@
       </div>
       <div id="stabilization"></div>
 
-
-      <!-- Product Menu Test Button 
-      <button class="open-pm-button">
-        <iconify-icon
-          icon="ic:round-menu-book"
-          width="20"
-          inline="true"
-          style="color: #0353a4"
-        ></iconify-icon>
-      </button>
-      -->
-
       <!-- Product Menu -->
       <div class="background-dim pm-background-dim"></div>
       <div class="pm-container">
@@ -342,6 +330,7 @@
           </div>
         </div>
       
+        <!-- Current Selection -->
         <div class="pm-cs-container">
           <img
             src="../assets/images/no-selection-picture.png"
@@ -381,6 +370,7 @@
           </div>
         </div>
       
+        <!-- Dropdown menu for selecting different menus -->
         <div class="pm-dropdown-container">
           <button
             class="pm-dropdown-button"
@@ -407,6 +397,7 @@
           <ul class="pm-dropdown-list" role="listbox" aria-expanded="false"></ul>
         </div>
       
+        <!-- Default product menu -->
         <div class="dpm-container">
           <div class="dpm-row-container">
             <div class="dpm-header-container">
@@ -451,7 +442,6 @@
               <div class="pm-product-row-end-cap"></div>
             </div>
           </div>
-      
           <div class="pm-horizontal-divider"></div>
           <div class="dpm-row-container">
             <div class="dpm-header-container">
@@ -476,6 +466,7 @@
           </div>
         </div>
       
+        <!-- Search by category menu -->
         <div class="spm-container spm-category">
           <h1>Product Categories</h1>
           <h2>Candles</h2>
@@ -497,6 +488,7 @@
           </div>
         </div>
       
+        <!-- Search by name menu -->
         <div class="spm-container spm-name">
           <h1>Product Search</h1>
           <div class="spm-row-container">
@@ -659,6 +651,7 @@
     </div>
   </body>
 
+  <!-- Help menu wrapper -->
   <div class="hm-wrapper"></div>
 
   <!-- Temp screenshot feature -->
@@ -673,22 +666,4 @@
   </div>
 
   <script src="app.js" type="text/javascript"></script>
-  <!--
-  <script>
-    $(document).ready(function () {
-      $(".pm-wrapper").load(
-        "product-menu.html",
-        function (responseTxt, statusTxt, xhr) {
-          if (statusTxt == "success") {
-            console.log("It went fine");
-          } else if (statusTxt == "error") {
-            console.log("Error: " + xhr.statusText);
-          }
-        }
-      );
-    });
-  </script>
-  
-  <script src="product-menu.js" type="module"></script>
--->
 </html>

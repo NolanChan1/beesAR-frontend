@@ -269,7 +269,7 @@ class App {
           "../assets/images/hide_projection_blue.png"
         );
         $("#obj-toggle").removeClass("value-p-highlighted");
-        $('#obj-toggle').addClass('value-p-clickable');
+        $("#obj-toggle").addClass("value-p-clickable");
       } else if (objShow === false) {
         $("#obj-toggle > span").text("Show Product");
         $("#obj-toggle > img").attr(
@@ -277,7 +277,7 @@ class App {
           "../assets/images/hide_projection_white.png"
         );
         $("#obj-toggle").addClass("value-p-highlighted");
-        $('#obj-toggle').removeClass('value-p-clickable');
+        $("#obj-toggle").removeClass("value-p-clickable");
       }
     }
   };
@@ -292,11 +292,11 @@ class App {
         "../assets/images/hide_virtualmarker_blue.png"
       );
       $("#ret-toggle").removeClass("value-p-highlighted");
-      $('#ret-toggle').addClass('value-p-clickable')
+      $("#ret-toggle").addClass("value-p-clickable");
     } else if (retShow === false) {
       $("#ret-toggle > span").text("Show Marker");
       $("#ret-toggle").addClass("value-p-highlighted");
-      $('#ret-toggle').removeClass('value-p-clickable')
+      $("#ret-toggle").removeClass("value-p-clickable");
       $("#ret-toggle > img").attr(
         "src",
         "../assets/images/hide_virtualmarker_white.png"
@@ -633,7 +633,7 @@ function undoSelectionOfProduct() {
       "../assets/images/hide_projection_blue.png"
     );
     $("#obj-toggle").removeClass("value-p-highlighted");
-    $('#obj-toggle').addClass('value-p-clickable');
+    $("#obj-toggle").addClass("value-p-clickable");
   }
   setupFunction();
   productViewManager();
@@ -917,6 +917,8 @@ function finishRotation() {
 }
 
 // PRODUCT MENU CODE
+
+// Fetches products by one product category (productCategory)
 async function fetchCategory(productCategory) {
   let fetchedData;
   await fetch(`https://beesar-backend.com/api/categories/${productCategory}`, {
@@ -937,6 +939,7 @@ async function fetchCategory(productCategory) {
   return fetchedData;
 }
 
+// Fetches the URL of an image for the specified product (productSKU)
 async function fetchImage(productSKU) {
   let imageLink;
   await fetch(`https://beesar-backend.com/api/product_images/${productSKU}`, {
@@ -957,9 +960,12 @@ async function fetchImage(productSKU) {
   return imageLink;
 }
 
+// Fetches products from the backend based on the categories selected in candleCategories
+// Returns a Promise with an array with all of the results
 async function fetchCategories() {
   let fetchResult = [];
   if (candleCategories[0].selected) {
+    // If 'All' category is selected
     await fetch(`https://beesar-backend.com/api/products`, {
       method: "GET",
       headers: {
@@ -976,6 +982,7 @@ async function fetchCategories() {
         console.error("ALL PRODUCT FETCH ERROR: ", error);
       });
   } else {
+    // If 'All' category is not selected
     for (let k = 1; k < candleCategories.length; k++) {
       if (candleCategories[k].selected) {
         await fetch(
@@ -1003,6 +1010,7 @@ async function fetchCategories() {
   return fetchResult;
 }
 
+// Fetches products from the backend by the name (searchTerm)
 async function fetchByName(searchTerm) {
   const fetchURI = `https://beesar-backend.com/api/products/name/${searchTerm}`;
   let fetchResult = [];
@@ -1026,7 +1034,7 @@ async function fetchByName(searchTerm) {
   return fetchResult;
 }
 
-// PM dropdown data
+// Product menu dropdown data
 let menuTypes = [
   {
     id: 1,
@@ -1050,7 +1058,7 @@ let menuTypes = [
 let selectedMenuType = menuTypes[0];
 let menuDropdownOpen = false;
 
-// PMPC data
+// Product menu product card data
 let pmpcProduct = {
   productSKU: -1,
   imageLink: "",
@@ -1070,7 +1078,7 @@ let pmpcDropdownOpen = false;
 let heightIndex = 0;
 let colourIndex = 0;
 
-// PMCS data
+// Product menu current selection data
 let pmcsProduct = {
   productSKU: -1,
   imageLink: "",
@@ -1140,6 +1148,7 @@ let pmCategorySearchResults = [];
 let pmNameSearchTerm = "";
 let pmNameSearchResults = [];
 
+// Update the styles for the product menu dropdown menu styles (selecting different menus)
 function updatePMDropdownStyles() {
   if (menuDropdownOpen) {
     $(".pm-dropdown-button-arrow").removeAttr("flip");
@@ -1150,6 +1159,7 @@ function updatePMDropdownStyles() {
   }
 }
 
+// Update the dropdown menu styles in the product menu product card
 function updatePMPCDDStyles() {
   if (pmpcDropdownOpen) {
     $(".pmpc-dropdown-button-icon").removeAttr("flip");
@@ -1166,6 +1176,8 @@ function updatePMPCDDStyles() {
   }
 }
 
+// Update the product menu product card
+// Intended to run everytime a user presses a product in the product menu
 function updatePMPC() {
   $(".pmpc-product-image").attr("src", pmpcProduct.imageLink);
   $(".pmpc-header-text-container h1").html(pmpcProduct.name);
@@ -1316,6 +1328,7 @@ function updatePMPC() {
   $(".pmpc-container").css("display", "block");
 }
 
+// Update the current selection section in the product menu
 function updatePMCS() {
   if (pmcsProduct.productSKU === -1) {
     $(".pm-cs-image").attr("src", "../assets/images/no-selection-picture.png");
@@ -1342,6 +1355,7 @@ function updatePMCS() {
   }
 }
 
+// Update the product category button styles in the search by category menu
 function updateCategoryButtons() {
   $(".spm-category-button-selected").removeClass(
     "spm-category-button-selected"
@@ -1355,10 +1369,12 @@ function updateCategoryButtons() {
   });
 }
 
+// Setup search by category menu
 function setupCategorySearchPM() {
   let pmCategorySearchOption =
     '<button class="spm-category-button">default-category</button>';
 
+  // Add category buttons
   $.each(candleCategories, function (i, candleCategory) {
     $(".spm-category-buttton-container").append(pmCategorySearchOption);
     $(".spm-category-buttton-container button:nth-child(" + (i + 1) + ")").html(
@@ -1396,6 +1412,7 @@ function setupCategorySearchPM() {
         fetchRes.then((fetchedData) => {
           pmCategorySearchResults = fetchedData;
 
+          // Empty container and append search results
           $(".spm-category-search").empty();
           if (pmCategorySearchResults.length > 0) {
             $(".spm-nocategory-search").css("display", "none");
@@ -1466,6 +1483,8 @@ function setupCategorySearchPM() {
   updateCategoryButtons();
 }
 
+// Function for directing to search by category menu
+// Intended for the View Category buttons in the default menu
 function goToCategorySearch(categoryID) {
   // Set selected menu type
   selectedMenuType = menuTypes[1];
@@ -1589,6 +1608,7 @@ function goToCategorySearch(categoryID) {
   });
 }
 
+// Update text input in search by name product menu
 function updateNameSearchPM() {
   if (pmNameSearchTerm.length > 0) {
     $(".spm-cancelsearch-button").css("display", "block");
@@ -1597,6 +1617,7 @@ function updateNameSearchPM() {
   }
 }
 
+// Setup the search by name product menu
 function setupNameSearchPM() {
   updateNameSearchPM();
   $(".spm-search-input").keyup(function (val) {
@@ -1683,6 +1704,7 @@ function setupNameSearchPM() {
   });
 }
 
+// Run function to setup Product Menu
 function setupPM() {
   $(document).ready(function () {
     // Setup open PM button
@@ -1986,11 +2008,13 @@ function setupPM() {
       goToCategorySearch(2);
     });
 
+    // Setup other menus in Product Menu
     setupCategorySearchPM();
     setupNameSearchPM();
   });
 }
 
+// Run function once to setup Help Menu
 function setupHP() {
   $(document).ready(function () {
     $(".hm-wrapper").load(
