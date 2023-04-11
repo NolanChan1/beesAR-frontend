@@ -460,6 +460,7 @@ function manageHeightDropdown(data) {
 //   fixProductMenuIconHeight();
 // }
 
+/** Expands and collapses card using helper functions */
 function productViewManager(e) {
   if (selectedProduct) {
     if (!isProductMenuOpen) {
@@ -543,7 +544,7 @@ function swapProducts(selected, colour) {
     // window.app.current_obj = null;
   }
 }
-
+/** Function called when a product is confirmed as selected in menu and card needs to be updated */
 function productSelected(currentSelection) {
   //refactoring done
   //selectedProduct = sunflowerProduct;
@@ -683,6 +684,8 @@ isMenuOpen = false;
 //   ["Stuart"],
 //   "https://i.imgur.com/kPO7HXN.jpg"
 // );
+
+// the icon on the bottom right above product card
 function fixProductMenuIconHeight() {
   value = document.getElementById("selection-panel").offsetHeight;
   document.getElementById("product-menu-icon-container").style.bottom =
@@ -741,7 +744,7 @@ function updateColourRows() {
     });
   }
 }
-
+/** Primary onload function that sets up UI elements on page load. This is also reused to update product card details! */
 function setupFunction() {
   if (!listenersAdded) {
     listenersAdded = true;
@@ -819,7 +822,7 @@ function updateProductDetailsOnExpandedCard(idxChange = false) {
     $(".footer-width").removeClass("hide");
   } else $(".footer-width").addClass("hide");
 }
-
+/** Deals with change in height selected and corresponding price */
 function changeIndex(node) {
   //tracks height and price
   selectedProduct.selectedHeight = parseInt(node.innerText.slice(0, -1));
@@ -900,7 +903,7 @@ function rotateSelection() {
   });
   return false;
 }
-
+/** Cancels rotation and returns to product card */
 function stopRotation() {
   // Hide/show virtual marker needs to be decided based on whether marker is placed.
   const angle = window.app.objAngle;
@@ -909,7 +912,7 @@ function stopRotation() {
   window.app.revertRotation(angle);
   document.getElementById("rotation-slider").value = angle;
 }
-
+/** Helper function to manage UI elements after rotation */
 function finishRotation() {
   $("#enter-ar").removeClass("hide");
   $("#rotation-slider-container").addClass("hide");

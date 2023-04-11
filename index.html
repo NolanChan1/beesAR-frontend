@@ -124,7 +124,14 @@
           </div>
           <div>
             <!-- Main content -->
-            <div class="full-product-card   fpc1" remove show-for from this one>
+                        <!-- The product card has a collapsed and expanded(full) version. This is managed by
+            unhiding all classes with 'show-for-fpc' and hiding them when the card is collapsed. Elements common
+            to both are reused
+            Every 'manager' function (such as productViewManager()) acts as a 'toggle' function to open and close
+            based on other custom criteria for that case
+            Inline styling is used in some cases to override defaults!
+            The default item names/values in the card are updated via JavaScript, so do not change those here-->
+            <div class="full-product-card   fpc1">
               <div class="selection-main-content" onclick="productViewManager(event)">
               <div class="no-image-selection image-container" style="max-height: 95px;">
                 <span class="material-symbols-outlined no-image">question_mark</span>
