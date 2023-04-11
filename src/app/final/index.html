@@ -1,20 +1,5 @@
 <!doctype html>
-<!--
-/*
- * Copyright 2017 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
--->
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -60,16 +45,7 @@
   </head>
   <body id="thebody" onload="setupFunction()">
     <div class="app-UI">
-      <!-- <div id="enter-ar-info" class="mdc-card demo-card">
-        <h2>Augmented Reality with the WebXR Device API</h2>
-        <p>
-          This is an experiment using augmented reality features with the WebXR Device API.
-          Upon entering AR, you will be surrounded by a world of cubes.
-          Learn more about these features from the <a href="https://codelabs.developers.google.com/codelabs/ar-with-webxr">Building an augmented reality application with the WebXR Device API</a> Code Lab.
-        </p>
-
-        <!-- Starting an immersive WebXR session requires user interaction. Start the WebXR experience with a simple button. --> <!--
-      </div> -->
+      <!-- The container that holds all UI elements on the bottom of the screen -->
       <div class="bottom-container">
         <div id="enter-ar" class="btn btn-primary virtual-marker">
           <span class="material-symbols-outlined icon" style="vertical-align: middle;">motion_sensor_active</span>
@@ -124,7 +100,14 @@
           </div>
           <div>
             <!-- Main content -->
-            <div class="full-product-card   fpc1" remove show-for from this one>
+            <!-- The product card has a collapsed and expanded(full) version. This is managed by
+            unhiding all classes with 'show-for-fpc' and hiding them when the card is collapsed. Elements common
+            to both are reused
+            Every 'manager' function (such as productViewManager()) acts as a 'toggle' function to open and close
+            based on other custom criteria for that case
+            Inline styling is used in some cases to override defaults!
+            The default item names/values in the card are updated via JavaScript, so do not change those here-->
+            <div class="full-product-card   fpc1">
               <div class="selection-main-content" onclick="productViewManager(event)">
               <div class="no-image-selection image-container" style="max-height: 95px;">
                 <span class="material-symbols-outlined no-image">question_mark</span>
@@ -171,25 +154,11 @@
                     <li role="presentation" role="option">CSS</li>
                   </ul>
                 </div>
-                <!-- <select class="form-select height-form" aria-label=".form-select" onchange="changeIndex(this)">
-                  <option selected value="0">3"</option>
-                  <option value="1">5"</option>
-                  <option value="2">7"</option>
-                  <option value="3">9"</option>
-                </select> -->
 
                 <span class="colour" style="margin-left: 2rem;"><b>Colour</b></span>
                 <span class="colour-value value-p" id="fpc-colour">Stuart</span>
               </div>
-              <div class="show-for-fpc colours"> <!-- set up x overflow later   -->
-                <!-- <div style="display:grid; justify-items: center; margin-right: 0.2rem;">
-                <span class="colour-template selected"></span>
-                <span style="font-size: 12px">Stuart</span>
-                </div> -->
-                <!-- <div style="display:grid; justify-items: center;">
-                  <span class="colour-template" style="background-color: #B28839;"></span>
-                  <span style="font-size: 12px"><del>Orange</del></span>
-                </div> -->
+              <div class="show-for-fpc colours">
               </div>
               <hr class="show-for-fpc" style="width: 91%; margin: 0px; justify-self: center;">
               <div class="show-for-fpc container" style="padding: 0px; margin: 0.5rem 1rem 1rem 1rem;">

@@ -459,7 +459,7 @@ function manageHeightDropdown(data) {
 //   isProductMenuOpen = !isProductMenuOpen;
 //   fixProductMenuIconHeight();
 // }
-
+/** Expands and collapses card using helper functions */
 function productViewManager(e) {
   if (selectedProduct) {
     if (!isProductMenuOpen) {
@@ -473,7 +473,7 @@ function productViewManager(e) {
     fixProductMenuIconHeight();
   }
 }
-
+// this function is not needed!
 function manageProductMenu(e) {
   if (isMenuOpen) {
     document.getElementById("product-menu-container").style.display = "none";
@@ -543,7 +543,7 @@ function swapProducts(selected, colour) {
     // window.app.current_obj = null;
   }
 }
-
+/** Function call for when a product is confirmed as selected in the menu and product card needs to be updated */
 function productSelected(currentSelection) {
   //refactoring done
   //selectedProduct = sunflowerProduct;
@@ -741,7 +741,9 @@ function updateColourRows() {
     });
   }
 }
-
+/** Main function called after page onload. This function is also reused to update the content of 
+ * product card after updated selection from the menu
+ */
 function setupFunction() {
   if (!listenersAdded) {
     listenersAdded = true;
